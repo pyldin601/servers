@@ -7,8 +7,8 @@ commonLabels:
   app: musicloud
 
 images:
-  - name: postgres
-    newName: postgres
+  - name: library/postgres
+    newName: library/postgres
     newTag: "9.5"
 
 resources:
