@@ -5,13 +5,7 @@ metadata:
 spec:
   completions: 1
   parallelism: 1
-  selector:
-    matchLabels:
-      deployment: musicloud-migration-job
   template:
-    metadata:
-      labels:
-        deployment: musicloud-migration-job
     spec:
       containers:
         - name: migration
