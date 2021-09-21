@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: musicloud-db-deployment
+  name: musicloud-postgres-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      deployment: musicloud-db-deployment
+      deployment: musicloud-postgres-deployment
   template:
     metadata:
       labels:
-        deployment: musicloud-db-deployment
+        deployment: musicloud-postgres-deployment
     spec:
       volumes:
         - name: k8s-persistent-volume
