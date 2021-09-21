@@ -15,3 +15,5 @@ resources:
   - musicloud-postgres-deployment.yaml
   - musicloud-postgres-configmap.yaml
   - musicloud-postgres-pvc.yaml
+  - musicloud-postgres-service.yaml
+  - musicloud-migration-job.yaml
