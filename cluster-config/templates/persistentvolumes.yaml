@@ -1,0 +1,12 @@
+piVersion: v1
+kind: PersistentVolume
+metadata:
+  name: k8s-persistent-volume
+spec:
+  storageClassName: manual
+  capacity:
+    storage: {{ .Values.volumes.k8s.capacity }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/volumes/k8s"
