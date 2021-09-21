@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: musicloud-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: musicloud-db-deployment
+  template:
+    metadata:
+      labels:
+        deployment: musicloud-db-deployment
+    spec:
+      containers:
+        - name: postgres
+          image: library/postgres
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: musicloud-postgres-configmap
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: musicloud-postgres-configmap
+                  key: password
