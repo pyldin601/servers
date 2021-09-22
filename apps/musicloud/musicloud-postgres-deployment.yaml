@@ -13,9 +13,9 @@ spec:
         deployment: musicloud-postgres-deployment
     spec:
       volumes:
-        - name: k8s-persistent-volume
+        - name: musicloud-postgres-data-volume
           persistentVolumeClaim:
-            claimName: musicloud-postgres-claim
+            claimName: musicloud-postgres-data-volume-claim
       containers:
         - name: postgres
           image: postgres
@@ -32,4 +32,5 @@ spec:
                   key: password
           volumeMounts:
             - mountPath: "/var/lib/postgresql/data"
-              name: k8s-persistent-volume
+              name: musicloud-postgres-data-volume
+              subPath: musicloud-postgres-data
