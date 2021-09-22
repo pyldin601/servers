@@ -4,6 +4,8 @@ kind: Application
 metadata:
   name: musicloud-app
   namespace: musicloud
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
