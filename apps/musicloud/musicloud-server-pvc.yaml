@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: musicloud-postgres-data-volume-claim
+  name: musicloud-server-data-volume-claim
 spec:
   storageClassName: manual
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 2Gi
+      storage: 32Gi

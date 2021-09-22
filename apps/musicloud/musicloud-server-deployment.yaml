@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: musicloud-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: musicloud-server-deployment
+  template:
+    metadata:
+      labels:
+        deployment: musicloud-server-deployment
+    spec:
+      volumes:
+        - name: musicloud-server-data-volume
+          persistentVolumeClaim:
+            claimName: musicloud-server-data-volume-claim
+        - name: musicloud-server-temp-volume
+          emptyDir:
+            sizeLimit: '2Gi'
+      containers:
+        - name: postgres
+          image: postgres
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: musicloud-postgres-configmap
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: musicloud-postgres-configmap
+                  key: password
+            - name: DB_HOSTNAME
+              value: musicloud-postgres-service
+            - name: DB_DATABASE
+              value: musicloud
+          volumeMounts:
+            - mountPath: "/volume/media"
+              name: musicloud-server-data-volume
+              subPath: musicloud-server-data
+            - mountPath: "/volume/temp"
+              name: musicloud-server-temp-volume
