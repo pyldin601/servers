@@ -5,7 +5,7 @@ metadata:
   name: musicloud
   namespace: musicloud
 spec:
-  project: default
+  project: ""
   source:
     repoURL: 'https://github.com/pldin601/homefs-k8s.git'
     path: apps/musicloud
