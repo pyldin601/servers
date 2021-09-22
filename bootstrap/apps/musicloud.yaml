@@ -10,6 +10,7 @@ spec:
     repoURL: 'https://github.com/pldin601/homefs-k8s.git'
     path: apps/musicloud
     targetRevision: HEAD
+    kustomize: {}
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: musicloud
