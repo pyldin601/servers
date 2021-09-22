@@ -17,5 +17,10 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: musicloud
+  labels:
+    name: musicloud
