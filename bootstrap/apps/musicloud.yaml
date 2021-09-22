@@ -2,8 +2,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: musicloud-app
-  namespace: musicloud
+  name: musicloud
+  namespace: argocd
 spec:
   project: default
   source:
