@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: api-prod-eu-west-1
+  namespace: argocd
+spec:
+  project: homefs-k8s
+  source:
+    repoURL: 'https://github.com/pldin601/homefs-k8s.git'
+    path: apps/musicloud
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: musicloud
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -5,7 +5,7 @@ metadata:
 spec:
   storageClassName: manual
   capacity:
-    storage: {{ .Values.volumes.k8s.capacity }}
+    storage: 100Gi
   accessModes:
     - ReadWriteOnce
   hostPath:

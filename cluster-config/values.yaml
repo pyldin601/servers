@@ -1,3 +1,0 @@
-volumes:
-  k8s:
-    capacity: 100Gi
