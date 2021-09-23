@@ -18,10 +18,10 @@ spec:
             claimName: musicloud-server-data-volume-claim
         - name: musicloud-server-temp-volume
           emptyDir:
-            sizeLimit: '2Gi'
+            sizeLimit: 2Gi
       containers:
-        - name: postgres
-          image: postgres
+        - name: php-fpm
+          image: pldin601/musicloud-php-fpm:latest
           env:
             - name: DB_USERNAME
               valueFrom:
