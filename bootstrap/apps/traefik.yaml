@@ -20,12 +20,8 @@ spec:
           value: 'true'
         - name: deployment.kind
           value: DaemonSet
-        - name: ports.web.port
-          value: "80"
         - name: ports.web.expose
           value: "false"
-        - name: ports.websecure.port
-          value: "443"
         - name: ports.websecure.expose
           value: "false"
   destination:
