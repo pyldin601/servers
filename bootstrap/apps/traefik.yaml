@@ -12,6 +12,14 @@ spec:
     repoURL: 'https://github.com/traefik/traefik-helm-chart.git'
     path: traefik
     targetRevision: HEAD
+    helm:
+      parameters:
+        - name: service.enabled
+          value: 'false'
+        - name: hostNetwork
+          value: 'true'
+        - name: deployment.kind
+          value: DaemonSet
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
