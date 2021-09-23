@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myownradio-mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: myownradio-mysql-deployment
+  template:
+    metadata:
+      labels:
+        deployment: myownradio-mysql-deployment
+    spec:
+      volumes:
+        - name: myownradio-mysql-data-volume
+          persistentVolumeClaim:
+            claimName: myownradio-mysql-data-volume-claim
+      containers:
+        - name: mysql
+          image: mysql:5.6
+          env:
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: password
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: database
+          volumeMounts:
+            - mountPath: "/var/lib/mysql"
+              name: myownradio-mysql-data-volume

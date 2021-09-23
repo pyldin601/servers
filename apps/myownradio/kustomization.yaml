@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: arbitrary
+
+commonLabels:
+  app: myownradio
+
+images: []
+
+resources:
+  - myownradio-ns.yaml
+  - myownradio-mysql-configmap.yaml
+  - myownradio-mysql-deployment.yaml
+  - myownradio-mysql-pvc.yaml
+  - myownradio-mysql-service.yaml

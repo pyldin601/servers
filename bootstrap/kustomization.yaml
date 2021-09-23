@@ -7,3 +7,4 @@ resources:
   - resources/local-path-provisioner.yaml
   - apps/musicloud.yaml
   - apps/traefik.yaml
+  - argocd/ingressroute.yaml
