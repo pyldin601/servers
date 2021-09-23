@@ -24,6 +24,13 @@ spec:
           value: "false"
         - name: ports.websecure.expose
           value: "false"
+#        - name: persistence.enabled
+#          value: "true"
+#        - name: additionalArguments
+#          value:
+#            - --certificatesresolvers.le.acme.storage=/data/acme.json
+#            - --certificatesResolvers.default.acme.storage=/certs/acme.json
+#            - --certificatesResolvers.default.acme.httpChallenge.entryPoint=web
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default

@@ -16,5 +16,4 @@ spec:
           port: 443
   tls:
     certResolver: default
-    options:
-      name: opt
+    options: {}
