@@ -40,6 +40,5 @@ spec:
           volumeMounts:
             - mountPath: "/volume/media"
               name: musicloud-server-data-volume
-              subPath: musicloud-server-data
             - mountPath: "/volume/temp"
               name: musicloud-server-temp-volume

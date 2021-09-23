@@ -33,4 +33,3 @@ spec:
           volumeMounts:
             - mountPath: "/var/lib/postgresql/data"
               name: musicloud-postgres-data-volume
-              subPath: musicloud-postgres-data
