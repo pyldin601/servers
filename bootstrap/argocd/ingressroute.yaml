@@ -10,6 +10,7 @@ spec:
   routes:
     - kind: Rule
       match: Host(`argocd.homefs.biz`)
+      tls: true
       priority: 10
       services:
         - name: argocd-server
