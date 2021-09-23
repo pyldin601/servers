@@ -19,6 +19,10 @@ spec:
         - name: musicloud-server-temp-volume
           emptyDir:
             sizeLimit: 2Gi
+      hostAliases:
+        - ip: "127.0.0.1"
+          hostnames:
+            - "php-fpm"
       containers:
         - name: php-fpm
           image: pldin601/musicloud-php-fpm:latest
@@ -42,3 +46,5 @@ spec:
               name: musicloud-server-data-volume
             - mountPath: "/volume/temp"
               name: musicloud-server-temp-volume
+        - name: nginx
+          image: pldin601/musicloud-nginx:latest
