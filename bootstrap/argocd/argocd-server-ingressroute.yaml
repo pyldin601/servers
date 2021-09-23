@@ -15,5 +15,5 @@ spec:
         - name: argocd-server
           port: 443
   tls:
-    certResolver: default
-    options: {}
+    stores:
+      default: { }
