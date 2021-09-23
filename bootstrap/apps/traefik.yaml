@@ -27,10 +27,7 @@ spec:
         - name: persistence.enabled
           value: "true"
         - name: additionalArguments
-          value:
-            - --certificatesResolvers.default.acme.email=roman.lakhtadyr+certs@gmail.com
-            - --certificatesResolvers.default.acme.storage=/certs/acme.json
-            - --certificatesResolvers.default.acme.httpChallenge.entryPoint=web
+          value: "{--certificatesResolvers.default.acme.email=roman.lakhtadyr+certs@gmail.com,--certificatesResolvers.default.acme.storage=/certs/acme.json,--certificatesResolvers.default.acme.httpChallenge.entryPoint=web}"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
