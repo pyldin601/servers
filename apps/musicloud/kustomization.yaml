@@ -20,3 +20,4 @@ resources:
   - musicloud-postgres-migration-job.yaml
   - musicloud-server-deployment.yaml
   - musicloud-server-pvc.yaml
+  - musicloud-server-service.yaml
