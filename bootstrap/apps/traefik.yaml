@@ -16,6 +16,8 @@ spec:
       parameters:
         - name: hostNetwork
           value: "true"
+        - name: providers.kubernetesIngress.enabled
+        - value: false
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
