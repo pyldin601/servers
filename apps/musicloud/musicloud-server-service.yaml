@@ -3,10 +3,10 @@ apiVersion: v1
 metadata:
   name: musicloud-server-service
 spec:
+  type: NodePort
   selector:
     deployment: musicloud-server-deployment
   ports:
     - protocol: TCP
-      port: 8080
+      port: 10080
       targetPort: 8080
-      nodePort: 6060 # TODO Use traefik
