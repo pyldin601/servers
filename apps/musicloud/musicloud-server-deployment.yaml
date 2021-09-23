@@ -48,3 +48,5 @@ spec:
               name: musicloud-server-temp-volume
         - name: nginx
           image: pldin601/musicloud-nginx:latest
+          ports:
+            - containerPort: 8080
