@@ -8,5 +8,6 @@ spec:
     deployment: musicloud-server-deployment
   ports:
     - protocol: TCP
-      port: 10080
+      port: 8080
       targetPort: 8080
+      nodePort: 10080
