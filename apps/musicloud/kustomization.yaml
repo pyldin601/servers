@@ -21,3 +21,4 @@ resources:
   - musicloud-server-deployment.yaml
   - musicloud-server-pvc.yaml
   - musicloud-server-service.yaml
+  - musicloud-ignressroute.yaml
