@@ -12,6 +12,14 @@ spec:
     repoURL: 'https://github.com/rancher/local-path-provisioner.git'
     path: deploy/chart
     targetRevision: HEAD
+    helm:
+      parameters:
+        - name: storageClass.defaultClass
+          value: "true"
+        - name: nodePathMap[0].node
+          value: DEFAULT_PATH_FOR_NON_LISTED_NODES
+        - name: nodePathMap[0].paths[0]
+          value: /volumes/k8s
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
