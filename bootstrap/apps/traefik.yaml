@@ -14,8 +14,8 @@ spec:
     targetRevision: HEAD
     helm:
       parameters:
-#        - name: service.enabled
-#          value: 'false'
+        - name: service.type
+          value: Service
 #        - name: hostNetwork
 #          value: 'true'
 #        - name: deployment.kind
