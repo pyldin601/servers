@@ -11,7 +11,6 @@ spec:
       labels:
         deployment: nginx-lb-deployment
     spec:
-      hostNetwork: true
       containers:
         - name: nginx-lb
           image: pldin601/nginx-lb:latest
@@ -21,3 +20,8 @@ spec:
               value: traefik:8000
             - name: TARGET_HTTPS_HOST
               value: traefik:8443
+          ports:
+            - containerPort: 8000
+              hostPort: 8000
+            - containerPort: 8443
+              hostPort: 8443
