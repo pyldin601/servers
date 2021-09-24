@@ -16,22 +16,12 @@ spec:
       parameters:
         - name: service.type
           value: ClusterIP
-#        - name: hostNetwork
-#          value: 'true'
-#        - name: deployment.kind
-#          value: Deployment
-#        - name: ports.web.expose
-#          value: "false"
-#        - name: ports.websecure.expose
-#          value: "false"
+        - name: ports.web.expose
+          value: 'false'
+        - name: ports.websecure.expose
+          value: 'false'
         - name: persistence.enabled
           value: "true"
-#        - name: additionalArguments[0]
-#          value: --certificatesResolvers.default.acme.email=roman.lakhtadyr+certs@gmail.com
-#        - name: additionalArguments[1]
-#          value: --certificatesResolvers.default.acme.storage=/certs/acme.json
-#        - name: additionalArguments[2]
-#          value: --certificatesResolvers.default.acme.httpChallenge.entryPoint=web
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
