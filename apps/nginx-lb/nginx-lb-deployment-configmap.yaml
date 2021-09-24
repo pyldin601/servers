@@ -16,6 +16,7 @@ spec:
       containers:
         - name: nginx-lb
           image: pldin601/nginx-lb:latest
+          imagePullPolicy: Always
           env:
             - name: TARGET_HTTP_HOST
               value: traefik:8000
