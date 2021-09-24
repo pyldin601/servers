@@ -16,10 +16,6 @@ spec:
       parameters:
         - name: service.type
           value: ClusterIP
-        - name: ports.web.expose
-          value: 'false'
-        - name: ports.websecure.expose
-          value: 'false'
         - name: persistence.enabled
           value: "true"
   destination:
