@@ -15,7 +15,7 @@ spec:
     helm:
       parameters:
         - name: service.type
-          value: Service
+          value: ClusterIP
 #        - name: hostNetwork
 #          value: 'true'
 #        - name: deployment.kind
