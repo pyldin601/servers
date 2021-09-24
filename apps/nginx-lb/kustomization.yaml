@@ -6,7 +6,5 @@ metadata:
 commonLabels:
   app: nginx-lb
 
-images: []
-
 resources:
   - nginx-lb-deployment-configmap.yaml

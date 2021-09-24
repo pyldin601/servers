@@ -15,7 +15,7 @@ spec:
       hostNetwork: true
       containers:
         - name: nginx-lb
-          image: pldin601/nginx-lb:latest
+          image: pldin601/nginx-lb@sha256:570a66168e9f14013a8b6d56d0ac11f1d566712bcefedef79493c5e0d5f63b98
           env:
             - name: TARGET_HTTP_HOST
               value: traefik:8000
