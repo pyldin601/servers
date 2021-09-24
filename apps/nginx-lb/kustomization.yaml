@@ -7,4 +7,4 @@ commonLabels:
   app: nginx-lb
 
 resources:
-  - nginx-lb-deployment-configmap.yaml
+  - nginx-lb-deployment.yaml
