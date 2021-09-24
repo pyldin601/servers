@@ -18,9 +18,9 @@ spec:
           value: ClusterIP
         - name: persistence.enabled
           value: "true"
-        - name: ports.web.exposedPort
+        - name: ports.web.hostPort
           value: "8000"
-        - name: ports.websecure.exposedPort
+        - name: ports.websecure.hostPort
           value: "8443"
   destination:
     server: 'https://kubernetes.default.svc'
