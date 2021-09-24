@@ -1,9 +1,8 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: nginx-lb-deployment
 spec:
-  replicas: 1
   selector:
     matchLabels:
       deployment: nginx-lb-deployment
@@ -12,7 +11,7 @@ spec:
       labels:
         deployment: nginx-lb-deployment
     spec:
-#      hostNetwork: true
+      hostNetwork: true
       containers:
         - name: nginx-lb
           image: pldin601/nginx-lb:latest
