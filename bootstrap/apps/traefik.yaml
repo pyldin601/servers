@@ -14,16 +14,16 @@ spec:
     targetRevision: HEAD
     helm:
       parameters:
-        - name: service.enabled
-          value: 'false'
-        - name: hostNetwork
-          value: 'true'
-        - name: deployment.kind
-          value: Deployment
-        - name: ports.web.expose
-          value: "false"
-        - name: ports.websecure.expose
-          value: "false"
+#        - name: service.enabled
+#          value: 'false'
+#        - name: hostNetwork
+#          value: 'true'
+#        - name: deployment.kind
+#          value: Deployment
+#        - name: ports.web.expose
+#          value: "false"
+#        - name: ports.websecure.expose
+#          value: "false"
         - name: persistence.enabled
           value: "true"
 #        - name: additionalArguments[0]

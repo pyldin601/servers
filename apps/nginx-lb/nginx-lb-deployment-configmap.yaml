@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-lb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: nginx-lb-deployment
+  template:
+    metadata:
+      labels:
+        deployment: nginx-lb-deployment
+    spec:
+      hostNetwork: true
+      containers:
+        - name: nginx-lb
+          image: pldin601/nginx-lb:latest
+          env:
+            - name: TARGET_HTTP_HOST
+              value: traefik:8000
+            - name: TARGET_HTTPS_HOST
+              value: traefik:8443
