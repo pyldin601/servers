@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: musicloud-mysql-service
+  name: myownradio-mysql
 spec:
   selector:
-    deployment: musicloud-mysql-deployment
+    deployment: myownradio-mysql-deployment
   ports:
     - protocol: TCP
       port: 3306
