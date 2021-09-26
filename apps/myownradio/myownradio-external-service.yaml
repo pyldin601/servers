@@ -10,7 +10,7 @@ spec:
     - name: https
       port: 443
   externalIPs:
-    - 192.168.1.150
+    - 192.168.1.200
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
