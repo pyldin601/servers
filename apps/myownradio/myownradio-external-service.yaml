@@ -8,3 +8,20 @@ spec:
     - port: 80
   externalIPs:
     - 192.168.1.150
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: myownradio-external-public
+  namespace: myownradio
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`myownradio.biz`)
+      services:
+        - kind: Service
+          name: myownradio-external
+          port: 80
