@@ -5,12 +5,10 @@ metadata:
   name: myownradio-external
 spec:
   ports:
-#    - name: http
-#      port: 80
     - name: https
       port: 443
-  externalIPs:
-    - 192.168.1.200
+  type: ExternalName
+  externalName: 192.168.1.200
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
