@@ -4,8 +4,12 @@ metadata:
   name: arbitrary
 
 resources:
-  - resources/local-path-provisioner.yaml
+  # Apps
   - apps/musicloud.yaml
+  - apps/myownradio.yaml
+
+  # Resources
+  - resources/local-path-provisioner.yaml
   - apps/traefik.yaml
 #  - apps/nginx-lb.yaml
   - argocd/argocd-server-ingressroute.yaml
