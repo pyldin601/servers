@@ -27,7 +27,7 @@ spec:
       services:
         - kind: Service
           name: myownradio-external
-          port: 443
-          scheme: https
+          port: 80
+          scheme: http
   tls:
     certResolver: default
