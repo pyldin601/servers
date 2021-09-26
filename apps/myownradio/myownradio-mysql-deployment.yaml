@@ -35,6 +35,7 @@ spec:
                 configMapKeyRef:
                   name: myownradio-mysql-configmap
                   key: database
+            - name: MYSQL_RANDOM_ROOT_PASSWORD
           volumeMounts:
             - mountPath: "/var/lib/mysql"
               name: myownradio-mysql-data-volume
