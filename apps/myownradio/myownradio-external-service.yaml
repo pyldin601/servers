@@ -5,8 +5,8 @@ metadata:
   name: myownradio-external
 spec:
   ports:
-    - name: http
-      port: 80
+#    - name: http
+#      port: 80
     - name: https
       port: 443
   externalIPs:
@@ -27,7 +27,7 @@ spec:
       services:
         - kind: Service
           name: myownradio-external
-          port: 80
-          scheme: http
+          port: 443
+          scheme: https
   tls:
     certResolver: default
