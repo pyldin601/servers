@@ -14,3 +14,4 @@ resources:
   - myownradio-mysql-deployment.yaml
   - myownradio-mysql-pvc.yaml
   - myownradio-mysql-service.yaml
+  - myownradio-external-service.yaml
