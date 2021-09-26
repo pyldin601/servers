@@ -20,8 +20,12 @@ spec:
           value: "true"
         - name: ports.web.hostPort
           value: "8000"
+        - name: ports.web.address
+          value: ":80"
         - name: ports.websecure.hostPort
           value: "8443"
+        - name: ports.websecure.address
+          value: ":443"
 #        - name: additionalArguments[0]
 #          value: --certificatesResolvers.default.acme.httpChallenge.true
         - name: additionalArguments[0]
