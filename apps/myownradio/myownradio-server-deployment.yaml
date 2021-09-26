@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myownradio-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: myownradio-server-deployment
+  template:
+    metadata:
+      labels:
+        deployment: myownradio-server-deployment
+    spec:
+      volumes:
+        - name: myownradio-server-storage-volume
+          persistentVolumeClaim:
+            claimName: myownradio-server-storage-volume-claim
+      hostAliases:
+        - ip: "127.0.0.1"
+          hostnames:
+            - "php-fpm"
+            - "backend-php-fpm"
+      containers:
+        - name: php-fpm
+          image: pldin601/myownradio-backend-php:21.04.789615300-33bc09f
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: password
+            - name: DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: database
+            - name: DB_HOST
+              value: myownradio-mysql
+          volumeMounts:
+            - mountPath: "/app/storage"
+              name: myownradio-server-storage-volume
+        - name: nginx
+          image: pldin601/myownradio-backend-nginx:21.04.773120661-2daabdd
+          ports:
+            - containerPort: 80
+
