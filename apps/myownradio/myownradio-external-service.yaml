@@ -24,4 +24,4 @@ spec:
       services:
         - kind: Service
           name: myownradio-external
-          port: 80
+          port: 443
