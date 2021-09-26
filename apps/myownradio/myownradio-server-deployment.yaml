@@ -49,4 +49,5 @@ spec:
           image: pldin601/myownradio-backend-nginx:21.04.773120661-2daabdd
           ports:
             - containerPort: 80
-
+      imagePullSecrets:
+        - name: regcred
