@@ -22,7 +22,7 @@ spec:
     - kind: Rule
       match: Host(`myownradio.biz`)
       services:
-        - kind: Service
+        - kind: Endpoints
           name: myownradio-external
           port: https
           scheme: https
