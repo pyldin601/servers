@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: docker-swarm-service
+subsets:
+  - addresses:
+      - ip: 192.168.1.200
+    ports:
+      - name: http
+        port: 80
+      - name: https
+        port: 443
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: docker-swarm-service
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+      nodePort: 0
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 443
+      nodePort: 0
+  selector: {}
