@@ -20,4 +20,3 @@ resources:
   - myownradio-server-service.yaml
   - myownradio-streamer-deployment.yaml
   - myownradio-streamer-service.yaml
-  - myownradio-streamer-servicemonitor.yaml
