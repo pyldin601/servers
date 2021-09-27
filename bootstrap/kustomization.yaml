@@ -7,6 +7,7 @@ resources:
   # Apps
   - apps/musicloud.yaml
   - apps/myownradio.yaml
+  - apps/grafana.yaml
 
   # Resources
   - resources/local-path-provisioner.yaml
