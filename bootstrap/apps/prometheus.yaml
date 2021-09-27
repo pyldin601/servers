@@ -12,6 +12,13 @@ spec:
     repoURL: 'https://github.com/prometheus-community/helm-charts.git'
     path: charts/prometheus
     targetRevision: HEAD
+    helm:
+      parameters:
+        # workaroud for issue https://github.com/aws/eks-charts/issues/21
+        - name: securityContext.runAsUser
+          value: "0"
+        - name: securityContext.fsGroup
+          value: "0"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
