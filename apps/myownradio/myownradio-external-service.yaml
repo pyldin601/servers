@@ -18,11 +18,11 @@ metadata:
   name: myownradio-external-service
 spec:
   ports:
-    - name: http
-      port: 80
-      protocol: TCP
-      targetPort: 80
-      nodePort: 0
+#    - name: http
+#      port: 80
+#      protocol: TCP
+#      targetPort: 80
+#      nodePort: 0
     - name: https
       port: 443
       protocol: TCP
@@ -41,7 +41,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`myownradio.biz`) || Host(`fs1.myownradio.biz`)
+      match: Host(`myownradio.biz`)
       services:
         - kind: Service
           name: myownradio-external-service
