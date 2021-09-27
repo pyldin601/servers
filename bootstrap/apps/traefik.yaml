@@ -33,7 +33,7 @@ spec:
         - name: additionalArguments[2]
           value: --certificatesResolvers.default.acme.storage=/data/acme.json
         - name: additionalArguments[3]
-          value: --insecureSkipVerify=true
+          value: --serverstransport.insecureSkipVerify=true
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
