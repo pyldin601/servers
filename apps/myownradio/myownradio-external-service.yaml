@@ -41,7 +41,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`myownradio.biz`)
+      match: Host(`myownradio.biz`) || Host(`fs1.myownradio.biz`) || Host(`dev.myownradio.biz`)
       services:
         - kind: Service
           name: myownradio-external-service
