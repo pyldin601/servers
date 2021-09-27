@@ -1,0 +1,12 @@
+--
+kind: Service
+apiVersion: v1
+metadata:
+  name: myownradio-server
+spec:
+  selector:
+    deployment: myownradio-server-deployment
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

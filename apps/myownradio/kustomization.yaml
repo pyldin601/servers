@@ -17,3 +17,4 @@ resources:
   - myownradio-external-service.yaml
   - myownradio-server-deployment.yaml
   - myownradio-server-pvc.yaml
+  - myownradio-server-service.yaml
