@@ -9,8 +9,11 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`argocd.homefs.biz`)
+      match: Host(`cd.homefs.biz`)
       priority: 10
       services:
         - name: argocd-server
-          port: 80
+          port: 443
+          scheme: https
+  tls:
+    certResolver: default
