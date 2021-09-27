@@ -8,6 +8,7 @@ resources:
   - apps/musicloud.yaml
   - apps/myownradio.yaml
   - apps/grafana.yaml
+  - apps/prometheus.yaml
 
   # Resources
   - resources/local-path-provisioner.yaml
