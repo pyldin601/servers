@@ -26,14 +26,14 @@ spec:
           value: "8443"
         - name: ports.websecure.address
           value: ":443"
-#        - name: additionalArguments[0]
-#          value: --certificatesResolvers.default.acme.httpChallenge.true
         - name: additionalArguments[0]
           value: --certificatesResolvers.default.acme.httpChallenge.entryPoint=web
         - name: additionalArguments[1]
           value: --certificatesResolvers.default.acme.email=roman.lakhtadyr+certs@gmail.com
         - name: additionalArguments[2]
           value: --certificatesResolvers.default.acme.storage=/data/acme.json
+        - name: additionalArguments[3]
+          value: --insecureSkipVerify=true
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
