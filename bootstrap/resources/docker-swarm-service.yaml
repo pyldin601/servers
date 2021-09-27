@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Endpoints
 metadata:
   name: docker-swarm-service
+  namespace: default
 subsets:
   - addresses:
       - ip: 192.168.1.200
@@ -16,6 +17,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: docker-swarm-service
+  namespace: default
 spec:
   ports:
     - name: http
