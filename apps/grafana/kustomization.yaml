@@ -10,3 +10,4 @@ images: []
 
 resources:
   - grafana-external-service.yaml
+  - grafana.yaml
