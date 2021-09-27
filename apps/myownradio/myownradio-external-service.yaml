@@ -44,8 +44,9 @@ spec:
       match: Host(`myownradio.biz`) || Host(`fs1.myownradio.biz`) || Host(`dev.myownradio.biz`)
       services:
         - kind: Service
-          name: myownradio-external-service
+          name: docker-swarm-service
           port: https
           scheme: https
+          namespace: default
   tls:
     certResolver: default
