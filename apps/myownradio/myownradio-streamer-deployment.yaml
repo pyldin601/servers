@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myownradio-streamer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: myownradio-streamer
+  template:
+    metadata:
+      labels:
+        deployment: myownradio-streamer
+    spec:
+      containers:
+        - name: streamer
+          image: pldin601/myownradio-radio-streamer:21.08.1138736865-3f6875d
+          env:
+            - name: BIND_ADDRESS
+              value: 0.0.0.0:8080
+            - name: MOR_BACKEND_URL
+              value: http://myownradio-server:80
+            - name: STREAM_MUTATION_TOKEN
+              value: TODO
+            - name: SHUTDOWN_TIMEOUT
+              value: "7200"
+      imagePullSecrets:
+        - name: regcred
