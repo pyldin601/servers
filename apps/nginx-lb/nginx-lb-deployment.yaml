@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: nginx-lb-deployment
+  name: nginx-lb
 spec:
   selector:
     matchLabels:
-      deployment: nginx-lb-deployment
+      deployment: nginx-lb
   template:
     metadata:
       labels:
-        deployment: nginx-lb-deployment
+        deployment: nginx-lb
     spec:
       containers:
         - name: nginx-lb
@@ -17,11 +17,11 @@ spec:
           imagePullPolicy: Always
           env:
             - name: TARGET_HTTP_HOST
-              value: traefik:8000
+              value: traefik.svc.cluster.local:80
             - name: TARGET_HTTPS_HOST
-              value: traefik:8443
+              value: traefik.svc.cluster.local:443
           ports:
-            - containerPort: 8000
-              hostPort: 8000
-            - containerPort: 8443
-              hostPort: 8443
+            - containerPort: 80
+              hostPort: 80
+            - containerPort: 443
+              hostPort: 443
