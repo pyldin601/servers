@@ -17,9 +17,9 @@ spec:
           imagePullPolicy: Always
           env:
             - name: TARGET_HTTP_HOST
-              value: traefik.svc.cluster.local:80
+              value: traefik.default.svc.cluster.local:80
             - name: TARGET_HTTPS_HOST
-              value: traefik.svc.cluster.local:443
+              value: traefik.default.svc.cluster.local:443
           ports:
             - containerPort: 80
               hostPort: 80
