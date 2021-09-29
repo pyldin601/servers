@@ -21,7 +21,7 @@ spec:
             - name: TARGET_HTTPS_HOST
               value: traefik.default.svc.cluster.local:443
           ports:
-            - containerPort: 80
+            - containerPort: 8000
               hostPort: 80
-            - containerPort: 443
+            - containerPort: 8443
               hostPort: 443
