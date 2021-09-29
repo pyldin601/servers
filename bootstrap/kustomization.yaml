@@ -12,6 +12,7 @@ resources:
   - resources/local-path-provisioner.yaml
   - resources/docker-swarm-service.yaml
   - resources/sealed-secrets.yaml
+  - resources/busybox.yaml
 
   # Infrastructure Apps
   - apps/grafana.yaml

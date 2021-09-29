@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: busybox
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      deployment: busybox
+  template:
+    metadata:
+      labels:
+        deployment: busybox
+    spec:
+      containers:
+        - name: busybox
+          image: busybox:1.28
+          command:
+            - sleep
+            - infinity
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
