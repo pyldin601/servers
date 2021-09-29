@@ -17,7 +17,8 @@ spec:
         - name: busybox
           image: busybox:1.28
           command:
-            - sleep
-            - infinity
+            - tail
+            - -f
+            - /dev/null
           imagePullPolicy: IfNotPresent
       restartPolicy: Always
