@@ -42,6 +42,36 @@ spec:
                   key: database
             - name: DB_HOST
               value: myownradio-mysql
+            - name: FACEBOOK_APP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: FACEBOOK_APP_ID
+            - name: FACEBOOK_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: FACEBOOK_APP_SECRET
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: JWT_KEY
+            - name: RADIO_STREAMER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: RADIO_STREAMER_TOKEN
+            - name: S3_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: S3_ACCESS_KEY
+            - name: S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: S3_SECRET_KEY
           volumeMounts:
             - mountPath: "/app/storage"
               name: myownradio-server-storage-volume
