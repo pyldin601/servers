@@ -20,4 +20,4 @@ resources:
   - myownradio-server-service.yaml
   - myownradio-streamer-deployment.yaml
   - myownradio-streamer-service.yaml
-  - myownradio-dockerconfig-secret.yaml
+  - myownradio-dockerconfig-sealedsecret.yaml
