@@ -21,3 +21,4 @@ resources:
   - myownradio-streamer-deployment.yaml
   - myownradio-streamer-service.yaml
   - myownradio-dockerconfig-sealedsecret.yaml
+  - myownradio-server-sealedsecret.yaml
