@@ -13,6 +13,7 @@ resources:
   - resources/docker-swarm-service.yaml
   - resources/sealed-secrets.yaml
   - resources/busybox.yaml
+  - resources/server-metrics.yaml
 
   # Infrastructure Apps
   - apps/grafana.yaml
