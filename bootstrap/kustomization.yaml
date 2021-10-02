@@ -14,6 +14,7 @@ resources:
   - resources/sealed-secrets.yaml
   - resources/busybox.yaml
   - resources/server-metrics.yaml
+  - resources/pi-metrics.yaml
 
   # Infrastructure Apps
   - apps/grafana.yaml
