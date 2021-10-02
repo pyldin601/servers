@@ -32,4 +32,4 @@ spec:
             - name: SHUTDOWN_TIMEOUT
               value: "7200"
       imagePullSecrets:
-        - name: regcred
+        - name: dockerconfig
