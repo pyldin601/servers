@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myownradio-mysql-deployment
+  name: myownradio-mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      deployment: myownradio-mysql-deployment
+      deployment: myownradio-mysql
   template:
     metadata:
       labels:
-        deployment: myownradio-mysql-deployment
+        deployment: myownradio-mysql
     spec:
       volumes:
         - name: myownradio-mysql-data-volume

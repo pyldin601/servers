@@ -4,7 +4,7 @@ metadata:
   name: myownradio-mysql
 spec:
   selector:
-    deployment: myownradio-mysql-deployment
+    deployment: myownradio-mysql
   ports:
     - protocol: TCP
       port: 3306
