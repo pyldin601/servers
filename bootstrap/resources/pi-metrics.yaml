@@ -5,7 +5,7 @@ metadata:
   name: pi-metrics
 subsets:
   - addresses:
-      - ip: http://91.231.229.130/
+      - ip: 91.231.229.130
     ports:
       - name: metrics
         port: 9100
