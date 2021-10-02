@@ -10,16 +10,27 @@ images: []
 
 resources:
   - myownradio-ns.yaml
+  - myownradio-dockerconfig-sealedsecret.yaml
+  - myownradio-external-service.yaml
+
+  № mysql
   - myownradio-mysql-configmap.yaml
   - myownradio-mysql-deployment.yaml
   - myownradio-mysql-pvc.yaml
   - myownradio-mysql-service.yaml
-  - myownradio-external-service.yaml
+
+  # server
   - myownradio-server-deployment.yaml
   - myownradio-server-pvc.yaml
   - myownradio-server-service.yaml
   - myownradio-server-configmap.yaml
+  - myownradio-server-sealedsecret.yaml
+
+  # streamer
   - myownradio-streamer-deployment.yaml
   - myownradio-streamer-service.yaml
-  - myownradio-dockerconfig-sealedsecret.yaml
-  - myownradio-server-sealedsecret.yaml
+
+  # file-server
+  - myownradio-fileserver-deployment.yaml
+  - myownradio-fileserver-service.yaml
+  - myownradio-fileserver-ingressroute.yaml

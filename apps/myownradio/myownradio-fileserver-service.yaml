@@ -1,0 +1,32 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: myownradio-fileserver
+spec:
+  selector:
+    deployment: myownradio-fileserver
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: http
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: myownradio-fileserver
+  namespace: myownradio
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`fs1.myownradio.biz`)
+      services:
+        - kind: Service
+          name: myownradio-fileserver
+          port: http
+          scheme: http
+  tls:
+    certResolver: default
