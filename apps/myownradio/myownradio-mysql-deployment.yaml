@@ -13,9 +13,9 @@ spec:
         deployment: myownradio-mysql
     spec:
       volumes:
-        - name: myownradio-mysql-data-volume
+        - name: myownradio-mysql-data
           persistentVolumeClaim:
-            claimName: myownradio-mysql-data-volume-claim
+            claimName: myownradio-mysql-data
       containers:
         - name: mysql
           image: mysql:5.6
@@ -39,4 +39,4 @@ spec:
               value: "true"
           volumeMounts:
             - mountPath: "/var/lib/mysql"
-              name: myownradio-mysql-data-volume
+              name: myownradio-mysql-data
