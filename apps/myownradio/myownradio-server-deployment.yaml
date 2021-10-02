@@ -13,9 +13,9 @@ spec:
         deployment: myownradio-server
     spec:
       volumes:
-        - name: myownradio-server-storage-volume
+        - name: myownradio-server-storage
           persistentVolumeClaim:
-            claimName: myownradio-server-storage-volume-claim
+            claimName: myownradio-server-storage
       hostAliases:
         - ip: "127.0.0.1"
           hostnames:
@@ -99,7 +99,7 @@ spec:
                   key: RADIO_STREAMER_ENDPOINT
           volumeMounts:
             - mountPath: "/app/storage"
-              name: myownradio-server-storage-volume
+              name: myownradio-server-storage
         - name: nginx
           image: pldin601/myownradio-backend-nginx:21.04.773120661-2daabdd
           ports:

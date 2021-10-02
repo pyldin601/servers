@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: myownradio-server-storage-volume-claim
+  name: myownradio-server-storage
 spec:
   storageClassName: local-path
   accessModes:
