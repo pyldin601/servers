@@ -13,7 +13,7 @@ resources:
   - myownradio-dockerconfig-sealedsecret.yaml
   - myownradio-external-service.yaml
 
-  № mysql
+  # mysql
   - myownradio-mysql-configmap.yaml
   - myownradio-mysql-deployment.yaml
   - myownradio-mysql-pvc.yaml
