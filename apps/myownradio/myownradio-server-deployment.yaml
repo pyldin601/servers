@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myownradio-server-deployment
+  name: myownradio-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      deployment: myownradio-server-deployment
+      deployment: myownradio-server
   template:
     metadata:
       labels:
-        deployment: myownradio-server-deployment
+        deployment: myownradio-server
     spec:
       volumes:
         - name: myownradio-server-storage-volume

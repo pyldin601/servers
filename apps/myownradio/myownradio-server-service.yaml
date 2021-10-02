@@ -5,7 +5,7 @@ metadata:
   name: myownradio-server
 spec:
   selector:
-    deployment: myownradio-server-deployment
+    deployment: myownradio-server
   ports:
     - name: http
       protocol: TCP
