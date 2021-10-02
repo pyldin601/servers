@@ -23,9 +23,12 @@ spec:
             - name: BIND_ADDRESS
               value: 0.0.0.0:8080
             - name: MOR_BACKEND_URL
-              value: http://myownradio-server:80
+              value: http://myownradio-server.svc.cluster.local:80
             - name: STREAM_MUTATION_TOKEN
-              value: TODO
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: RADIO_STREAMER_TOKEN
             - name: SHUTDOWN_TIMEOUT
               value: "7200"
       imagePullSecrets:
