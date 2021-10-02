@@ -72,6 +72,31 @@ spec:
                 secretKeyRef:
                   name: myownradio-server
                   key: S3_SECRET_KEY
+            - name: FFMPEG_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: FFMPEG_PATH
+            - name: MEDIAINFO_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: MEDIAINFO_PATH
+            - name: SENTRY_DSN
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: SENTRY_DSN
+            - name: BACKEND_STORAGE_LOCAL_DIR
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: BACKEND_STORAGE_LOCAL_DIR
+            - name: RADIO_STREAMER_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: RADIO_STREAMER_ENDPOINT
           volumeMounts:
             - mountPath: "/app/storage"
               name: myownradio-server-storage-volume

@@ -18,6 +18,7 @@ resources:
   - myownradio-server-deployment.yaml
   - myownradio-server-pvc.yaml
   - myownradio-server-service.yaml
+  - myownradio-server-configmap.yaml
   - myownradio-streamer-deployment.yaml
   - myownradio-streamer-service.yaml
   - myownradio-dockerconfig-sealedsecret.yaml
