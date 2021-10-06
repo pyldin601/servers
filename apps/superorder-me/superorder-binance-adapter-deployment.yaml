@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: binance-adapter
+spec:
+  selector:
+    matchLabels:
+      deployment: binance-adapter
+  template:
+    metadata:
+      labels:
+        deployment: binance-adapter
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+        - name: binance-adapter
+          image: pldin601/superorder-me-binance-adapter:21.07.1012516702-7d4de88
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: EXCHANGE
+              value: binance
+          ports:
+            - name: http
+              containerPort: 8000
+      imagePullSecrets:
+        - name: dockerconfig
+
