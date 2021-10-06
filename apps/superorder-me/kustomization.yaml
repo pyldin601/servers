@@ -7,5 +7,6 @@ commonLabels:
   app: superorder-me
 
 resources:
+  - namespace.yaml
   - dockerconfig-sealedsecret.yaml
-  - superorder-binance-adapter-deployment.yaml
+  - binance-adapter-deployment.yaml
