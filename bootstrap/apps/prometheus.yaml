@@ -12,6 +12,10 @@ spec:
     repoURL: 'https://github.com/prometheus-community/helm-charts.git'
     path: charts/prometheus
     targetRevision: HEAD
+    helm:
+      parameters:
+        - name: server.strategy.type
+          value: Recreate
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
