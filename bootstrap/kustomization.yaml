@@ -16,6 +16,7 @@ resources:
   - resources/busybox.yaml
   - resources/server-metrics.yaml
   - resources/pi-metrics.yaml
+  - resources/kvm-metrics.yaml
 
   # Infrastructure Apps
   - apps/grafana.yaml

@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: kvm-metrics
+subsets:
+  - addresses:
+      - ip: 91.231.229.130
+    ports:
+      - name: metrics
+        port: 9177
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kvm-metrics
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9177"
+spec:
+  ports:
+    - name: metrics
+      port: 9100
+      protocol: TCP
+      targetPort: 9177
+      nodePort: 0
+  selector: {}
