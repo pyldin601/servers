@@ -5,7 +5,7 @@ metadata:
   name: kvm-metrics
 subsets:
   - addresses:
-      - ip: 91.231.229.130
+      - ip: 192.168.1.200
     ports:
       - name: metrics
         port: 9177
