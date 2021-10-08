@@ -20,7 +20,7 @@ metadata:
 spec:
   ports:
     - name: metrics
-      port: 9100
+      port: 9176
       protocol: TCP
       targetPort: 9176
       nodePort: 0
