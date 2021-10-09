@@ -7,4 +7,4 @@ data:
   MEDIAINFO_PATH: mediainfo
   SENTRY_DSN: https://2a74df546ce14acbb01fd71f1d00dfe7@sentry.io/2518976
   BACKEND_STORAGE_LOCAL_DIR: /app/storage
-  RADIO_STREAMER_ENDPOINT: "http://myownradio-server.svc.cluster.local"
+  RADIO_STREAMER_ENDPOINT: "http://myownradio-server.myownradio.svc.cluster.local"
