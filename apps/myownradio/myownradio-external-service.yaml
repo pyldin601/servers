@@ -29,23 +29,23 @@ spec:
       targetPort: 443
       nodePort: 0
   selector: {}
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: myownradio-external-public
-  namespace: myownradio
-spec:
-  entryPoints:
-    - web
-    - websecure
-  routes:
-    - kind: Rule
-      match: Host(`myownradio.biz`) || Host(`fs1.myownradio.biz`) || Host(`dev.myownradio.biz`)
-      services:
-        - kind: Service
-          name: myownradio-external-service
-          port: https
-          scheme: https
-  tls:
-    certResolver: default
+#---
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: IngressRoute
+#metadata:
+#  name: myownradio-external-public
+#  namespace: myownradio
+#spec:
+#  entryPoints:
+#    - web
+#    - websecure
+#  routes:
+#    - kind: Rule
+#      match: Host(`myownradio.biz`) || Host(`fs1.myownradio.biz`) || Host(`dev.myownradio.biz`)
+#      services:
+#        - kind: Service
+#          name: myownradio-external-service
+#          port: https
+#          scheme: https
+#  tls:
+#    certResolver: default
