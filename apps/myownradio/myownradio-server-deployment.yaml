@@ -41,7 +41,7 @@ spec:
                   name: myownradio-mysql-configmap
                   key: database
             - name: DB_HOST
-              value: myownradio-mysql.svc.cluster.local
+              value: myownradio-mysql.myownradio.svc.cluster.local
             - name: FACEBOOK_APP_ID
               valueFrom:
                 secretKeyRef:
