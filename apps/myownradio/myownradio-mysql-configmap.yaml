@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: myownradio-mysql-configmap
 data:
-  username: myownradio
-  password: myownradio
-  database: myownradio
+  username: mor
+  password: mor
+  database: mor
