@@ -25,10 +25,12 @@ resources:
   - myownradio-server-service.yaml
   - myownradio-server-configmap.yaml
   - myownradio-server-sealedsecret.yaml
+  - myownradio-server-ingressroute.yaml
 
   # streamer
   - myownradio-streamer-deployment.yaml
   - myownradio-streamer-service.yaml
+  - myownradio-streamer-ingressroute.yaml
 
   # file-server
   - myownradio-fileserver-deployment.yaml

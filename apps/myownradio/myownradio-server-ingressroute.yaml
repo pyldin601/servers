@@ -1,0 +1,20 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: myownradio-server
+  namespace: myownradio
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`myownradio.biz`)
+      priority: 0
+      services:
+        - kind: Service
+          name: myownradio-server
+          port: http
+          scheme: http
+  tls:
+    certResolver: default
