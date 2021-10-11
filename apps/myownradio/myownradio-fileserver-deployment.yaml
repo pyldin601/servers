@@ -20,6 +20,13 @@ spec:
       containers:
         - name: file-server
           image: myownradio/file-server:1.0.2
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
           volumeMounts:
             - mountPath: "/usr/share/nginx/html"
               name: myownradio-server-storage
