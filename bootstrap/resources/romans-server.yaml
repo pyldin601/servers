@@ -5,7 +5,7 @@ metadata:
   name: romans-server
 subsets:
   - addresses:
-      - ip: 172.29.70.215
+      - ip: 91.227.180.238
     ports:
       - name: http
         port: 8080
