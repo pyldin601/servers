@@ -38,5 +38,6 @@ spec:
           name: romans-server
           port: http
           scheme: http
+          namespace: default
   tls:
     certResolver: default
