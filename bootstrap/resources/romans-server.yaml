@@ -1,0 +1,45 @@
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: romans-server
+  namespace: default
+subsets:
+  - addresses:
+      - ip: 172.29.70.215
+    ports:
+      - name: http
+        port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: romans-server
+  namespace: default
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+      nodePort: 0
+  selector: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: romans-server
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`ingest.homefs.biz`)
+      services:
+        - kind: Service
+          name: romans-server
+          port: http
+          scheme: http
+  tls:
+    certResolver: default
