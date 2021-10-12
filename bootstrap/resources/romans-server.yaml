@@ -9,7 +9,7 @@ subsets:
       - ip: 172.29.70.215
     ports:
       - name: http
-        port: 80
+        port: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -19,9 +19,9 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 80
+      port: 8080
       protocol: TCP
-      targetPort: 80
+      targetPort: 8080
       nodePort: 0
   selector: {}
 ---
