@@ -18,7 +18,6 @@ resources:
   - resources/pi-metrics.yaml
   - resources/kvm-metrics.yaml
   - resources/openvpn-metrics.yaml
-  - resources/romans-server.yaml
 
   # Infrastructure Apps
   - apps/grafana.yaml
