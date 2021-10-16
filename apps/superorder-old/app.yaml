@@ -1,4 +1,20 @@
 ---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: app
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`coins1.homefs.biz`)
+      services:
+        - kind: Service
+          name: app
+          port: http
+          scheme: http
+---
 kind: Service
 apiVersion: v1
 metadata:
