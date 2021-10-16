@@ -12,3 +12,5 @@ resources:
   - rabbitmq.yaml
   - postgres.yaml
   - postgres-migration.yaml
+  - app.yaml
+  - app-sealedsecret.yaml
