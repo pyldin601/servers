@@ -1,0 +1,27 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postgres-migration
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      containers:
+        - name: postgres-migration
+          image: pldin601/superorder-v1:0b52e10cf04581212e93165f2779b32ab6709c82
+          command:
+            - npx knex migrate:latest
+          env:
+            - name: NODE_ENV
+              value: development
+            - name: DB_HOST
+              value: postgres
+            - name: DB_DATABASE
+              value: so
+            - name: DB_USER
+              value: so
+            - name: DB_PASSWORD
+              value: so
+      restartPolicy: OnFailure
