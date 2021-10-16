@@ -18,6 +18,13 @@ spec:
       containers:
         - name: streamer
           image: pldin601/myownradio-radio-streamer:21.08.1138736865-3f6875d
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "2000m"
           env:
             - name: BIND_ADDRESS
               value: 0.0.0.0:8080
