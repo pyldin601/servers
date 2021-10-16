@@ -1,0 +1,55 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgres
+spec:
+  selector:
+    deployment: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: postgres
+  template:
+    metadata:
+      labels:
+        deployment: postgres
+    spec:
+      volumes:
+        - name: postgres-data-volume
+          persistentVolumeClaim:
+            claimName: postgres-data-volume-claim
+      containers:
+        - name: postgres
+          image: postgres
+          env:
+            - name: POSTGRES_USER
+              value: so
+            - name: POSTGRES_PASSWORD
+              value: so
+            - name: POSTGRES_DB
+              value: so
+          volumeMounts:
+            - mountPath: "/var/lib/postgresql/data"
+              name: postgres-data-volume
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
