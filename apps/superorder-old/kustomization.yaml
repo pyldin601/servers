@@ -9,3 +9,6 @@ commonLabels:
 resources:
   - namespace.yaml
   - redis.yaml
+  - rabbitmq.yaml
+  - postgres.yaml
+  - postgres-migration.yaml
