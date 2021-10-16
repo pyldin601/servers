@@ -14,6 +14,8 @@ spec:
           name: app
           port: 8080
           scheme: http
+  tls:
+    certResolver: default
 ---
 kind: Service
 apiVersion: v1
