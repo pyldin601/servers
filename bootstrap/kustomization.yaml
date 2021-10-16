@@ -8,6 +8,7 @@ resources:
   - apps/musicloud.yaml
   - apps/myownradio.yaml
   - apps/superorder-me.yaml
+  - apps/superorder-old.yaml
 
   # Resources
   - resources/local-path-provisioner.yaml
