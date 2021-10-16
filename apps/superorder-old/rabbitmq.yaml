@@ -2,44 +2,44 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: redis
+  name: rabbitmq
 spec:
   selector:
-    deployment: redis
+    deployment: rabbitmq
   ports:
     - protocol: TCP
-      port: 6379
-      targetPort: 6379
+      port: 5672
+      targetPort: 5672
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis
+  name: rabbitmq
 spec:
   replicas: 1
   selector:
     matchLabels:
-      deployment: redis
+      deployment: rabbitmq
   template:
     metadata:
       labels:
-        deployment: redis
+        deployment: rabbitmq
     spec:
       volumes:
-        - name: redis-data-volume
+        - name: rabbitmq-data-volume
           persistentVolumeClaim:
-            claimName: redis-data-volume-claim
+            claimName: rabbitmq-data-volume-claim
       containers:
-        - name: redis
-          image: redis
+        - name: rabbitmq
+          image: rabbitmq
           volumeMounts:
-            - mountPath: "/data"
-              name: redis-data-volume
+            - mountPath: "/var/lib/rabbitmq"
+              name: rabbitmq-data-volume
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: redis-data-volume-claim
+  name: rabbitmq-data-volume-claim
 spec:
   accessModes:
     - ReadWriteOnce
