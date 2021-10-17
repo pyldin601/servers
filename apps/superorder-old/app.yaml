@@ -121,3 +121,5 @@ spec:
                 secretKeyRef:
                   name: app
                   key: COINPAYMENTS_IPN_SECRET
+            - name: HTTPS_PROXY
+              value: 52.183.8.192:3128
