@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: pldin601/superorder-v1:da2f61e8cff624f03586b0ab072690866a329566
+          image: pldin601/superorder-v1:06bf8ff3d3982cd44598b4cc62c9654611e9c69f
           env:
             - name: AMQP_URL
               value: amqp://rabbitmq?heartbeat=30
