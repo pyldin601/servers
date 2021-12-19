@@ -104,6 +104,23 @@ spec:
                 configMapKeyRef:
                   name: myownradio-server
                   key: RADIO_STREAMER_ENDPOINT
+            - name: SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: SMTP_HOST
+            - name: SMTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: SMTP_USER
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: SMTP_PASSWORD
+            - name: SMTP_PORT
+              value: "587"
           volumeMounts:
             - mountPath: "/app/storage"
               name: myownradio-server-storage
