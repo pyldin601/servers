@@ -23,7 +23,7 @@ spec:
             - "backend-php-fpm"
       containers:
         - name: php-fpm
-          image: pldin601/myownradio-backend-php:21.12.1603692916-475f552
+          image: pldin601/myownradio-backend-php:21.12.1603786991-aca9533
           resources:
             requests:
               memory: "256Mi"
