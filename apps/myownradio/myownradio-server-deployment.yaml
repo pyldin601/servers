@@ -121,6 +121,16 @@ spec:
                   key: SMTP_PASSWORD
             - name: SMTP_PORT
               value: "587"
+            - name: WEB_SERVER_OWN_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: WEB_SERVER_OWN_ADDRESS              
+            - name: FILE_SERVER_OWN_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: FILE_SERVER_OWN_ADDRESS              
           volumeMounts:
             - mountPath: "/app/storage"
               name: myownradio-server-storage
