@@ -7,8 +7,8 @@ resources:
   # Apps
   - apps/musicloud.yaml
   - apps/myownradio.yaml
-  - apps/superorder-me.yaml
-  - apps/superorder-old.yaml
+  # - apps/superorder-me.yaml
+  # - apps/superorder-old.yaml
 
   # Resources
   - resources/local-path-provisioner.yaml
@@ -16,7 +16,7 @@ resources:
   - resources/sealed-secrets.yaml
   - resources/busybox.yaml
   - resources/server-metrics.yaml
-  - resources/pi-metrics.yaml
+  # - resources/pi-metrics.yaml
   - resources/kvm-metrics.yaml
   - resources/openvpn-metrics.yaml
 
