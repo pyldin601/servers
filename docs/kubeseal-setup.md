@@ -12,7 +12,12 @@ sudo install -m 755 kubeseal /usr/local/bin/kubeseal && rm kubeseal
 `kubeseal --fetch-cert`
 ```
 
-## Import certificate:
+## Use certificate locally:
 ```shell
 kubeseal --cert cert.pem
+```
+
+## Certificate used for encryption/decryption:
+```shell
+kubectl get secret sealed-secrets-key46mgb -o yaml > sealed-secret.yaml
 ```
