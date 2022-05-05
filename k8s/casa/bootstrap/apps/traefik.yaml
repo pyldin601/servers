@@ -1,0 +1,43 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+  finalizers:
+      - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/traefik/traefik-helm-chart.git'
+    path: traefik
+    targetRevision: HEAD
+    helm:
+      parameters:
+        - name: service.type
+          value: ClusterIP
+        - name: persistence.enabled
+          value: "true"
+        - name: ports.web.hostPort
+          value: "8000"
+        - name: ports.web.address
+          value: ":80"
+        - name: ports.websecure.hostPort
+          value: "8443"
+        - name: ports.websecure.address
+          value: ":443"
+        - name: additionalArguments[0]
+          value: --certificatesResolvers.default.acme.httpChallenge.entryPoint=web
+        - name: additionalArguments[1]
+          value: --certificatesResolvers.default.acme.email=roman.lakhtadyr+certs@gmail.com
+        - name: additionalArguments[2]
+          value: --certificatesResolvers.default.acme.storage=/data/acme.json
+        - name: additionalArguments[3]
+          value: --serverstransport.insecureSkipVerify=true
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
