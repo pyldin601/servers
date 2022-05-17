@@ -6,3 +6,4 @@ metadata:
 
 resources:
   - resources/sealed-secrets.yaml
+  - argocd/argocd-server-ingressroute.yaml
