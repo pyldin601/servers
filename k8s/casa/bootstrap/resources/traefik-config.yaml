@@ -1,0 +1,15 @@
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    additionalArguments:
+      - "--certificatesResolvers.default.acme.httpChallenge.entryPoint=web"
+      - "--certificatesResolvers.default.acme.email=roman.lakhtadyr+certs@gmail.com"
+      - "--certificatesResolvers.default.acme.storage=/data/acme.json"
+      - "--serverstransport.insecureSkipVerify=true"
+    persistence:
+      enabled: true
