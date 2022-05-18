@@ -2,8 +2,8 @@
 
 ## Install kubeseal
 ```shell
-wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.17.3/kubeseal-0.17.3-linux-amd64.tar.gz
-tar xvf kubeseal-0.17.3-linux-amd64.tar.gz
+wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.17.5/kubeseal-0.17.5-linux-amd64.tar.gz
+tar xvf kubeseal-0.17.5-linux-amd64.tar.gz
 sudo install -m 755 kubeseal /usr/local/bin/kubeseal && rm kubeseal
 ```
 

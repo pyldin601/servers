@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myownradio-streamer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: myownradio-streamer
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+      labels:
+        deployment: myownradio-streamer
+    spec:
+      containers:
+        - name: streamer
+          image: pldin601/myownradio-radio-streamer:21.12.1570252298-31c8400
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1024Mi"
+              cpu: "2000m"
+          env:
+            - name: BIND_ADDRESS
+              value: 0.0.0.0:8080
+            - name: MOR_BACKEND_URL
+              value: http://myownradio-server.myownradio.svc.cluster.local:80
+            - name: STREAM_MUTATION_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: RADIO_STREAMER_TOKEN
+            - name: SHUTDOWN_TIMEOUT
+              value: "7200"
+      imagePullSecrets:
+        - name: dockerconfig

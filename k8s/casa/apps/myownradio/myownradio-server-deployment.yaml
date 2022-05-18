@@ -1,0 +1,149 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myownradio-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: myownradio-server
+  template:
+    metadata:
+      labels:
+        deployment: myownradio-server
+    spec:
+      volumes:
+        - name: myownradio-server-storage
+          persistentVolumeClaim:
+            claimName: myownradio-server-storage
+      hostAliases:
+        - ip: "127.0.0.1"
+          hostnames:
+            - "php-fpm"
+            - "backend-php-fpm"
+      containers:
+        - name: php-fpm
+          image: pldin601/myownradio-backend-php:21.12.1603786991-aca9533
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: password
+            - name: DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: database
+            - name: DB_HOST
+              value: myownradio-mysql.myownradio.svc.cluster.local
+            - name: FACEBOOK_APP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: FACEBOOK_APP_ID
+            - name: FACEBOOK_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: FACEBOOK_APP_SECRET
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: JWT_KEY
+            - name: RADIO_STREAMER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: RADIO_STREAMER_TOKEN
+            - name: S3_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: S3_ACCESS_KEY
+            - name: S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: S3_SECRET_KEY
+            - name: FFMPEG_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: FFMPEG_PATH
+            - name: MEDIAINFO_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: MEDIAINFO_PATH
+            - name: SENTRY_DSN
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: SENTRY_DSN
+            - name: BACKEND_STORAGE_LOCAL_DIR
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: BACKEND_STORAGE_LOCAL_DIR
+            - name: RADIO_STREAMER_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: RADIO_STREAMER_ENDPOINT
+            - name: SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: SMTP_HOST
+            - name: SMTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: SMTP_USER
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: SMTP_PASSWORD
+            - name: SMTP_PORT
+              value: "587"
+            - name: WEB_SERVER_OWN_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: WEB_SERVER_OWN_ADDRESS              
+            - name: FILE_SERVER_OWN_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: FILE_SERVER_OWN_ADDRESS              
+          volumeMounts:
+            - mountPath: "/app/storage"
+              name: myownradio-server-storage
+        - name: nginx
+          image: pldin601/myownradio-backend-nginx:21.12.1603692914-475f552
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: dockerconfig

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myownradio-server
+data:
+  FFMPEG_PATH: ffmpeg
+  MEDIAINFO_PATH: mediainfo
+  SENTRY_DSN: https://2a74df546ce14acbb01fd71f1d00dfe7@sentry.io/2518976
+  BACKEND_STORAGE_LOCAL_DIR: /app/storage
+  RADIO_STREAMER_ENDPOINT: https://myownradio.biz/r
+  WEB_SERVER_OWN_ADDRESS: https://myownradio.biz
+  FILE_SERVER_OWN_ADDRESS: https://fs1.myownradio.biz

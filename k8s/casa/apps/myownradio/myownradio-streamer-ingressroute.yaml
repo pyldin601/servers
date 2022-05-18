@@ -1,0 +1,31 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: myownradio-streamer
+  namespace: myownradio
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`myownradio.biz`) && PathPrefix(`/r/`)
+      middlewares:
+        - name: stripprefix-r
+      services:
+        - kind: Service
+          name: myownradio-streamer
+          port: http
+          scheme: http
+  tls:
+    certResolver: default
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: stripprefix-r
+  namespace: myownradio
+spec:
+  stripPrefix:
+    prefixes:
+      - /r

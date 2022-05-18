@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myownradio-fileserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: myownradio-fileserver
+  template:
+    metadata:
+      labels:
+        deployment: myownradio-fileserver
+    spec:
+      volumes:
+        - name: myownradio-server-storage
+          persistentVolumeClaim:
+            claimName: myownradio-server-storage
+      containers:
+        - name: file-server
+          image: myownradio/file-server:1.0.2
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
+          volumeMounts:
+            - mountPath: "/usr/share/nginx/html"
+              name: myownradio-server-storage
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: dockerconfig
