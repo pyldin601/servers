@@ -5,6 +5,8 @@ metadata:
   name: arbitrary
 
 resources:
+  - apps/myownradio.yaml
+
   - resources/sealed-secrets.yaml
   - resources/traefik-config.yaml
   - argocd/argocd-server-ingressroute.yaml
