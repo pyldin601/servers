@@ -6,6 +6,9 @@ metadata:
 
 resources:
   - apps/myownradio.yaml
+  - apps/grafana.yaml
+  - apps/prometheus.yaml
+  - apps/loki.yaml
 
   - resources/sealed-secrets.yaml
   - resources/traefik-config.yaml
