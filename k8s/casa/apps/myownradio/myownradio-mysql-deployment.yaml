@@ -18,7 +18,7 @@ spec:
             claimName: myownradio-mysql-data
       containers:
         - name: mysql
-          image: mysql/mysql-server:8.0.29
+          image: mysql:8.0.29-oracle
           resources:
             requests:
               memory: "256Mi"
