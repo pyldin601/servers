@@ -19,6 +19,8 @@ spec:
       containers:
         - name: mysql
           image: mysql:8.0.29-oracle
+          args:
+            - --log_bin_trust_function_creators=1
           resources:
             requests:
               memory: "256Mi"
