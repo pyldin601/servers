@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: musicloud-postgres-migration-job
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      containers:
+        - name: migration
+          image: pldin601/musicloud-migration
+          env:
+            - name: POSTGRES_DB
+              value: musicloud
+            - name: POSTGRES_HOST
+              value: musicloud-postgres-service
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: musicloud-postgres-configmap
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: musicloud-postgres-configmap
+                  key: password
+      restartPolicy: OnFailure

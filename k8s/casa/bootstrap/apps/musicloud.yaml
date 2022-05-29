@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: musicloud
+  namespace: argocd
+  finalizers:
+      - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/pldin601/servers.git'
+    path: k8s/casa/apps/musicloud
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: musicloud
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

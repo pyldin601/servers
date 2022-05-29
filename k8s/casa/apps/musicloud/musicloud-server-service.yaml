@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: musicloud-server-service
+spec:
+  type: ClusterIP
+  selector:
+    deployment: musicloud-server-deployment
+  ports:
+    - name: http
+      port: 8080

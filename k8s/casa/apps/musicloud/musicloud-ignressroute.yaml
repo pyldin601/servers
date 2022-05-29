@@ -1,0 +1,17 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: musicloud-server-public
+  namespace: musicloud
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`musicloud.homefs.biz`)
+      services:
+        - kind: Service
+          name: musicloud-server-service
+          port: 8080

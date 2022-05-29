@@ -5,11 +5,16 @@ metadata:
   name: arbitrary
 
 resources:
+  # Applications
   - apps/myownradio.yaml
+  - apps/musicloud.yaml
+
+  # Management
   - apps/grafana.yaml
   - apps/prometheus.yaml
   - apps/loki.yaml
 
+  # Resources
   - resources/sealed-secrets.yaml
   - resources/traefik-config.yaml
   - argocd/argocd-server-ingressroute.yaml

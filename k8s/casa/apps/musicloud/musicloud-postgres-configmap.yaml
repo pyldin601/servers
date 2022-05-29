@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: musicloud-postgres-configmap
+data:
+  username: musicloud
+  password: musicloud
