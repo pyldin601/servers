@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: migration
-          image: pldin601/musicloud-migration:22.05.2404584526-01c707e
+          image: pldin601/musicloud-migration:22.05.2404615532-c2d337f
           env:
             - name: POSTGRES_DB
               value: musicloud
