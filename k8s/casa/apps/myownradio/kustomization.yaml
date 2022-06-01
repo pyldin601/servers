@@ -19,19 +19,19 @@ resources:
   - myownradio-mysql-configmap.yaml
 
   # server
-#  - myownradio-server-deployment.yaml
-#  - myownradio-server-service.yaml
-#  - myownradio-server-ingressroute.yaml
-  #  - myownradio-server-pvc.yaml
+  - myownradio-server-deployment.yaml
+  - myownradio-server-service.yaml
+  - myownradio-server-ingressroute.yaml
+  - myownradio-server-pvc.yaml
   - myownradio-server-configmap.yaml
   - myownradio-server-sealedsecret.yaml
 
   # streamer
-#  - myownradio-streamer-deployment.yaml
-#  - myownradio-streamer-service.yaml
-#  - myownradio-streamer-ingressroute.yaml
+  - myownradio-streamer-deployment.yaml
+  - myownradio-streamer-service.yaml
+  - myownradio-streamer-ingressroute.yaml
 
   # file-server
-#  - myownradio-fileserver-deployment.yaml
-#  - myownradio-fileserver-service.yaml
-#  - myownradio-fileserver-ingressroute.yaml
+  - myownradio-fileserver-deployment.yaml
+  - myownradio-fileserver-service.yaml
+  - myownradio-fileserver-ingressroute.yaml
