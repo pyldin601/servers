@@ -19,6 +19,7 @@ spec:
       containers:
         - name: mysql
           image: mysql:5.7
+          command: bash
           resources:
             requests:
               memory: "256Mi"
