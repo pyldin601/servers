@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/pldin601/homefs-k8s.git'
-    path: apps/musicloud
+    path: k8s/homefs.biz/apps/musicloud
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
