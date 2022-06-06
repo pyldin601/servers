@@ -14,7 +14,7 @@ resources:
   - resources/local-path-provisioner.yaml
   - resources/docker-swarm-service.yaml
   - resources/sealed-secrets.yaml
-  - resources/busybox.yaml
+  # - resources/busybox.yaml
   - resources/server-metrics.yaml
   # - resources/pi-metrics.yaml
   - resources/kvm-metrics.yaml
