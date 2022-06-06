@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/pldin601/homefs-k8s.git'
-    path: apps/nginx-lb
+    path: k8s/homefs.biz/apps/nginx-lb
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
