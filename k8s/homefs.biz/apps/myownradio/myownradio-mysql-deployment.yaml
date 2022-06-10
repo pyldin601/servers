@@ -19,7 +19,7 @@ spec:
       containers:
         - name: mysql
           image: mysql:5.7.38
-          command: ['tail', '-f', '/dev/null']
+          # command: ['tail', '-f', '/dev/null']
           resources:
             requests:
               memory: "256Mi"
