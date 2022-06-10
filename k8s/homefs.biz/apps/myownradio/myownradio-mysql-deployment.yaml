@@ -18,7 +18,7 @@ spec:
             claimName: myownradio-mysql-data
       containers:
         - name: mysql
-          image: mysql:8.0.11
+          image: mysql:8.0.0
           # command: ['tail', '-f', '/dev/null']
           resources:
             requests:
