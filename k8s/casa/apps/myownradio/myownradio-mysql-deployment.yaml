@@ -23,10 +23,10 @@ spec:
             - --log_bin_trust_function_creators=1
           resources:
             requests:
-              memory: "256Mi"
+              memory: "512Mi"
               cpu: "200m"
             limits:
-              memory: "512Mi"
+              memory: "1024Mi"
               cpu: "400m"
           env:
             - name: MYSQL_USER
