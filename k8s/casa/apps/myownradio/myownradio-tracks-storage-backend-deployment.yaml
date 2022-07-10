@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracks-storage-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: tracks-storage-backend
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+      labels:
+        deployment: tracks-storage-backend
+    spec:
+      containers:
+        - name: streamer
+          image: pldin601/myownradio-tracks-storage-backend:22.07.2645326364-ac7cfae
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1024Mi"
+              cpu: "2000m"
+          env:
+            - name: BIND_ADDRESS
+              value: 0.0.0.0:8080
+      imagePullSecrets:
+        - name: dockerconfig
