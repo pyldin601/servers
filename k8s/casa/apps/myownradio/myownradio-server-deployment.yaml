@@ -23,14 +23,14 @@ spec:
             - "backend-php-fpm"
       containers:
         - name: php-fpm
-          image: pldin601/myownradio-backend-php:22.07.2742154287-722da98
+          image: pldin601/myownradio-backend-php:22.07.2742322395-9fb2496
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "250m"
-            limits:
               memory: "512Mi"
               cpu: "500m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1000m"
           env:
             - name: DB_USERNAME
               valueFrom:
