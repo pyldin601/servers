@@ -39,6 +39,8 @@ spec:
           scheme: http
       middlewares:
         - name: myownradio-radio-manager-backend-stripprefix
+          namespace: myownradio
         - name: myownradio-radio-manager-backend-forwardauth
+          namespace: myownradio
   tls:
     certResolver: default
