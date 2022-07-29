@@ -17,14 +17,14 @@ spec:
     spec:
       containers:
         - name: streamer
-          image: pldin601/myownradio-radio-manager-backend:22.07.2763166289-5d43af2
+          image: pldin601/myownradio-radio-manager-backend:22.07.2763292350-b2e0e76
           resources:
             requests:
               memory: "512Mi"
               cpu: "500m"
             limits:
               memory: "1024Mi"
-              cpu: "2000m"
+              cpu: "1000m"
           env:
             - name: BIND_ADDRESS
               value: 0.0.0.0:8080
