@@ -28,5 +28,22 @@ spec:
           env:
             - name: BIND_ADDRESS
               value: 0.0.0.0:8080
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: username
+            - name: MYSQL_PASSWORD;
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: password
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: database
+            - name: MYSQL_HOST
+              value: myownradio-mysql.myownradio.svc.cluster.local
       imagePullSecrets:
         - name: dockerconfig
