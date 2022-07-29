@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tracks-storage-backend
+  name: radio-manager-backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      deployment: tracks-storage-backend
+      deployment: radio-manager-backend
   template:
     metadata:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
       labels:
-        deployment: tracks-storage-backend
+        deployment: radio-manager-backend
     spec:
       containers:
         - name: streamer
-          image: pldin601/myownradio-tracks-storage-backend:22.07.2645326364-ac7cfae
+          image: pldin601/myownradio-radio-manager-backend:22.07.2763166289-5d43af2
           resources:
             requests:
               memory: "512Mi"

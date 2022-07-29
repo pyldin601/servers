@@ -36,6 +36,7 @@ resources:
   - myownradio-fileserver-service.yaml
   - myownradio-fileserver-ingressroute.yaml
 
-  # tracks-storage-backend
-  - myownradio-tracks-storage-backend-deployment.yaml
-  - myownradio-tracks-storage-backend-service.yaml
+  # radio-manager-backend
+  - radio-manager-backend-deployment.yaml
+  - radio-manager-backend-service.yaml
+  - radio-manager-backend-ingressroute.yaml
