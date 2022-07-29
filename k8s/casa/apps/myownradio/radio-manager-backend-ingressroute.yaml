@@ -35,12 +35,10 @@ spec:
       services:
         - kind: Service
           name: myownradio-radio-manager-backend
-          port: http
+          port: 8080
           scheme: http
       middlewares:
         - name: myownradio-radio-manager-backend-stripprefix
-          namespace: myownradio
         - name: myownradio-radio-manager-backend-forwardauth
-          namespace: myownradio
   tls:
     certResolver: default
