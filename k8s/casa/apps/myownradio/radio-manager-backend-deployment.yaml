@@ -33,7 +33,7 @@ spec:
                 configMapKeyRef:
                   name: myownradio-mysql-configmap
                   key: username
-            - name: MYSQL_PASSWORD;
+            - name: MYSQL_PASSWORD
               valueFrom:
                 configMapKeyRef:
                   name: myownradio-mysql-configmap
