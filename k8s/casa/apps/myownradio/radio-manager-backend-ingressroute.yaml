@@ -2,7 +2,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: myownradio-radio-manager-backend-stripprefix
+  name: radio-manager-backend-stripprefix
   namespace: myownradio
 spec:
   stripPrefix:
@@ -12,11 +12,11 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: myownradio-radio-manager-backend-forwardauth
+  name: radio-manager-backend-forwardauth
   namespace: myownradio
 spec:
   forwardAuth:
-    address: http://myownradio-server:80/api/v2/self
+    address: http://myownradio-server.myownradio.svc.cluster.local/api/v2/self
     authResponseHeaders: ["user-id"]
     trustForwardHeader: false
 
@@ -24,7 +24,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: myownradio-radio-manager-backend
+  name: radio-manager-backend
   namespace: myownradio
 spec:
   entryPoints:
@@ -34,11 +34,11 @@ spec:
       match: Host(`myownradio.biz`) && PathPrefix(`/radio-manager/api/`)
       services:
         - kind: Service
-          name: myownradio-radio-manager-backend
+          name: radio-manager-backend
           port: 8080
           scheme: http
       middlewares:
-        - name: myownradio-radio-manager-backend-stripprefix
-        - name: myownradio-radio-manager-backend-forwardauth
+        - name: radio-manager-backend-stripprefix
+        - name: radio-manager-backend-forwardauth
   tls:
     certResolver: default

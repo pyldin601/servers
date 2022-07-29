@@ -2,10 +2,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: myownradio-radio-manager-backend
+  name: radio-manager-backend
 spec:
   selector:
-    deployment: myownradio-radio-manager-backend
+    deployment: radio-manager-backend
   ports:
     - name: http
       protocol: TCP
