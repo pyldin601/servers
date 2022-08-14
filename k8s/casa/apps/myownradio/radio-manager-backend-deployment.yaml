@@ -46,6 +46,6 @@ spec:
             - name: MYSQL_HOST
               value: myownradio-mysql.myownradio.svc.cluster.local
             - name: FILE_SERVER_ENDPOINT
-              value: http://myownradio-fileserver/
+              value: https://fs1.myownradio.biz/
       imagePullSecrets:
         - name: dockerconfig
