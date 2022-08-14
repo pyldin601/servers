@@ -103,12 +103,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: myownradio-server
-                  key: RADIO_STREAMER_INTERNAL_ENDPOINT
+                  key: RADIO_STREAMER_ENDPOINT
             - name: RADIO_STREAMER_INTERNAL_ENDPOINT
               valueFrom:
                 configMapKeyRef:
                   name: myownradio-server
-                  key: RADIO_STREAMER_ENDPOINT
+                  key: RADIO_STREAMER_INTERNAL_ENDPOINT
             - name: SMTP_HOST
               valueFrom:
                 secretKeyRef:
