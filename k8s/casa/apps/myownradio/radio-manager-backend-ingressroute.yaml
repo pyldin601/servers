@@ -40,5 +40,14 @@ spec:
       middlewares:
         - name: radio-manager-backend-stripprefix
         - name: radio-manager-backend-forwardauth
+    - kind: Rule
+      match: Host(`myownradio.biz`) && PathPrefix(`/radio-manager/api/pub/`)
+      services:
+        - kind: Service
+          name: radio-manager-backend
+          port: 8080
+          scheme: http
+      middlewares:
+        - name: radio-manager-backend-stripprefix
   tls:
     certResolver: default
