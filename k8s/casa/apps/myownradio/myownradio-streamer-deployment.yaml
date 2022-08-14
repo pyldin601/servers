@@ -26,6 +26,8 @@ spec:
               memory: "1024Mi"
               cpu: "2000m"
           env:
+            - name: LOG_LEVEL
+              value: Debug
             - name: BIND_ADDRESS
               value: 0.0.0.0:8080
             - name: MOR_BACKEND_URL
