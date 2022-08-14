@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: streamer
-          image: pldin601/myownradio-radio-streamer:22.07.2714493213-1cfcb8e
+          image: pldin601/myownradio-radio-streamer:22.08.2855416639-da433af
           resources:
             requests:
               memory: "512Mi"
@@ -29,7 +29,7 @@ spec:
             - name: BIND_ADDRESS
               value: 0.0.0.0:8080
             - name: MOR_BACKEND_URL
-              value: http://myownradio-server.myownradio.svc.cluster.local:80
+              value: http://radio-manager-backend.myownradio.svc.cluster.local:8080
             - name: STREAM_MUTATION_TOKEN
               valueFrom:
                 secretKeyRef:

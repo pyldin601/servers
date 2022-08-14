@@ -23,7 +23,7 @@ spec:
             - "backend-php-fpm"
       containers:
         - name: php-fpm
-          image: pldin601/myownradio-backend-php:22.07.2763833219-26f3a82
+          image: pldin601/myownradio-backend-php:22.08.2855416589-da433af
           resources:
             requests:
               memory: "512Mi"
@@ -103,6 +103,11 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: myownradio-server
+                  key: RADIO_STREAMER_INTERNAL_ENDPOINT
+            - name: RADIO_STREAMER_INTERNAL_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
                   key: RADIO_STREAMER_ENDPOINT
             - name: SMTP_HOST
               valueFrom:
@@ -135,7 +140,7 @@ spec:
             - mountPath: "/app/storage"
               name: myownradio-server-storage
         - name: nginx
-          image: pldin601/myownradio-backend-nginx:22.07.2763833215-26f3a82
+          image: pldin601/myownradio-backend-nginx:22.08.2855416577-da433af
           resources:
             requests:
               memory: "256Mi"
