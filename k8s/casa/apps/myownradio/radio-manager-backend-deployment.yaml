@@ -57,5 +57,7 @@ spec:
                 secretKeyRef:
                   name: myownradio-server
                   key: RADIO_STREAMER_TOKEN
+            - name: FILE_SYSTEM_ROOT_PATH
+              value: ""
       imagePullSecrets:
         - name: dockerconfig
