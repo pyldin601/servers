@@ -47,5 +47,15 @@ spec:
               value: myownradio-mysql.myownradio.svc.cluster.local
             - name: FILE_SERVER_ENDPOINT
               value: https://fs1.myownradio.biz/
+            - name: RADIO_STREAMER_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: RADIO_STREAMER_INTERNAL_ENDPOINT
+            - name: RADIO_STREAMER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: RADIO_STREAMER_TOKEN
       imagePullSecrets:
         - name: dockerconfig
