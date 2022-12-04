@@ -15,7 +15,7 @@ spec:
     helm:
       parameters:
         - name: server.dev.enabled
-          value: 'true'
+          value: 'false'
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: kube-system
