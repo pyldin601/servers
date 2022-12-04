@@ -23,3 +23,22 @@ spec:
     automated:
       prune: true
       selfHeal: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: vault
+  namespace: argocd
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`vault.homefs.biz`)
+      priority: 10
+      services:
+        - name: vault
+          port: 8200
+          scheme: http
+  tls:
+    certResolver: default
