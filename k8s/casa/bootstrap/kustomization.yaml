@@ -17,7 +17,7 @@ resources:
   # Resources
   - resources/sealed-secrets.yaml
   - resources/traefik-config.yaml
-  - resources/vault.yaml
 
   # ArgoCD
   - argocd/argocd-server-ingressroute.yaml
+  - argocd/vault.yaml

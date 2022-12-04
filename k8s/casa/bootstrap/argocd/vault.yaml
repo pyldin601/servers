@@ -11,14 +11,17 @@ spec:
   source:
     repoURL: 'https://helm.releases.hashicorp.com'
     chart: vault
-    targetRevision: 0.22.1
+    #targetRevision: 0.22.1
     helm:
-      parameters:
-        - name: server.dev.enabled
-          value: 'false'
+      parameters: []
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: kube-system
+    namespace: argocd
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      jqPathExpressions:
+        - .webhooks[]?.clientConfig.caBundle
   syncPolicy:
     automated:
       prune: true
@@ -28,7 +31,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: vault
-  namespace: kube-system
+  namespace: argocd
 spec:
   entryPoints:
     - websecure
