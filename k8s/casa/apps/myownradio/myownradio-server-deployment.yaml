@@ -33,22 +33,16 @@ spec:
               cpu: "1000m"
           env:
             - name: DB_USERNAME
-              valueFrom:
-                configMapKeyRef:
-                  name: myownradio-mysql-configmap
-                  key: username
+              value: myownradio-backend
             - name: DB_PASSWORD
               valueFrom:
-                configMapKeyRef:
-                  name: myownradio-mysql-configmap
-                  key: password
+                secretKeyRef:
+                  name: myownradio-server
+                  key: MYSQL_PASSWORD
             - name: DB_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: myownradio-mysql-configmap
-                  key: database
+              value: myownradio
             - name: DB_HOST
-              value: myownradio-mysql.myownradio.svc.cluster.local
+              value: external-mysql-server.default.svc.cluster.local
             - name: FACEBOOK_APP_ID
               valueFrom:
                 secretKeyRef:
