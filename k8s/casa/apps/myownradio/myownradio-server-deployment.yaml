@@ -73,6 +73,16 @@ spec:
                 secretKeyRef:
                   name: myownradio-server
                   key: S3_SECRET_KEY
+            - name: S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: S3_BUCKET
+            - name: S3_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-server
+                  key: S3_REGION
             - name: FFMPEG_PATH
               valueFrom:
                 configMapKeyRef:

@@ -11,3 +11,5 @@ data:
   RADIO_STREAMER_INTERNAL_ENDPOINT: http://myownradio-streamer:8080
   WEB_SERVER_OWN_ADDRESS: https://myownradio.biz
   FILE_SERVER_OWN_ADDRESS: https://fs1.myownradio.biz
+  S3_BUCKET: myownradio-storage
+  S3_REGION: eu-central-1
