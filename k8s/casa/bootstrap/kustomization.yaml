@@ -21,4 +21,3 @@ resources:
 
   # ArgoCD
   - argocd/argocd-server-ingressroute.yaml
-  - argocd/vault.yaml
