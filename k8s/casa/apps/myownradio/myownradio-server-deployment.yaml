@@ -139,7 +139,9 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: myownradio-server
-                  key: FILE_SERVER_OWN_ADDRESS              
+                  key: FILE_SERVER_OWN_ADDRESS
+            - name: STORAGE_BACKEND
+              value: local
           volumeMounts:
             - mountPath: "/app/storage"
               name: myownradio-server-storage
