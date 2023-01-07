@@ -42,3 +42,6 @@ spec:
       imagePullSecrets:
         - name: dockerconfig
       terminationGracePeriodSeconds: 7200
+      preStop:
+        exec:
+          command: ["/bin/sh", "-c", "kill -SIGUSR1 1"]
