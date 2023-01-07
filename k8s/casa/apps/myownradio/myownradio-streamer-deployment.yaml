@@ -41,3 +41,4 @@ spec:
               value: "7200"
       imagePullSecrets:
         - name: dockerconfig
+      terminationGracePeriodSeconds: 7200
