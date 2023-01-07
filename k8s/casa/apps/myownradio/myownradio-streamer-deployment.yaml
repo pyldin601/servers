@@ -39,9 +39,10 @@ spec:
                   key: RADIO_STREAMER_TOKEN
             - name: SHUTDOWN_TIMEOUT
               value: "7200"
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "kill -SIGUSR1 1"]
       imagePullSecrets:
         - name: dockerconfig
       terminationGracePeriodSeconds: 7200
-      preStop:
-        exec:
-          command: ["/bin/sh", "-c", "kill -SIGUSR1 1"]
