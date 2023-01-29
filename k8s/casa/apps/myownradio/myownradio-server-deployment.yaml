@@ -142,6 +142,8 @@ spec:
                   key: FILE_SERVER_OWN_ADDRESS
             - name: STORAGE_BACKEND
               value: local
+            - name: ASSETS_MANIFEST_URL
+              value: "https://myownradio.biz/assets/assets-manifest.json"
           volumeMounts:
             - mountPath: "/app/storage"
               name: myownradio-server-storage
