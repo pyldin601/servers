@@ -148,7 +148,7 @@ spec:
             - mountPath: "/app/storage"
               name: myownradio-server-storage
         - name: nginx
-          image: pldin601/myownradio-backend-nginx:23.03.4307949775-1c5e150
+          image: pldin601/myownradio-backend-nginx:23.03.4318309189-9bee292
           resources:
             requests:
               memory: "256Mi"
