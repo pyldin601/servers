@@ -9,7 +9,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`myownradio.biz`) && PathPrefix(`/r/`)
+      match: Host(`old.myownradio.biz`) && PathPrefix(`/r/`)
       middlewares:
         - name: stripprefix-r
       services:
