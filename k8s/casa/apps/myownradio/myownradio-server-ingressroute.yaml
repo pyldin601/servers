@@ -9,7 +9,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`myownradio.biz`)
+      match: Host(`old.myownradio.biz`)
       services:
         - kind: Service
           name: myownradio-server
