@@ -31,7 +31,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`old.myownradio.biz`) && PathPrefix(`/radio-manager/api/`)
+      match: Host(`myownradio.biz`) && PathPrefix(`/radio-manager/api/`)
       services:
         - kind: Service
           name: radio-manager-backend
@@ -41,7 +41,7 @@ spec:
         - name: radio-manager-backend-stripprefix
         - name: radio-manager-backend-forwardauth
     - kind: Rule
-      match: Host(`old.myownradio.biz`) && PathPrefix(`/radio-manager/api/pub/`)
+      match: Host(`myownradio.biz`) && PathPrefix(`/radio-manager/api/pub/`)
       services:
         - kind: Service
           name: radio-manager-backend
