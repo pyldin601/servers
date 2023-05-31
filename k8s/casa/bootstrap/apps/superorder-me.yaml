@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: superorder-me
+  namespace: argocd
+  finalizers:
+      - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/pldin601/homefs-k8s.git'
+    path: k8s/homefs.biz/apps/superorder-me
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: superorder-me
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

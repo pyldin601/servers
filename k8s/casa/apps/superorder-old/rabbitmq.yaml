@@ -1,0 +1,48 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: rabbitmq
+spec:
+  selector:
+    deployment: rabbitmq
+  ports:
+    - protocol: TCP
+      port: 5672
+      targetPort: 5672
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: rabbitmq
+  template:
+    metadata:
+      labels:
+        deployment: rabbitmq
+    spec:
+      volumes:
+        - name: rabbitmq-data-volume
+          persistentVolumeClaim:
+            claimName: rabbitmq-data-volume-claim
+      containers:
+        - name: rabbitmq
+          image: rabbitmq
+          volumeMounts:
+            - mountPath: "/var/lib/rabbitmq"
+              name: rabbitmq-data-volume
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rabbitmq-data-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
