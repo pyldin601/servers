@@ -9,7 +9,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/pldin601/servers.git'
+    repoURL: 'https://github.com/pyldin601/servers.git'
     path: k8s/casa/apps/grafana
     targetRevision: HEAD
   destination:

@@ -9,8 +9,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/pldin601/homefs-k8s.git'
-    path: k8s/homefs.biz/apps/superorder-old
+    repoURL: 'https://github.com/pyldin601/servers.git'
+    path: k8s/casa/apps/superorder-old
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
