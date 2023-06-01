@@ -91,7 +91,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`grafana-new.homefs.biz`)
+      match: Host(`grafana-new.pyldin601.dev`)
       services:
         - kind: Service
           name: grafana

@@ -9,7 +9,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`grafana.homefs.biz`)
+      match: Host(`grafana.pyldin601.dev`)
       services:
         - kind: Service
           name: docker-swarm-service

@@ -10,7 +10,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`musicloud.homefs.biz`)
+      match: Host(`musicloud.pyldin601.dev`)
       services:
         - kind: Service
           name: musicloud-server-service
