@@ -16,6 +16,8 @@ spec:
       parameters:
         - name: server.strategy.type
           value: Recreate
+        - name: server.global.scrape_interval
+          value: 15s
         - name: extraScrapeConfigs
           value: |
             - job_name: "oracle-nodes"
