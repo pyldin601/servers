@@ -40,7 +40,7 @@ spec:
             - name: MYSQL_HOST
               value: external-mysql-server.default.svc.cluster.local
             - name: FILE_SERVER_ENDPOINT
-              value: https://fs1.myownradio.biz/
+              value: https://fs1.radioter.io/
             - name: RADIO_STREAMER_ENDPOINT
               valueFrom:
                 configMapKeyRef:

@@ -9,7 +9,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`fs1.myownradio.biz`)
+      match: Host(`fs1.radioter.io`)
       services:
         - kind: Service
           name: myownradio-fileserver
