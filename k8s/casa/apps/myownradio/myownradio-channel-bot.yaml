@@ -34,7 +34,7 @@ spec:
             path: /data/radioterio
       containers:
         - name: channel-bot
-          image: pldin601/myownradio-channel-bot:latest
+          image: pldin601/myownradio-channel-bot:latest@sha256:ec0d79d306574214f2e3720fbcc06d238adc7913623bb3d18e21df60188935d4
           resources:
             requests:
               memory: "512Mi"
