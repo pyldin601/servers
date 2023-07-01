@@ -40,3 +40,6 @@ resources:
   - radio-manager-backend-deployment.yaml
   - radio-manager-backend-service.yaml
   - radio-manager-backend-ingressroute.yaml
+
+  # channel-bot
+  - myownradio-channel-bot-sealedsecret.yaml

@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: channel-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: channel-bot
+  template:
+    metadata:
+      labels:
+        deployment: channel-bot
+    spec:
+      volumes:
+        - name: channel-bot-storage
+          persistentVolumeClaim:
+            claimName: channel-bot-storage
+      containers:
+        - name: channel-bot
+          image: pldin601/myownradio-channel-bot:latest
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
+          env:
+            - name: RUTRACKER_USERNAME
+            - name: RUTRACKER_PASSWORD
+            - name: TRANSMISSION_RPC_ENDPOINT
+            - name: TRANSMISSION_DOWNLOAD_DIRECTORY
+            - name: TRANSMISSION_USERNAME
+            - name: TRANSMISSION_PASSWORD
+            - name: RADIOMANAGER_ENDPOINT
+            - name: RADIOMANAGER_USERNAME
+            - name: RADIOMANAGER_PASSWORD
+            - name: DOWNLOAD_DIRECTORY
+            - name: STATE_STORAGE_DIRECTORY
+            - name: OPENAI_API_KEY
+          volumeMounts:
+            - mountPath: "/var/lib/torrent-bot/storage"
+              name: channel-bot-storage
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: dockerconfig
