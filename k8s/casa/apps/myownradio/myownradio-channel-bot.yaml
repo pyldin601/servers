@@ -76,7 +76,7 @@ spec:
                   name: channel-bot-secret
                   key: OPENAI_API_KEY
             - name: RUST_LOG
-              value: debug
+              value: trace
           volumeMounts:
             - mountPath: "/var/lib/torrent-bot/storage"
               name: channel-bot-storage
