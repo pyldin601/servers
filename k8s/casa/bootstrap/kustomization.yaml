@@ -20,6 +20,7 @@ resources:
   - resources/sealed-secrets.yaml
   - resources/traefik-config.yaml
   - resources/external-endpoints.yaml
+  - resources/transmission-rpc.yaml
 
   # ArgoCD
   - argocd/argocd-server-ingressroute.yaml
