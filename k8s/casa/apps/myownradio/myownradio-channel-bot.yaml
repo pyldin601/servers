@@ -37,11 +37,11 @@ spec:
           image: pldin601/myownradio-channel-bot:latest
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "200m"
-            limits:
               memory: "512Mi"
-              cpu: "400m"
+              cpu: "500m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1000m"
           env:
             - name: RUTRACKER_USERNAME
               value: "Ted Irens"
