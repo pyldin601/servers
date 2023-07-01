@@ -17,6 +17,9 @@ spec:
         - name: channel-bot-storage
           persistentVolumeClaim:
             claimName: channel-bot-storage
+        - name: channel-bot-host-mount
+          hostPath:
+            path: /data/radioterio
       containers:
         - name: channel-bot
           image: pldin601/myownradio-channel-bot:latest
@@ -29,20 +32,42 @@ spec:
               cpu: "400m"
           env:
             - name: RUTRACKER_USERNAME
+              value: "Ted Irens"
             - name: RUTRACKER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: channel-bot-secret
+                  key: RUTRACKER_PASSWORD
             - name: TRANSMISSION_RPC_ENDPOINT
+              value: http://transmission-rpc.default.svc.cluster.local:9091/transmission/rpc/
             - name: TRANSMISSION_DOWNLOAD_DIRECTORY
-            - name: TRANSMISSION_USERNAME
-            - name: TRANSMISSION_PASSWORD
+              value: /data/radioterio/
             - name: RADIOMANAGER_ENDPOINT
+              value: https://radioter.io/
             - name: RADIOMANAGER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: channel-bot-secret
+                  key: RADIOMANAGER_USERNAME
             - name: RADIOMANAGER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: channel-bot-secret
+                  key: RADIOMANAGER_PASSWORD
             - name: DOWNLOAD_DIRECTORY
+              value: /data/radioterio/
             - name: STATE_STORAGE_DIRECTORY
+              value: "/var/lib/torrent-bot/storage"
             - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: channel-bot-secret
+                  key: OPENAI_API_KEY
           volumeMounts:
             - mountPath: "/var/lib/torrent-bot/storage"
               name: channel-bot-storage
+            - mountPath: "/data/radioterio"
+              name: channel-bot-host-mount
           ports:
             - containerPort: 8080
       imagePullSecrets:
