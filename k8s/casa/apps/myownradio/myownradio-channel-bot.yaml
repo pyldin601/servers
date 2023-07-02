@@ -64,7 +64,7 @@ spec:
                   name: channel-bot-secret
                   key: RUTRACKER_PASSWORD
             - name: TRANSMISSION_RPC_ENDPOINT
-              value: http://transmission-rpc.default.svc.cluster.local:9091/transmission/rpc/
+              value: http://external-transmission-rpc.default.svc.cluster.local:9091/transmission/rpc/
             - name: TRANSMISSION_DOWNLOAD_DIRECTORY
               value: /data/radioterio/
             - name: RADIOMANAGER_ENDPOINT
