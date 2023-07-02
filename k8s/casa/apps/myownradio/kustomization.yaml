@@ -43,4 +43,4 @@ resources:
 
   # channel-bot
   - myownradio-channel-bot-sealedsecret.yaml
-  - myownradio-channel-bot.yaml
+#  - myownradio-channel-bot.yaml
