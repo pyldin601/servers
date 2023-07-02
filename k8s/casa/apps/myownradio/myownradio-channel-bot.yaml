@@ -22,7 +22,7 @@ spec:
     - name: http
       protocol: TCP
       port: 8080
-      targetPort: 8080
+      targetPort: http
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -96,7 +96,9 @@ spec:
             - mountPath: "/data/radioterio"
               name: channel-bot-host-mount
           ports:
-            - containerPort: 8080
+            - name: http
+              containerPort: 8080
+              protocol: TCP
           livenessProbe:
             httpGet:
               path: /health/alive
