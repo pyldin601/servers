@@ -11,6 +11,19 @@ spec:
     requests:
       storage: 8Gi
 ---
+kind: Service
+apiVersion: v1
+metadata:
+  name: channel-bot
+spec:
+  selector:
+    deployment: channel-bot
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
