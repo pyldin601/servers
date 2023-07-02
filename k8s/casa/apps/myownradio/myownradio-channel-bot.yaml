@@ -97,5 +97,13 @@ spec:
               name: channel-bot-host-mount
           ports:
             - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /health/alive
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: http
       imagePullSecrets:
         - name: dockerconfig
