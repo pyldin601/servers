@@ -1,0 +1,73 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radiomanager-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: radiomanager-frontend
+  template:
+    metadata:
+      labels:
+        deployment: radiomanager-frontend
+    spec:
+      containers:
+        - name: radiomanager-frontend
+          image: pldin601/myownradio-radiomanager-frontend:23.08.5777368439-95802cb
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "750m"
+          env:
+            - name: DUMMY
+              value: "0"
+      imagePullSecrets:
+        - name: dockerconfig
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: radiomanager-frontend
+spec:
+  selector:
+    deployment: radiomanager-frontend
+  ports:
+    - name: http
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: stripprefix-new
+  namespace: myownradio
+spec:
+  stripPrefix:
+    prefixes: ["/new"]
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: radiomanager-frontend
+  namespace: myownradio
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`radioter.io`) && PathPrefix(`/new/`)
+      middlewares:
+        - name: stripprefix-new
+      services:
+        - kind: Service
+          name: radiomanager-frontend
+          port: 3000
+          scheme: http
+  tls:
+    certResolver: default

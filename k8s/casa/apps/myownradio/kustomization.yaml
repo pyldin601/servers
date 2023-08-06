@@ -41,6 +41,9 @@ resources:
   - radio-manager-backend-service.yaml
   - radio-manager-backend-ingressroute.yaml
 
+  # radiomanager-frontend
+  - radiomanager-frontend.yaml
+
   # channel-bot
   - myownradio-channel-bot-sealedsecret.yaml
 #  - myownradio-channel-bot.yaml
