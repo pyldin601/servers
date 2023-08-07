@@ -52,7 +52,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`radioter.io`) && PathPrefix(`/new/`)
+      match: Host(`radioter.io`) && PathPrefix(`/new`)
       middlewares: []
       services:
         - kind: Service
