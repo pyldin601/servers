@@ -62,8 +62,7 @@ spec:
   routes:
     - kind: Rule
       match: Host(`radioter.io`) && PathPrefix(`/new`)
-      middlewares:
-        - name: stripprefix-new
+      middlewares: []
       services:
         - kind: Service
           name: radiomanager-frontend
