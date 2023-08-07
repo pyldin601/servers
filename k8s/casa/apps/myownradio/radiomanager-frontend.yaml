@@ -45,7 +45,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: radiomanager-frontend2
+  name: radiomanager-frontend
   namespace: myownradio
 spec:
   entryPoints:
@@ -53,6 +53,7 @@ spec:
   routes:
     - kind: Rule
       match: Host(`radioter.io`) && PathPrefix(`/new/`)
+      middlewares: []
       services:
         - kind: Service
           name: radiomanager-frontend
