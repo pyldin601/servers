@@ -43,15 +43,6 @@ spec:
       targetPort: 3000
 ---
 apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: stripprefix-new
-  namespace: myownradio
-spec:
-  stripPrefix:
-    prefixes: ["/new"]
----
-apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: radiomanager-frontend
@@ -62,8 +53,6 @@ spec:
   routes:
     - kind: Rule
       match: Host(`radioter.io`) && PathPrefix(`/new/`)
-      middlewares:
-        - name: stripprefix-new
       services:
         - kind: Service
           name: radiomanager-frontend
