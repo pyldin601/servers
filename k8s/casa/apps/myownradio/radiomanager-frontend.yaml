@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: radiomanager-frontend
-          image: pldin601/myownradio-radiomanager-frontend:23.08.5790026215-7c93743
+          image: pldin601/myownradio-radiomanager-frontend:23.08.5800871905-88d3259
           resources:
             requests:
               memory: "512Mi"
