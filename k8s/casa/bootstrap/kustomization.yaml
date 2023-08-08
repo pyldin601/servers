@@ -8,8 +8,8 @@ resources:
   # Applications
   - apps/myownradio.yaml
   - apps/musicloud.yaml
-  - apps/superorder-me.yaml
-  - apps/superorder-old.yaml
+#  - apps/superorder-me.yaml
+#  - apps/superorder-old.yaml
 
   # Management
   - apps/grafana.yaml
