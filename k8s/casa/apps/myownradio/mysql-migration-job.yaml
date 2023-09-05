@@ -1,0 +1,32 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mysql-migration-job
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      containers:
+        - name: migration
+          image: pldin601/myownradio-mysql-migration:23.09.6087040522-aa04e93
+          env:
+            - name: MYSQL_HOST
+              value: myownradio-mysql.myownradio.svc.cluster.local
+            - name: MYSQL_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: database
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: password
+      restartPolicy: OnFailure
