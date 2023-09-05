@@ -29,16 +29,22 @@ spec:
             - name: BIND_ADDRESS
               value: 0.0.0.0:8080
             - name: MYSQL_USER
-              value: myownradio-backend
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: username
             - name: MYSQL_PASSWORD
               valueFrom:
-                secretKeyRef:
-                  name: myownradio-server
-                  key: MYSQL_PASSWORD
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: password
             - name: MYSQL_DATABASE
-              value: myownradio
+              valueFrom:
+                configMapKeyRef:
+                  name: myownradio-mysql-configmap
+                  key: database
             - name: MYSQL_HOST
-              value: external-mysql-server.default.svc.cluster.local
+              value: myownradio-mysql.myownradio.svc.cluster.local
             - name: FILE_SERVER_ENDPOINT
               value: https://fs1.radioter.io/
             - name: RADIO_STREAMER_ENDPOINT
