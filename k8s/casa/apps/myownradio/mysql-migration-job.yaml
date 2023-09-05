@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: mysql-migration-job
+  name: mysql-migration-job-23.09.6087040522-aa04e93
 spec:
   completions: 1
   parallelism: 1
