@@ -4,7 +4,7 @@ apiVersion: batch/v1
 metadata:
   name: mysql-backup-cronjob
 spec:
-  schedule: "*/ 5 * * * *"
+  schedule: "*/5 * * * *"
   jobTemplate:
     spec:
       template:
