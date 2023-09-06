@@ -16,6 +16,8 @@ spec:
           value: "false"
         - name: server.logLevel
           value: "debug"
+        - name: injector.logLevel
+          value: "debug"
   destination:
     namespace: kube-system
     server: https://kubernetes.default.svc
