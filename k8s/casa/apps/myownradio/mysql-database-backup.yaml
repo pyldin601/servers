@@ -2,7 +2,7 @@
 kind: Job
 apiVersion: batch/v1
 metadata:
-  name: mysql-backup-cronjob-5
+  name: mysql-backup-cronjob-6
 spec:
 #  successfulJobsHistoryLimit: 2
 #  failedJobsHistoryLimit: 0
@@ -37,6 +37,8 @@ spec:
                   configMapKeyRef:
                     name: myownradio-mysql-configmap
                     key: password
+              - name: GITHUB_TOKEN
+                value: vault:secret/myownradio/mysql-database-backup
               command: ["/bin/sh", "-c"]
               args:
                 - |
