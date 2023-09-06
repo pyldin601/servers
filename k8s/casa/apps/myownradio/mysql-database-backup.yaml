@@ -2,7 +2,7 @@
 kind: Job
 apiVersion: batch/v1
 metadata:
-  name: mysql-backup-cronjob-3
+  name: mysql-backup-cronjob-5
 spec:
 #  successfulJobsHistoryLimit: 2
 #  failedJobsHistoryLimit: 0
@@ -10,6 +10,11 @@ spec:
 #  jobTemplate:
 #    spec:
       template:
+        metadata:
+          annotations:
+            vault.hashicorp.com/agent-inject: "true"
+            vault.hashicorp.com/role: "k8s"
+            vault.hashicorp.com/agent-inject-secret-creds: "secret/myownradio/mysql-database-backup"
         spec:
           containers:
             - name: mysql-backup
