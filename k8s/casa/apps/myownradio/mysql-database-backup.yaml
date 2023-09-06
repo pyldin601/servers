@@ -2,7 +2,7 @@
 kind: Job
 apiVersion: batch/v1
 metadata:
-  name: mysql-backup-cronjob-2
+  name: mysql-backup-cronjob-3
 spec:
 #  successfulJobsHistoryLimit: 2
 #  failedJobsHistoryLimit: 0
@@ -37,4 +37,5 @@ spec:
                 - |
                   apk add git mysql-client mariadb-connector-c-dev
                   mysqldump --no-tablespaces -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > myownradio_mysql_backup.sql
+                  ls -l
           restartPolicy: OnFailure
