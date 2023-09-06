@@ -36,5 +36,5 @@ spec:
               args:
                 - |
                   apk add git mysql-client mariadb-connector-c-dev
-                  mysqldump -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > myownradio_mysql_backup.sql
+                  mysqldump --no-tablespaces -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > myownradio_mysql_backup.sql
           restartPolicy: OnFailure
