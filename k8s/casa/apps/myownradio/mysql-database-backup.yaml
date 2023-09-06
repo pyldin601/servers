@@ -1,14 +1,14 @@
 ---
-kind: CronJob
+kind: Job
 apiVersion: batch/v1
 metadata:
-  name: mysql-backup-cronjob
+  name: mysql-backup-cronjob-1
 spec:
-  successfulJobsHistoryLimit: 2
-  failedJobsHistoryLimit: 0
-  schedule: "*/5 * * * *"
-  jobTemplate:
-    spec:
+#  successfulJobsHistoryLimit: 2
+#  failedJobsHistoryLimit: 0
+#  schedule: "*/5 * * * *"
+#  jobTemplate:
+#    spec:
       template:
         spec:
           containers:
