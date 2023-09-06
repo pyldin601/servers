@@ -1,0 +1,39 @@
+---
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+  name: mysql-backup-cronjob
+spec:
+  schedule: "*/ 5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: mysql-backup
+              image: alpine:3.18
+              env:
+              - name: MYSQL_HOST
+                value: myownradio-mysql.myownradio.svc.cluster.local
+              - name: MYSQL_DB
+                valueFrom:
+                  configMapKeyRef:
+                    name: myownradio-mysql-configmap
+                    key: database
+              - name: MYSQL_USER
+                valueFrom:
+                  configMapKeyRef:
+                    name: myownradio-mysql-configmap
+                    key: username
+              - name: MYSQL_PASSWORD
+                valueFrom:
+                  configMapKeyRef:
+                    name: myownradio-mysql-configmap
+                    key: password
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  apk add git
+                  apk add mysql-client
+                  echo Hello World
+          restartPolicy: OnFailure

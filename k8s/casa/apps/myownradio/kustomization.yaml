@@ -18,6 +18,7 @@ resources:
   - myownradio-mysql-pvc.yaml
   - myownradio-mysql-configmap.yaml
   - mysql-migration-job.yaml
+  - mysql-database-backup.yaml
 
   # server
   - myownradio-server-deployment.yaml
