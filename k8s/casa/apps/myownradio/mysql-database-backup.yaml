@@ -33,7 +33,6 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  apk add git
-                  apk add mysql-client
-                  echo Hello World
+                  apk add git mysql-client
+                  mysqldump -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > myownradio_mysql_backup.sql
           restartPolicy: OnFailure
