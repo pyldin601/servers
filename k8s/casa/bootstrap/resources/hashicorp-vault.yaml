@@ -8,31 +8,21 @@ spec:
   project: default
   source:
     repoURL: 'https://helm.releases.hashicorp.com'
+    targetRevision: "0.25.0"
     chart: vault
-    targetRevision: 1.27
+    helm:
+      parameters:
+        - name: server.dev.enabled
+          value: "false"
   destination:
-    namespace: vault
+    namespace: kube-system
     server: https://kubernetes.default.svc
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-#---
-#apiVersion: argoproj.io/v1alpha1
-#kind: Application
-#metadata:
-#  name: vault-agent-injector
-#  namespace: argocd
-#spec:
-#  project: default
-#  source:
-#    repoURL: 'https://helm.releases.hashicorp.com'
-#    chart: vault-agent-injector
-#    targetRevision: HEAD
-#  destination:
-#    namespace: vault
-#    server: https://kubernetes.default.svc
-#  syncPolicy:
-#    automated:
-#      prune: true
-#      selfHeal: true
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      jqPathExpressions:
+        - .webhooks[]?.clientConfig.caBundle
