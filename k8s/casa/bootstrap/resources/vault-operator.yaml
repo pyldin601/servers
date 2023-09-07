@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vault
+  name: vault-operator
   namespace: argocd
 spec:
   project: default
@@ -10,14 +10,29 @@ spec:
     repoURL: "https://kubernetes-charts.banzaicloud.com"
     targetRevision: "1.16.1"
     chart: vault-operator
-#    helm:
-#      parameters:
-#        - name: server.dev.enabled
-#          value: "false"
-#        - name: server.logLevel
-#          value: "debug"
-#        - name: injector.logLevel
-#          value: "debug"
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://helm.releases.hashicorp.com'
+    targetRevision: "0.25.0"
+    chart: vault
+    helm:
+      parameters:
+        - name: server.dev.enabled
+          value: "false"
   destination:
     namespace: default
     server: https://kubernetes.default.svc
