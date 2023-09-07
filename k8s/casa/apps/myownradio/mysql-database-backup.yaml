@@ -2,7 +2,7 @@
 kind: Job
 apiVersion: batch/v1
 metadata:
-  name: mysql-backup-cronjob-1
+  name: mysql-backup-cronjob-0
   namespace: myownradio
 spec:
 #  successfulJobsHistoryLimit: 2
@@ -15,6 +15,7 @@ spec:
           annotations:
             vault.hashicorp.com/agent-inject: "true"
             vault.hashicorp.com/role: "app"
+            vault.hashicorp.com/agent-inject-secret-envs: "secret/myownradio/mysql-database-backup"
         spec:
           containers:
             - name: mysql-backup
@@ -37,12 +38,13 @@ spec:
                   configMapKeyRef:
                     name: myownradio-mysql-configmap
                     key: password
-#              - name: GITHUB_TOKEN
-#                value: vault:secret/myownradio/mysql-database-backup
+              - name: GITHUB_TOKEN
+                value: vault:secret/myownradio/mysql-database-backup#GITHUB_TOKEN
               command: ["/bin/sh", "-c"]
               args:
                 - |
                   apk add git mysql-client mariadb-connector-c-dev
                   mysqldump --no-tablespaces -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > myownradio_mysql_backup.sql
                   ls -l
+                  echo $GITHUB_TOKEN
           restartPolicy: OnFailure
