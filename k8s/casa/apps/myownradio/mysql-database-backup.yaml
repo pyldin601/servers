@@ -2,7 +2,7 @@
 kind: Job
 apiVersion: batch/v1
 metadata:
-  name: mysql-backup-cronjob-6
+  name: mysql-backup-cronjob-7
   namespace: myownradio
 spec:
 #  successfulJobsHistoryLimit: 2
@@ -13,9 +13,11 @@ spec:
       template:
         metadata:
           annotations:
-            vault.hashicorp.com/agent-inject: "true"
-            vault.hashicorp.com/role: "app"
-            vault.hashicorp.com/agent-inject-secret-envs: "secret/myownradio/mysql-database-backup"
+            vault.security.banzaicloud.io/enabled: "true"
+            vault.security.banzaicloud.io/vault-role: "app"
+#            vault.hashicorp.com/agent-inject: "true"
+#            vault.hashicorp.com/role: "app"
+#            vault.hashicorp.com/agent-inject-secret-envs: "secret/myownradio/mysql-database-backup"
         spec:
           containers:
             - name: mysql-backup
