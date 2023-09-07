@@ -1,15 +1,15 @@
 ---
-kind: Job
+kind: CronJob
 apiVersion: batch/v1
 metadata:
-  name: mysql-backup-cronjob-17
+  name: mysql-backup-cronjob
   namespace: myownradio
 spec:
-#  successfulJobsHistoryLimit: 2
-#  failedJobsHistoryLimit: 0
-#  schedule: "*/5 * * * *"
-#  jobTemplate:
-#    spec:
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 0
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
       template:
         metadata:
           annotations:
