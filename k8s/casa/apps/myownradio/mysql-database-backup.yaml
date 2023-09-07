@@ -2,7 +2,7 @@
 kind: Job
 apiVersion: batch/v1
 metadata:
-  name: mysql-backup-cronjob-1
+  name: mysql-backup-cronjob-6
   namespace: myownradio
 spec:
 #  successfulJobsHistoryLimit: 2
