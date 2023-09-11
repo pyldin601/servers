@@ -7,7 +7,7 @@ metadata:
 spec:
   successfulJobsHistoryLimit: 2
   failedJobsHistoryLimit: 0
-  schedule: "0 0 * * *"
+  schedule: "0 12 * * *"
   jobTemplate:
     spec:
       template:
@@ -15,6 +15,7 @@ spec:
           annotations:
             vault.hashicorp.com/agent-inject: "true"
             vault.hashicorp.com/role: "app"
+            vault.hashicorp.com/agent-pre-populate-only : "true"
             vault.hashicorp.com/agent-inject-secret-exports: "kv/myownradio/mysql-database-backup"
             vault.hashicorp.com/agent-inject-template-exports: |
               {{- with secret "kv/myownradio/mysql-database-backup" -}}
@@ -45,15 +46,15 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  source /vault/secrets/exports
-                  apk add git mysql-client mariadb-connector-c-dev
-                  git config --global user.email "hello@pyldin601.dev"
-                  git config --global user.name "Backup Bot"    
-                  git clone https://pyldin601:"$GITHUB_TOKEN"@github.com/myownradio/mysql-database-backup.git
-                  cd mysql-database-backup
-                  mysqldump --no-tablespaces -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > myownradio_mysql_backup.sql
-                  git add myownradio_mysql_backup.sql
-                  git commit -m "Adding new database backup"
-                  git push
+                  source /vault/secrets/exports &&
+                  apk add git mysql-client mariadb-connector-c-dev &&
+                  git config --global user.email "hello@pyldin601.dev" &&
+                  git config --global user.name "Backup Bot" &&
+                  git clone https://pyldin601:"$GITHUB_TOKEN"@github.com/myownradio/mysql-database-backup.git &&
+                  cd mysql-database-backup &&
+                  mysqldump --no-create-info --no-tablespaces -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > myownradio_mysql_backup.sql &&
+                  git add myownradio_mysql_backup.sql &&
+                  git commit -m "Adding new database backup" &&
+                  git push &&
                   exit 0
           restartPolicy: OnFailure
