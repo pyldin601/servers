@@ -12,6 +12,7 @@ spec:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
+        ad.datadoghq.com/radiomanager-backend.logs: '[{"source":"rust","service":"radiomanager-backend"}]'
       labels:
         deployment: radio-manager-backend
     spec:
