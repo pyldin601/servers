@@ -7,8 +7,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://helm.datadoghq.com'
-    chart: datadog
+    repoURL: 'https://github.com/DataDog/helm-charts.git'
+    path: 'charts/datadog'
+    targetRevision: '3.36.0'
     helm:
       parameters:
         - name: datadog.site
