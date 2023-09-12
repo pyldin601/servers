@@ -14,8 +14,8 @@ spec:
       parameters:
         - name: datadog.site
           value: "datadoghq.eu"
-        - name: datadog.apiKey
-          value: "{{ configmap.datadog-api-key.data.api-key }}"
+        - name: datadog.apiKeyExistingSecret
+          value: "datadog-api-key"
   destination:
     namespace: default
     server: https://kubernetes.default.svc
