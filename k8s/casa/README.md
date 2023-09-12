@@ -17,3 +17,9 @@ curl -sfL https://get.k3s.io | sh -
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.0-rc1/manifests/install.yaml
 ```
+
+
+Update Datadog API Key:
+```shell
+kubectl create configmap datadog-api-key --from-literal=api-key=NEW_TOKEN
+```
