@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: datadog
+  namespace: default
+spec:
+  project: default
+  source:
+    repoURL: 'https://helm.datadoghq.com'
+    chart: datadog
+    helm:
+      parameters:
+        - name: datadog.site
+          value: "datadoghq.eu"
+        - name: datadog.apiKey
+          value: "{{ configmap.datadog-api-key.data.api-key }}"
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
