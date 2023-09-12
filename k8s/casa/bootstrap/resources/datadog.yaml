@@ -16,6 +16,10 @@ spec:
           value: "datadoghq.eu"
         - name: datadog.apiKeyExistingSecret
           value: "datadog-api-key"
+        - name: logs.enabled
+          value: "true"
+        - name: logs.containerCollectAll
+          value: "true"
   destination:
     namespace: default
     server: https://kubernetes.default.svc
