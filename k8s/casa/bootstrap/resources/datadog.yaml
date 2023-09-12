@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: 'https://github.com/DataDog/helm-charts.git'
     path: 'charts/datadog'
-    targetRevision: '3.36.0'
+    targetRevision: 'datadog-3.36.0'
     helm:
       parameters:
         - name: datadog.site
