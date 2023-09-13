@@ -20,7 +20,7 @@ spec:
           value: "true"
         - name: datadog.logs.containerCollectAll
           value: "true"
-        - name: datadog.containerExclude
+        - name: datadog.containerExcludeLogs
           value: "service:argocd service:loki"
   destination:
     namespace: default
