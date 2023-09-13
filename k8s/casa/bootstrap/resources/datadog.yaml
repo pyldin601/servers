@@ -21,7 +21,7 @@ spec:
         - name: datadog.logs.containerCollectAll
           value: "true"
         - name: datadog.containerExcludeLogs
-          value: "service:argocd service:loki"
+          value: "image:datadog/agent service:argocd service:loki"
   destination:
     namespace: default
     server: https://kubernetes.default.svc
