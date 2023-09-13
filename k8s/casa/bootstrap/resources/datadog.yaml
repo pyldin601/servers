@@ -21,7 +21,7 @@ spec:
         - name: datadog.logs.containerCollectAll
           value: "true"
         - name: datadog.containerExcludeLogs
-          value: "image:gcr.io/datadoghq/agent"
+          value: "image:gcr.io/datadoghq/agent image:quay.io/argoproj/argocd image:grafana/loki"
   destination:
     namespace: default
     server: https://kubernetes.default.svc
