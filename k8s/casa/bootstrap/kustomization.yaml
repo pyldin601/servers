@@ -21,7 +21,6 @@ resources:
   - resources/traefik-config.yaml
   - resources/external-endpoints.yaml
   - resources/transmission-rpc.yaml
-  - resources/vault-operator.yaml
   - resources/datadog.yaml
 
   # ArgoCD
