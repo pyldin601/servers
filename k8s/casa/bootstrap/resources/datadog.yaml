@@ -16,9 +16,9 @@ spec:
           value: "datadoghq.eu"
         - name: datadog.apiKeyExistingSecret
           value: "datadog-api-key"
-        - name: logs.enabled
+        - name: datadog.logs.enabled
           value: "true"
-        - name: logs.containerCollectAll
+        - name: datadog.logs.containerCollectAll
           value: "true"
   destination:
     namespace: default
