@@ -12,13 +12,12 @@ spec:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
-        ad.datadoghq.com/radiomanager-backend.logs: '[{"source":"rust","service":"radiomanager-backend"}]'
       labels:
         deployment: radio-manager-backend
     spec:
       containers:
         - name: streamer
-          image: pldin601/myownradio-radio-manager-backend:23.09.6150225447-425f55d
+          image: pldin601/myownradio-radio-manager-backend:23.09.6187873407-507edd4
           resources:
             requests:
               memory: "512Mi"
