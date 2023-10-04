@@ -1,0 +1,12 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: myownradio-redis
+spec:
+  selector:
+    deployment: myownradio-redis
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379

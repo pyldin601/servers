@@ -20,6 +20,11 @@ resources:
   - mysql-migration-job.yaml
   - mysql-database-backup.yaml
 
+  # redis
+  - redis-deployment.yaml
+  - redis-pvc.yaml
+  - redis-service.yaml
+
   # server
   - myownradio-server-deployment.yaml
   - myownradio-server-service.yaml

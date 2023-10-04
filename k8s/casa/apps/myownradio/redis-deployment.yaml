@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myownradio-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: myownradio-redis
+  template:
+    metadata:
+      labels:
+        deployment: myownradio-redis
+    spec:
+      volumes:
+        - name: myownradio-redis-data
+          persistentVolumeClaim:
+            claimName: myownradio-redis-data
+      containers:
+        - name: redis
+          image: redis:alpine3.18
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "200m"
+            limits:
+              memory: "1024Mi"
+              cpu: "400m"
+          volumeMounts:
+            - mountPath: "/data"
+              name: myownradio-redis-data
