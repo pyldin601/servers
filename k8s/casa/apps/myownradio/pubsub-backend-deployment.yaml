@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radioterio-pubsub-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: radioterio-pubsub-backend
+  template:
+    metadata:
+      labels:
+        deployment: radioterio-pubsub-backend
+    spec:
+      containers:
+        - name: radioterio-pubsub-backend
+          image: pldin601/myownradio-radiomanager-pubsub-backend:23.10.6409421440-19ef3dc
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "200m"
+            limits:
+              memory: "1024Mi"
+              cpu: "400m"

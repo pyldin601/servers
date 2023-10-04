@@ -54,3 +54,6 @@ resources:
   # channel-bot
   - myownradio-channel-bot-sealedsecret.yaml
 #  - myownradio-channel-bot.yaml
+
+  # pubsub
+  - pubsub-backend-deployment.yaml
