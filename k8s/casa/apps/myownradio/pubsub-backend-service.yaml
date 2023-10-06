@@ -2,10 +2,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: radioterio-pubsub-backend
+  name: radiomanager-pubsub-backend
 spec:
   selector:
-    deployment: radioterio-pubsub-backend
+    deployment: radiomanager-pubsub-backend
   ports:
     - protocol: TCP
       port: 8080

@@ -2,19 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: radioterio-pubsub-backend
+  name: radiomanager-pubsub-backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      deployment: radioterio-pubsub-backend
+      deployment: radiomanager-pubsub-backend
   template:
     metadata:
       labels:
-        deployment: radioterio-pubsub-backend
+        deployment: radiomanager-pubsub-backend
     spec:
       containers:
-        - name: radioterio-pubsub-backend
+        - name: radiomanager-pubsub-backend
           image: pldin601/myownradio-radiomanager-pubsub-backend:23.10.6409421440-19ef3dc
           env:
             - name: PORT
