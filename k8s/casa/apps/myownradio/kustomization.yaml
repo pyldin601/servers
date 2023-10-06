@@ -58,3 +58,4 @@ resources:
   # pubsub
   - pubsub-backend-deployment.yaml
   - pubsub-backend-service.yaml
+  - pubsub-backend-ingressroute.yaml
