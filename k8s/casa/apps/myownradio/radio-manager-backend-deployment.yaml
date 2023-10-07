@@ -60,6 +60,6 @@ spec:
             - name: FILE_SYSTEM_ROOT_PATH
               value: ""
             - name: PUBSUB_BACKEND_ENDPOINT
-              value: http://radiomanager-pubsub-backend.myownradio.svc.cluster.local
+              value: http://radiomanager-pubsub-backend.myownradio.svc.cluster.local:8080
       imagePullSecrets:
         - name: dockerconfig
