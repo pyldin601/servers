@@ -21,6 +21,8 @@ spec:
               value: '8080'
             - name: REDIS_HOST
               value: 'myownradio-redis'
+            - name: DEBUG
+              value: '*'
           resources:
             requests:
               memory: "512Mi"
