@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radiomanager-web-egress-process
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: radiomanager-web-egress-process
+  template:
+    metadata:
+      labels:
+        deployment: radiomanager-web-egress-process
+    spec:
+      containers:
+        - name: radiomanager-web-egress-process
+          image: pldin601/myownradio-radiomanager-web-egress-process:23.10.6512130480-7440b89
+          env:
+            - name: WEBPAGE_URL
+              value: 'https://www.testufo.com/'
+            - name: RTMP_URL
+              value: 'rtmp://live.restream.io/live'
+            - name: RTMP_STREAM_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rtmp-stream-key
+                  key: rtmp-stream-key
+            - name: GST_DEBUG
+              value: '4'
+            - name: VIDEO_WIDTH
+              value: '1280'
+            - name: VIDEO_HEIGHT
+              value: '720'
+            - name: VIDEO_BITRATE
+              value: '2500'
+            - name: VIDEO_FRAMERATE
+              value: '30'
+            - name: AUDIO_BITRATE
+              value: '128'
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "1000m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1500m"
