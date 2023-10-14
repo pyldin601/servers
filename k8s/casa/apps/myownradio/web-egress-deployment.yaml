@@ -47,6 +47,8 @@ spec:
               value: '128'
             - name: CEF_GPU_ENABLED
               value: 'true'
+            - name: VIDEO_ACCELERATION
+              value: 'VAAPI'
           resources:
             requests:
               memory: "512Mi"
