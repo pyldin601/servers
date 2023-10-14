@@ -18,6 +18,9 @@ spec:
       containers:
         - name: streamer
           image: pldin601/myownradio-radio-manager-backend:23.10.6518017277-292c1ea
+          volumeDevices:
+            - devicePath: /dev/dri
+              name: /dev/dri
           resources:
             requests:
               memory: "512Mi"
