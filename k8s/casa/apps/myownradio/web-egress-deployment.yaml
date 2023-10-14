@@ -5,6 +5,8 @@ metadata:
   name: radiomanager-web-egress-process
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       deployment: radiomanager-web-egress-process
@@ -43,6 +45,8 @@ spec:
               value: '30'
             - name: AUDIO_BITRATE
               value: '128'
+            - name: CEF_GPU_ENABLED
+              value: 'true'
           resources:
             requests:
               memory: "512Mi"
