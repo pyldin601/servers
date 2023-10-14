@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: radiomanager-web-egress-process
-          image: pldin601/myownradio-radiomanager-web-egress-process:23.10.6518017277-292c1ea
+          image: pldin601/myownradio-radiomanager-web-egress-process:23.10.6518876781-f1d1bb7
           securityContext:
             privileged: true
           volumeMounts:
