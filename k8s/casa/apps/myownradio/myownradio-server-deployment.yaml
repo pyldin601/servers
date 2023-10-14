@@ -27,7 +27,7 @@ spec:
           resources:
             requests:
               memory: "512Mi"
-              cpu: "500m"
+              cpu: "100m"
             limits:
               memory: "1024Mi"
               cpu: "1000m"
@@ -158,10 +158,10 @@ spec:
           resources:
             requests:
               memory: "256Mi"
-              cpu: "200m"
+              cpu: "100m"
             limits:
               memory: "512Mi"
-              cpu: "500m"
+              cpu: "350m"
           ports:
             - containerPort: 80
       imagePullSecrets:
