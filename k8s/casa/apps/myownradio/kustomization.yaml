@@ -61,4 +61,4 @@ resources:
   - pubsub-backend-ingressroute.yaml
 
   # test stream
-#  - web-egress-deployment.yaml
+  - web-egress-deployment.yaml
