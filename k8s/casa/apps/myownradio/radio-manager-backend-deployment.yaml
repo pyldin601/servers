@@ -17,12 +17,7 @@ spec:
     spec:
       containers:
         - name: streamer
-          image: pldin601/myownradio-radio-manager-backend:23.10.6518017277-292c1ea
-          securityContext:
-            privileged: true
-          volumeMounts:
-            - name: dev-dri
-              mountPath: /dev/dri
+          image: pldin601/myownradio-radio-manager-backend:23.10.6442004634-ed9a19d
           resources:
             requests:
               memory: "512Mi"
@@ -66,9 +61,5 @@ spec:
               value: ""
             - name: PUBSUB_BACKEND_ENDPOINT
               value: http://radiomanager-pubsub-backend.myownradio.svc.cluster.local:8080
-      volumes:
-        - name: dev-dri
-          hostPath:
-            path: /dev/dri
       imagePullSecrets:
         - name: dockerconfig

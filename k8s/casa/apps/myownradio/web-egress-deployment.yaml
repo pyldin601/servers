@@ -15,7 +15,12 @@ spec:
     spec:
       containers:
         - name: radiomanager-web-egress-process
-          image: pldin601/myownradio-radiomanager-web-egress-process:23.10.6517819394-d280405
+          image: pldin601/myownradio-radiomanager-web-egress-process:23.10.6518017277-292c1ea
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: dev-dri
+              mountPath: /dev/dri
           env:
             - name: WEBPAGE_URL
               value: 'https://www.testufo.com/'
@@ -45,3 +50,7 @@ spec:
             limits:
               memory: "1024Mi"
               cpu: "1500m"
+      volumes:
+        - name: dev-dri
+          hostPath:
+            path: /dev/dri
