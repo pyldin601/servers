@@ -34,7 +34,7 @@ spec:
                   name: rtmp-stream-key
                   key: rtmp-stream-key
             - name: GST_DEBUG
-              value: 'GST_CAPS:6'
+              value: '4'
             - name: VIDEO_WIDTH
               value: '1280'
             - name: VIDEO_HEIGHT
