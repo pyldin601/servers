@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: radiomanager-web-egress-process
-          image: pldin601/myownradio-radiomanager-web-egress-process:23.10.6519361537-ad0bc01
+          image: pldin601/myownradio-radiomanager-web-egress-process:23.10.6519673067-14dcdc4
           securityContext:
             privileged: true
           volumeMounts:
@@ -47,8 +47,8 @@ spec:
               value: '128'
             - name: CEF_GPU_ENABLED
               value: 'true'
-#            - name: VIDEO_ACCELERATION
-#              value: 'VAAPI'
+            - name: VIDEO_ACCELERATION
+              value: 'VAAPI'
           resources:
             requests:
               memory: "512Mi"
