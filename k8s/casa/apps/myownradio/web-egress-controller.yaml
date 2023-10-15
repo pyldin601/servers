@@ -11,6 +11,12 @@ spec:
       port: 8080
       targetPort: 8080
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: radiomanager-web-egress-controller
+  namespace: myownradio
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,6 +31,7 @@ spec:
       labels:
         deployment: radiomanager-web-egress-controller
     spec:
+      serviceAccountName: radiomanager-web-egress-controller
       containers:
         - name: radiomanager-web-egress-controller
           image: pldin601/myownradio-radiomanager-web-egress-controller:23.10.6525180771-a854570
@@ -48,3 +55,27 @@ spec:
             limits:
               memory: "1024Mi"
               cpu: "500m"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: radioterio-egress
+  name: job-list-role
+rules:
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["list", "get", "create", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: job-list-rolebinding
+  namespace: radioterio-egress
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: job-list-role
+subjects:
+  - kind: ServiceAccount
+    name: radiomanager-web-egress-controller
+    namespace: myownradio
