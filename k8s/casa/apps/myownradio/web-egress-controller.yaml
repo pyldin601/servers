@@ -1,0 +1,50 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: radiomanager-web-egress-controller
+spec:
+  selector:
+    deployment: radiomanager-web-egress-controller
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radiomanager-web-egress-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: radiomanager-web-egress-controller
+  template:
+    metadata:
+      labels:
+        deployment: radiomanager-web-egress-controller
+    spec:
+      containers:
+        - name: radiomanager-web-egress-controller
+          image: pldin601/myownradio-radiomanager-web-egress-controller:23.10.6524510078-9581889
+          env:
+            - name: EGRESS_IMAGE_NAME
+              value: 'pldin601/myownradio-radiomanager-web-egress-process'
+            - name: EGRESS_IMAGE_TAG
+              value: '23.10.6520030794-016601c'
+            - name: EGRESS_NAMESPACE
+              value: 'radioterio-egress'
+            - name: BIND_ADDRESS
+              value: '0.0.0.0:8080'
+            - name: CEF_GPU_ENABLED
+              value: 'true'
+            - name: VIDEO_ACCELERATION
+              value: 'VAAPI'
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "200m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
