@@ -61,5 +61,15 @@ spec:
               value: ""
             - name: PUBSUB_BACKEND_ENDPOINT
               value: http://radiomanager-pubsub-backend.myownradio.svc.cluster.local:8080
+            - name: AUTH_JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: radiomanager-backend
+                  key: AUTH_JWT_SECRET_KEY
+            - name: LEGACY_AUTH_JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: myownradio-server
+                  key: JWT_KEY
       imagePullSecrets:
         - name: dockerconfig
