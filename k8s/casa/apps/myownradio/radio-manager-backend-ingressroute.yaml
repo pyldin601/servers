@@ -16,7 +16,7 @@ metadata:
   namespace: myownradio
 spec:
   forwardAuth:
-    address: http://myownradio-server.myownradio.svc.cluster.local/api/v2/self
+    address: http://radio-manager-backend.myownradio.svc.cluster.local/v0/forward-auth/by-token
     authResponseHeaders: ["user-id"]
     trustForwardHeader: false
 
