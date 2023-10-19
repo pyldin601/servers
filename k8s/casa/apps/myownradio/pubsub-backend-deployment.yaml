@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: radiomanager-pubsub-backend
-          image: pldin601/myownradio-radiomanager-pubsub-backend:23.10.6432989450-56412eb
+          image: pldin601/myownradio-radiomanager-pubsub-backend:23.10.6551878695-81549fe
           env:
             - name: PORT
               value: '8080'
