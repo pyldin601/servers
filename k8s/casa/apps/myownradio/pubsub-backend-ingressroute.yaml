@@ -18,6 +18,7 @@ spec:
   forwardAuth:
     address: http://radio-manager-backend.myownradio.svc.cluster.local:8080/v0/forward-auth/by-token
     authResponseHeaders: ["user-id"]
+    authRequestHeaders: ["authentication"]
     trustForwardHeader: false
 
 ---
