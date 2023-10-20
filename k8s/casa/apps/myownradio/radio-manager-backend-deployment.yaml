@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: streamer
-          image: pldin601/myownradio-radio-manager-backend:23.10.6551878437-81549fe
+          image: pldin601/myownradio-radio-manager-backend:23.10.6589325161-ec8c9c2
           resources:
             requests:
               memory: "512Mi"
