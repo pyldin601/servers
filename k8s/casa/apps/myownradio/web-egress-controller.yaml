@@ -62,7 +62,7 @@ metadata:
   namespace: radioterio-egress
   name: job-list-role
 rules:
-  - apiGroups: ["batch", "core"]
+  - apiGroups: ["batch", ""]
     resources: ["jobs", "pods"]
     verbs: ["list", "get", "create", "delete"]
 ---
