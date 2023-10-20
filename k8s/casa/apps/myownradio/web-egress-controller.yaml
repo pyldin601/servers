@@ -62,8 +62,8 @@ metadata:
   namespace: radioterio-egress
   name: job-list-role
 rules:
-  - apiGroups: ["batch"]
-    resources: ["jobs"]
+  - apiGroups: ["batch", "core"]
+    resources: ["jobs", "pods"]
     verbs: ["list", "get", "create", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
