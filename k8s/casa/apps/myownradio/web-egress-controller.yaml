@@ -34,12 +34,12 @@ spec:
       serviceAccountName: radiomanager-web-egress-controller
       containers:
         - name: radiomanager-web-egress-controller
-          image: pldin601/myownradio-radiomanager-web-egress-controller:23.10.6604164375-bb1e48a
+          image: pldin601/myownradio-radiomanager-web-egress-controller:23.10.6605235667-6e0e17b
           env:
             - name: EGRESS_IMAGE_NAME
               value: 'pldin601/myownradio-radiomanager-web-egress-process'
             - name: EGRESS_IMAGE_TAG
-              value: '23.10.6591067306-ae186d2'
+              value: '23.10.6605235584-6e0e17b'
             - name: EGRESS_NAMESPACE
               value: 'radioterio-egress'
             - name: BIND_ADDRESS
