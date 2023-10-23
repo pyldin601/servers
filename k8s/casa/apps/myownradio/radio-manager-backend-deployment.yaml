@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: streamer
-          image: pldin601/myownradio-radio-manager-backend:23.10.6591067313-ae186d2
+          image: pldin601/myownradio-radio-manager-backend:23.10.6613732863-7b993a6
           resources:
             requests:
               memory: "512Mi"
@@ -71,5 +71,9 @@ spec:
                 secretKeyRef:
                   name: myownradio-server
                   key: JWT_KEY
+            - name: WEB_EGRESS_STREAM_PLAYER_URL_PREFIX
+              value: https://radioter.io/new/player/
+            - name: WEB_EGRESS_CONTROLLER_ENDPOINT
+              value: http://radiomanager-web-egress-controller.svc.cluster.local:8080
       imagePullSecrets:
         - name: dockerconfig
