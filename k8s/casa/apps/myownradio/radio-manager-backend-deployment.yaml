@@ -74,6 +74,6 @@ spec:
             - name: WEB_EGRESS_STREAM_PLAYER_URL_PREFIX
               value: https://radioter.io/new/player/
             - name: WEB_EGRESS_CONTROLLER_ENDPOINT
-              value: http://radiomanager-web-egress-controller.svc.cluster.local:8080
+              value: http://radiomanager-web-egress-controller.myownradio.svc.cluster.local:8080
       imagePullSecrets:
         - name: dockerconfig
