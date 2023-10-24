@@ -39,7 +39,7 @@ spec:
             - name: EGRESS_IMAGE_NAME
               value: 'pldin601/myownradio-radiomanager-web-egress-process'
             - name: EGRESS_IMAGE_TAG
-              value: '23.10.6630224117-7910d9c'
+              value: '23.10.6605235584-6e0e17b'
             - name: EGRESS_NAMESPACE
               value: 'radioterio-egress'
             - name: BIND_ADDRESS
