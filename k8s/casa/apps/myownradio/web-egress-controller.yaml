@@ -48,6 +48,8 @@ spec:
               value: 'true'
             - name: VIDEO_ACCELERATION
               value: 'VAAPI'
+            - name: RADIOMANAGER_BACKEND_ENDPOINT
+              value: http://radio-manager-backend.myownradio.svc.cluster.local:8080
           resources:
             requests:
               memory: "512Mi"
