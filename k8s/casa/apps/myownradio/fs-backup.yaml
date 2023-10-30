@@ -1,0 +1,45 @@
+---
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: fs-backup-cronjob
+  namespace: myownradio
+spec:
+#  successfulJobsHistoryLimit: 2
+#  failedJobsHistoryLimit: 0
+#  schedule: "0 12 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: myownradio-server-storage
+              persistentVolumeClaim:
+                claimName: myownradio-server-storage
+          containers:
+            - name: fs-to-s3-backup
+              image: amazon/aws-cli
+              env:
+              - name: SOURCE_PATH
+                value: /data
+              - name: AWS_S3_BUCKET
+                value: myownradio-storage
+              - name: AWS_ACCESS_KEY_ID
+                secretKeyRef:
+                  secret:
+                    name: awscli
+                    key: aws_access_key_id
+              - name: AWS_SECRET_ACCESS_KEY
+                secretKeyRef:
+                  secret:
+                    name: awscli
+                    key: aws_secret_access_key
+              - name: AWS_DEFAULT_REGION
+                value: eu-central-1
+              command: ["/bin/sh", "-c"]
+              args:
+                - aws s3 sync "$SOURCE_PATH" s3://"$AWS_S3_BUCKET" --delete
+          restartPolicy: OnFailure
+          volumeMounts:
+            - mountPath: "/data"
+              name: myownradio-server-storage
