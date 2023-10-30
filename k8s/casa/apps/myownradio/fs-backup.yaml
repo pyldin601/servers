@@ -25,13 +25,13 @@ spec:
               - name: AWS_S3_BUCKET
                 value: myownradio-storage
               - name: AWS_ACCESS_KEY_ID
-                secretKeyRef:
-                  secret:
+                valueFrom:
+                  secretKeyRef:
                     name: awscli
                     key: aws_access_key_id
               - name: AWS_SECRET_ACCESS_KEY
-                secretKeyRef:
-                  secret:
+                valueFrom:
+                  secretKeyRef:
                     name: awscli
                     key: aws_secret_access_key
               - name: AWS_DEFAULT_REGION
