@@ -9,7 +9,7 @@ spec:
 #  failedJobsHistoryLimit: 0
 #  schedule: "0 12 * * *"
 #  jobTemplate:
-    spec:
+#    spec:
       template:
         spec:
           volumes:
