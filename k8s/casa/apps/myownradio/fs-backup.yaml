@@ -36,10 +36,10 @@ spec:
                     key: aws_secret_access_key
               - name: AWS_DEFAULT_REGION
                 value: eu-central-1
+                volumeMounts:
+                  - mountPath: "/data"
+                    name: myownradio-server-storage
               command: ["/bin/sh", "-c"]
               args:
                 - aws s3 sync "$SOURCE_PATH" s3://"$AWS_S3_BUCKET" --delete
           restartPolicy: OnFailure
-          volumeMounts:
-            - mountPath: "/data"
-              name: myownradio-server-storage
