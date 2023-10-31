@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: mysql-migration-job-23.10.6707356296-54f0923
+  name: mysql-migration-job-23.10.6708426040-a1e5442
 spec:
   completions: 1
   parallelism: 1
@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
         - name: migration
-          image: pldin601/myownradio-mysql-migration:23.10.6707356296-54f0923
+          image: pldin601/myownradio-mysql-migration:23.10.6708426040-a1e5442
           env:
             - name: MYSQL_HOST
               value: myownradio-mysql.myownradio.svc.cluster.local
