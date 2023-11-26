@@ -20,7 +20,7 @@ metadata:
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: prepuller
+  name: web-egress-process-prepuller
   namespace: radioterio-egress
 spec:
   selector:
@@ -33,6 +33,9 @@ spec:
     spec:
       initContainers:
         - name: web-egress-process-prepuller-1
+          image: pldin601/myownradio-radiomanager-web-egress-process:23.11.6797136598-78f80d4
+          command: ["sh", "-c", "'true'"]
+        - name: web-egress-process-prepuller-2
           image: pldin601/myownradio-radiomanager-web-egress-process:23.11.6797136598-78f80d4
           command: ["sh", "-c", "'true'"]
       containers:
