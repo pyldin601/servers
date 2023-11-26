@@ -18,6 +18,28 @@ metadata:
   namespace: myownradio
 ---
 apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: prepuller
+  namespace: radioterio-egress
+spec:
+  selector:
+    matchLabels:
+      name: web-egress-process-prepuller
+  template:
+    metadata:
+      labels:
+        name: web-egress-process-prepuller
+    spec:
+      initContainers:
+        - name: web-egress-process-prepuller-1
+          image: pldin601/myownradio-radiomanager-web-egress-process:23.11.6797136598-78f80d4
+          command: ["sh", "-c", "'true'"]
+      containers:
+        - name: pause
+          image: gcr.io/google_containers/pause
+---
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: radiomanager-web-egress-controller
