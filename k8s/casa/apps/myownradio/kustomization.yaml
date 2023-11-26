@@ -6,7 +6,17 @@ metadata:
 commonLabels:
   app: myownradio
 
-images: []
+images:
+  - name: pldin601/myownradio-radiomanager-web-egress-controller
+    newTag: 23.11.6995128147-3fe4a0b
+  - name: pldin601/myownradio-radiomanager-web-egress-process
+    newTag: 23.11.6797136598-78f80d4 # <---------------------------------
+#                                                                       |
+#                                                                       |
+configMapGenerator: #                                       Should be updated together!
+  - name: image-tag-config #                                            |
+    literals: #                                                         |
+      - WEB_EGRESS_PROCESS_IMAGE_TAG=23.11.6797136598-78f80d4 # <--------
 
 resources:
   - myownradio-ns.yaml

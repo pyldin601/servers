@@ -33,10 +33,7 @@ spec:
     spec:
       initContainers:
         - name: web-egress-process-prepuller-1
-          image: pldin601/myownradio-radiomanager-web-egress-process:23.11.6797136598-78f80d4
-          command: ["sh", "-c", "'true'"]
-        - name: web-egress-process-prepuller-2
-          image: pldin601/myownradio-radiomanager-web-egress-process:23.11.6797136598-78f80d4
+          image: pldin601/myownradio-radiomanager-web-egress-process
           command: ["sh", "-c", "'true'"]
       containers:
         - name: pause
@@ -59,12 +56,16 @@ spec:
       serviceAccountName: radiomanager-web-egress-controller
       containers:
         - name: radiomanager-web-egress-controller
-          image: pldin601/myownradio-radiomanager-web-egress-controller:23.11.6995128147-3fe4a0b
+          image: pldin601/myownradio-radiomanager-web-egress-controller
           env:
             - name: EGRESS_IMAGE_NAME
               value: pldin601/myownradio-radiomanager-web-egress-process
             - name: EGRESS_IMAGE_TAG
-              value: 23.11.6797136598-78f80d4
+              valueFrom:
+                configMapKeyRef:
+                  name: image-tag-config
+                  key: WEB_EGRESS_PROCESS_IMAGE_TAG
+
             - name: EGRESS_NAMESPACE
               value: 'radioterio-egress'
             - name: BIND_ADDRESS
