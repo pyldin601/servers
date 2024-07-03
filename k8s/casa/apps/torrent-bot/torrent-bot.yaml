@@ -22,7 +22,7 @@ spec:
             - name: STORAGE_FILE
               value: /data/torrent-bot.db
             - name: TRANS_URL
-              value: http://transmission-daemon
+              value: http://transmission-daemon:9091/transmission/rpc
             - name: TRANS_DOWNLOAD_DIRECTORY
               value: /data/Bot
             - name: TRANS_DRY_RUN
