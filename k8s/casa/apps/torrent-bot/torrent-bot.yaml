@@ -1,0 +1,51 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: torrent-bot-job
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      volumes:
+        - name: db-volume
+          persistentVolumeClaim:
+            claimName: db-volume-claim
+      containers:
+        - name: torrent-bot
+          image: pldin601/torrent-bot@sha256:5f8453bc75a30921b128d0a6cc6afe16b370e07bb57133f75cfb713c12c9d95e
+          volumeMounts:
+            - mountPath: /data
+              name: db-volume
+          env:
+            - name: STORAGE_FILE
+              value: /data/torrent-bot.db
+            - name: TRANS_URL
+              value: http://transmission-daemon
+            - name: TRANS_DOWNLOAD_DIRECTORY
+              value: /data/Bot
+            - name: TRANS_DRY_RUN
+              value: "true"
+            - name: TOLOKA_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: toloka
+                  key: USERNAME
+            - name: TOLOKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: toloka
+                  key: PASSWORD
+      restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
