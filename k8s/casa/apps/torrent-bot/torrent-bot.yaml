@@ -30,12 +30,12 @@ spec:
             - name: TOLOKA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: toloka
+                  name: toloka-secret
                   key: USERNAME
             - name: TOLOKA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: toloka
+                  name: toloka-secret
                   key: PASSWORD
       restartPolicy: OnFailure
 ---
