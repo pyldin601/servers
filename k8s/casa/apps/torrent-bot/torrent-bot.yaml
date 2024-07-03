@@ -28,8 +28,6 @@ spec:
                   value: http://transmission-daemon:9091/transmission/rpc
                 - name: TRANS_DOWNLOAD_DIRECTORY
                   value: /data/Bot
-                - name: TRANS_DRY_RUN
-                  value: "true"
                 - name: TOLOKA_USERNAME
                   valueFrom:
                     secretKeyRef:
