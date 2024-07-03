@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: torrent-bot-sync-job
+  name: torrent-bot-sync-job-v0.2.0
 spec:
   successfulJobsHistoryLimit: 2
   failedJobsHistoryLimit: 0
@@ -17,7 +17,7 @@ spec:
                 claimName: db-volume-claim
           containers:
             - name: torrent-bot
-              image: pldin601/torrent-bot@sha256:5f8453bc75a30921b128d0a6cc6afe16b370e07bb57133f75cfb713c12c9d95e
+              image: pldin601/torrent-bot:v0.2.0
               volumeMounts:
                 - mountPath: /data
                   name: db-volume
