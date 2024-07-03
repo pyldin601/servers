@@ -22,7 +22,7 @@ resources:
   - resources/traefik-config.yaml
   - resources/external-endpoints.yaml
   - resources/transmission-rpc.yaml
-  - resources/datadog.yaml
+#  - resources/datadog.yaml
 
   # ArgoCD
   - argocd/argocd-server-ingressroute.yaml
