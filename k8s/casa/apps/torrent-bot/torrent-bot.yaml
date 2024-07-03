@@ -6,7 +6,7 @@ metadata:
 spec:
   successfulJobsHistoryLimit: 2
   failedJobsHistoryLimit: 0
-  schedule: "*/30 * * * *"
+  schedule: "*/30 9-22 * * *"
   jobTemplate:
     spec:
       template:
