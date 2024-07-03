@@ -1,1 +1,110 @@
 ---
+kind: Service
+apiVersion: v1
+metadata:
+  name: transmission-daemon
+spec:
+  selector:
+    deployment: transmission-daemon
+  ports:
+    - protocol: TCP
+      port: 9091
+      targetPort: 9091
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transmission-daemon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: transmission-daemon
+  template:
+    metadata:
+      labels:
+        deployment: transmission-daemon
+    spec:
+      volumes:
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: config-volume-claim
+        - name: downloads-volume
+          persistentVolumeClaim:
+            claimName: downloads-volume-claim
+        - name: watch-volume
+          persistentVolumeClaim:
+            claimName: watch-volume-claim
+        - name: data-volume
+          hostPath:
+            path: /data/Bot
+      containers:
+        - name: transmission-daemon
+          image: haugene/transmission-openvpn
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+          volumeMounts:
+            - mountPath: "/config"
+              name: config-volume
+            - mountPath: "/downloads"
+              name: downloads-volume
+            - mountPath: "/watch"
+              name: watch-volume
+            - mountPath: "/data"
+              name: data-volume
+          env:
+            - name: OPENVPN_PROVIDER
+              value: NORDVPN
+            - name: OPENVPN_CONFIG
+              value: ukraine
+            - name: OPENVPN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: openvpn-secret
+                  key: OPENVPN_USERNAME
+            - name: OPENVPN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: openvpn-secret
+                  key: OPENVPN_PASSWORD
+            - name: LOCAL_NETWORK
+              value: 192.168.0.0/16
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: downloads-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: watch-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
