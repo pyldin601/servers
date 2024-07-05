@@ -17,7 +17,7 @@ spec:
                 claimName: db-volume-claim
           containers:
             - name: torrent-bot
-              image: pldin601/torrent-bot:v0.2.0
+              image: pldin601/torrent-bot:v1.0.0
               volumeMounts:
                 - mountPath: /data
                   name: db-volume
@@ -38,6 +38,13 @@ spec:
                     secretKeyRef:
                       name: toloka-secret
                       key: PASSWORD
+                - name: TELEGRAM_BOT_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: telegram-secret
+                      key: TOKEN
+                - name: TELEGRAM_BOT_CHAT_ID
+                  value: "384980395"
           restartPolicy: OnFailure
 ---
 apiVersion: v1
