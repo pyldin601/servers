@@ -19,15 +19,15 @@ spec:
             - name: torrent-bot
               image: pldin601/torrent-bot:v1.0.0
               volumeMounts:
-                - mountPath: /data
+                - mountPath: /storage
                   name: db-volume
               env:
                 - name: STORAGE_FILE
-                  value: /data/torrent-bot.db
+                  value: /storage/torrent-bot.db
                 - name: TRANS_URL
                   value: http://transmission-daemon:9091/transmission/rpc
                 - name: TRANS_DOWNLOAD_DIRECTORY
-                  value: /data/Bot
+                  value: /data
                 - name: TOLOKA_USERNAME
                   valueFrom:
                     secretKeyRef:
