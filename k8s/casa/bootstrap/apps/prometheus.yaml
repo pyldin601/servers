@@ -26,7 +26,8 @@ spec:
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
-  spec:
+  
+  syncPolicy:
     automated:
       prune: true
       selfHeal: true
