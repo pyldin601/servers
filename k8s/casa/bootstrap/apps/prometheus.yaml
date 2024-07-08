@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: 'https://github.com/prometheus-community/helm-charts.git'
     path: charts/prometheus
-    targetRevision: b320323b9852a169145b3aa64e98af7eae3a0178
+    targetRevision: prometheus-25.22.0
     helm:
       parameters:
         - name: server.strategy.type
