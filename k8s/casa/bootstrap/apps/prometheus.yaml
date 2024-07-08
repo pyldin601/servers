@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: 'https://github.com/prometheus-community/helm-charts.git'
     path: charts/prometheus
-    targetRevision: HEAD
+    targetRevision: b320323b9852a169145b3aa64e98af7eae3a0178
     helm:
       parameters:
         - name: server.strategy.type
@@ -26,3 +26,7 @@ spec:
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
+  spec:
+    automated:
+      prune: true
+      selfHeal: true
