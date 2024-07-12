@@ -1,0 +1,52 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: torrent-bot-server
+spec:
+  selector:
+    deployment: torrent-bot-server
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: torrent-bot-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: torrent-bot-server
+  template:
+    metadata:
+      labels:
+        deployment: torrent-bot-server
+    spec:
+      containers:
+        - name: torrent-bot-server
+          image: pldin601/torrent-bot-server:latest
+          env:
+            env:
+              - name: TRANS_URL
+                value: http://transmission-daemon:9091/transmission/rpc
+              - name: TOLOKA_USERNAME
+                valueFrom:
+                  secretKeyRef:
+                    name: toloka-secret
+                    key: USERNAME
+              - name: TOLOKA_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: toloka-secret
+                    key: PASSWORD
+              - name: TELEGRAM_BOT_TOKEN
+                valueFrom:
+                  secretKeyRef:
+                    name: telegram-secret
+                    key: TOKEN
+              - name: TELEGRAM_BOT_CHAT_ID
+                value: "384980395"
+          restartPolicy: OnFailure

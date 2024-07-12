@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: torrent-bot-sync
+  name: torrent-bot-runner
 spec:
   successfulJobsHistoryLimit: 2
   failedJobsHistoryLimit: 0

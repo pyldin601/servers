@@ -8,7 +8,7 @@ resources:
   # Applications
   - apps/myownradio.yaml
   - apps/musicloud.yaml
-  - apps/torrent-bot.yaml
+  - apps/torrent-bot-runner.yaml
 #  - apps/superorder-me.yaml
 #  - apps/superorder-old.yaml
 

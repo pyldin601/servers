@@ -9,4 +9,5 @@ commonLabels:
 resources:
   - namespace.yaml
   - transmission-daemon.yaml
-  - torrent-bot.yaml
+  - torrent-bot-runner.yaml
+  - torrent-bot-server.yaml
