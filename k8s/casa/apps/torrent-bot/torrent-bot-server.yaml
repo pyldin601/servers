@@ -48,4 +48,4 @@ spec:
                   key: TOKEN
             - name: TELEGRAM_BOT_CHAT_ID
               value: "384980395"
-          restartPolicy: OnFailure
+      restartPolicy: OnFailure
