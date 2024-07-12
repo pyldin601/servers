@@ -17,6 +17,7 @@ metadata:
   name: torrent-bot-server
 spec:
   replicas: 1
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       deployment: torrent-bot-server
