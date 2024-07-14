@@ -47,6 +47,8 @@ spec:
                   value: "384980395"
                 - name: CLIENT_ENDPOINT
                   value: "http://torrent-bot-server:8080"
+                - name: SERVER_ENDPOINT
+                  value: "http://torrent-bot-server:8080"
           restartPolicy: OnFailure
 ---
 apiVersion: v1
