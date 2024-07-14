@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: torrent-bot-server
-          image: pldin601/torrent-bot-server@sha256:1185d1031bfb7b8f867ca09895f0d462ca86f70239518160a5ad7a57729cabbb
+          image: pldin601/torrent-bot-server@sha256:db008b30640f7fc419377de1196ad859262065345cda297a4c3b53ef9fee0d72
           env:
             - name: TRANS_URL
               value: http://transmission-daemon:9091/transmission/rpc

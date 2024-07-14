@@ -17,7 +17,7 @@ spec:
                 claimName: db-volume-claim
           containers:
             - name: torrent-bot
-              image: pldin601/torrent-bot-runner@sha256:f9c4a353391c074b40d04040d2b195d032366ccaaa4f1baac14ac567c96de0a7
+              image: pldin601/torrent-bot-runner@sha256:98e9c90abbd85c2b025ab08b7fe88e105cd8aaad5f6f7de48af5b04303d37376
               volumeMounts:
                 - mountPath: /storage
                   name: db-volume
@@ -45,6 +45,8 @@ spec:
                       key: TOKEN
                 - name: TELEGRAM_BOT_CHAT_ID
                   value: "384980395"
+                - name: SERVER_ENDPOINT
+                  value: "http://torrent-bot-server:8080"
           restartPolicy: OnFailure
 ---
 apiVersion: v1
