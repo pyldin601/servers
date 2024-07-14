@@ -45,7 +45,7 @@ spec:
                       key: TOKEN
                 - name: TELEGRAM_BOT_CHAT_ID
                   value: "384980395"
-                - name: SERVER_ENDPOINT
+                - name: CLIENT_ENDPOINT
                   value: "http://torrent-bot-server:8080"
           restartPolicy: OnFailure
 ---
