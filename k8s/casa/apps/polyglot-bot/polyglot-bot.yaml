@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polyglot-bot-server
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      deployment: polyglot-bot-server
+  template:
+    metadata:
+      labels:
+        deployment: polyglot-bot-server
+    spec:
+      containers:
+        - name: polyglot-bot-server
+          image: pldin601/polyglot-bot@sha256:02ca511cefac0137aae1382122744bbbadcb45202cb58571a7ce0ef7c3c82279
+          env:
+            - name: TS_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: polyglot-bot-secret
+                  key: TS_API_TOKEN
+            - name: TG_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: polyglot-bot-secret
+                  key: TG_BOT_TOKEN
