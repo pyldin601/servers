@@ -18,11 +18,11 @@ spec:
         - name: polyglot-bot-server
           image: pldin601/polyglot-bot@sha256:02ca511cefac0137aae1382122744bbbadcb45202cb58571a7ce0ef7c3c82279
           env:
-            - name: TS_API_TOKEN
+            - name: TS_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: polyglot-bot-secret
-                  key: TS_API_TOKEN
+                  key: TS_API_KEY
             - name: TG_BOT_TOKEN
               valueFrom:
                 secretKeyRef:
