@@ -31,7 +31,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /health/ready
-              port: http
+              port: 8080
 ---
 kind: Service
 apiVersion: v1
