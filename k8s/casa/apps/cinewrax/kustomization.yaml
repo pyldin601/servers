@@ -9,6 +9,5 @@ commonLabels:
 resources:
   - cinewrax-ns.yaml
   - cinewrax-cinewrax.yaml
-  -
-
+  - cinewrax-pubsub.yaml
   - backing-redis.yaml
