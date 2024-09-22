@@ -1,0 +1,63 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cinewrax-pubsub
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      deployment: cinewrax-pubsub
+  template:
+    metadata:
+      labels:
+        deployment: cinewrax-pubsub
+    spec:
+      containers:
+        - name: cinewrax-pubsub
+          image: pldin601/cinewrax-apps-pubsub:9d5467f
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "750m"
+          env:
+            - name: REDIS_URL
+              value: redis://redis.cinewrax.svc.cluster.local:6379
+            - name: LOG_LEVEL
+              value: debug
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: cinewrax-pubsub
+spec:
+  selector:
+    deployment: cinewrax-pubsub
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: cinewrax-pubsub
+  namespace: cinewrax
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`cw.pyldin601.dev`) && Path(`/socket.io/`)
+      middlewares: []
+      services:
+        - kind: Service
+          name: cinewrax-pubsub
+          port: 8080
+          scheme: http
+  tls:
+    certResolver: default

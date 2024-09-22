@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cinewrax-app
+  name: cinewrax-cinewrax
 spec:
   replicas: 1
   selector:
     matchLabels:
-      deployment: cinewrax-app
+      deployment: cinewrax-cinewrax
   template:
     metadata:
       labels:
-        deployment: cinewrax-app
+        deployment: cinewrax-cinewrax
     spec:
       containers:
-        - name: cinewrax-app
-          image: pldin601/cinewrax-apps-cinewrax@sha256:46ca657f2ae6ffb62a48475261232d31f2dd718f7600d00f0ccf7ec1c66e5ee9
+        - name: cinewrax-cinewrax
+          image: pldin601/cinewrax-cinewraxs-cinewrax@sha256:46ca657f2ae6ffb62a48475261232d31f2dd718f7600d00f0ccf7ec1c66e5ee9
           resources:
             requests:
               memory: "256Mi"
@@ -30,10 +30,10 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: cinewrax-app
+  name: cinewrax-cinewrax
 spec:
   selector:
-    deployment: cinewrax-app
+    deployment: cinewrax-cinewrax
   ports:
     - name: http
       protocol: TCP
@@ -43,7 +43,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: cinewrax-app
+  name: cinewrax-cinewrax
   namespace: cinewrax
 spec:
   entryPoints:
@@ -54,7 +54,7 @@ spec:
       middlewares: []
       services:
         - kind: Service
-          name: cinewrax-app
+          name: cinewrax-cinewrax
           port: 3000
           scheme: http
   tls:
