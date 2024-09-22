@@ -9,3 +9,5 @@ commonLabels:
 resources:
   - cinewrax-ns.yaml
   - cinewrax-app.yaml
+
+  - backing-redis.yaml
