@@ -5,6 +5,7 @@ metadata:
   name: cinewrax-pubsub
 spec:
   replicas: 2
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       deployment: cinewrax-pubsub
