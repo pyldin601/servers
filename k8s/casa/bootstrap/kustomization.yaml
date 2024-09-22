@@ -10,6 +10,7 @@ resources:
   - apps/musicloud.yaml
   - apps/torrent-bot.yaml
   - apps/polyglot-bot.yaml
+  - apps/cinewrax.yaml
 #  - apps/superorder-me.yaml
 #  - apps/superorder-old.yaml
 

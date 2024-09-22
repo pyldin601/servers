@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cinewrax-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: cinewrax-app
+  template:
+    metadata:
+      labels:
+        deployment: cinewrax-app
+    spec:
+      containers:
+        - name: cinewrax-app
+          image: pldin601/cinewrax-apps-cinewrax@sha256:46ca657f2ae6ffb62a48475261232d31f2dd718f7600d00f0ccf7ec1c66e5ee9
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "750m"
+          env:
+            - name: DUMMY
+              value: "0"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: cinewrax-app
+spec:
+  selector:
+    deployment: cinewrax-app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: cinewrax-app
+  namespace: cinewrax
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`cw.pyldin601.dev`)
+      middlewares: []
+      services:
+        - kind: Service
+          name: cinewrax-app
+          port: 3000
+          scheme: http
+  tls:
+    certResolver: default
