@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: cinewrax-cinewrax
-          image: pldin601/cinewrax-apps-cinewrax:d7a12b3
+          image: pldin601/cinewrax-apps-cinewrax:71f7ee0
           resources:
             requests:
               memory: "256Mi"
