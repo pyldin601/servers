@@ -77,11 +77,11 @@ spec:
             - --source=ingress
             - --provider=cloudflare
           env:
-            - name: CF_API_KEY
+            - name: CF_API_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: external-dns-credentials
-                  key: CF_API_KEY
+                  key: CF_API_TOKEN
             - name: CF_API_EMAIL
               valueFrom:
                 secretKeyRef:
