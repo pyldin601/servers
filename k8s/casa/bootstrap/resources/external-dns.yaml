@@ -50,8 +50,7 @@ spec:
                   RECORD_ID=3aa2cc0db5d9d426abeb17fbd3685df4
                   PUBLIC_IP=$(curl -s https://ipinfo.io/ip)
                   curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
-                       -H "Authentication: Bearer $CF_API_TOKEN" \
-                       -H "X-Auth-Email: $CF_API_EMAIL" \
+                       -H "Authorization: Bearer $CF_API_TOKEN" \
                        -H "Content-Type: application/json" \
                        --data @- <<EOF
                           {
