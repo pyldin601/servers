@@ -76,6 +76,7 @@ spec:
           args:
             - --source=traefik-proxy
             - --provider=cloudflare
+            - --policy=sync
           env:
             - name: CF_API_TOKEN
               valueFrom:
