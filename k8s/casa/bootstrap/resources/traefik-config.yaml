@@ -13,3 +13,7 @@ spec:
       - "--serverstransport.insecureSkipVerify=true"
     persistence:
       enabled: true
+    providers:
+      kubernetesIngress:
+        publishedService:
+          enabled: true
