@@ -20,3 +20,8 @@ spec:
       remoteRef:
         key: prod/CloudFlare/ExternalDnsCredentials
         property: CF_API_EMAIL
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: external-dns
