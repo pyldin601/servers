@@ -44,8 +44,8 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  apk update &&
-                  apk add  --no-cache curl &&
+                  apk update
+                  apk add  --no-cache curl
                   PUBLIC_IP=$(curl -s https://ipinfo.io/ip)
                   echo $PUBLIC_IP
           restartPolicy: OnFailure
