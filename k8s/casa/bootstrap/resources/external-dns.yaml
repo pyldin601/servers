@@ -3,7 +3,6 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: external-dns-credentials
-  namespace: kube-system
 spec:
   refreshInterval: 1h
   secretStoreRef:
@@ -26,7 +25,6 @@ kind: CronJob
 apiVersion: batch/v1
 metadata:
   name: cloudflare-dns-records-sync
-  namespace: kube-system
 spec:
   schedule: "* * * * *"
   jobTemplate:
