@@ -20,3 +20,32 @@ spec:
       remoteRef:
         key: prod/CloudFlare/ExternalDnsCredentials
         property: CF_API_EMAIL
+---
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+  name: cloudflare-dns-records-sync
+  namespace: kube-system
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: cloudflare-dns-records-sync
+              image: alpine:3.18
+              env:
+                - name: CF_API_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: external-dns-credentials
+                      key: CF_API_TOKEN
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  apk update &&
+                  apk add  --no-cache curl &&
+                  PUBLIC_IP=$(curl -s https://ipinfo.io/ip)
+                  echo $PUBLIC_IP
+          restartPolicy: OnFailure
