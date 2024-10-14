@@ -45,7 +45,13 @@ spec:
               args:
                 - |
                   apk update
-                  apk add  --no-cache curl
+                  apk add --no-cache curl
+                  ZONE_ID=89a11213078594f0de740ed5f38a3148
+                  RECORD_ID=3aa2cc0db5d9d426abeb17fbd3685df4
                   PUBLIC_IP=$(curl -s https://ipinfo.io/ip)
+                  curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
+                       -H "Authorization: Bearer $API_TOKEN" \
+                       -H "Content-Type: application/json" \
+                       --data "{\"type\":\"A\",\"name\":\"davinciapps.pyldin601.xyz\",\"content\":\"$PUBLIC_IP\",\"ttl\":120,\"proxied\":false}"
                   echo $PUBLIC_IP
           restartPolicy: OnFailure
