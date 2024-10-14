@@ -12,10 +12,10 @@ spec:
     name: external-dns-credentials
     creationPolicy: Owner
   data:
-    - secretKey: CF_API_KEY
+    - secretKey: CF_API_TOKEN
       remoteRef:
         key: prod/CloudFlare/ExternalDnsCredentials
-        property: CF_API_KEY
+        property: CF_API_TOKEN
     - secretKey: CF_API_EMAIL
       remoteRef:
         key: prod/CloudFlare/ExternalDnsCredentials
