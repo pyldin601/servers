@@ -52,6 +52,14 @@ spec:
                   curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
                        -H "Authentication: Bearer $CF_API_TOKEN" \
                        -H "Content-Type: application/json" \
-                       --data "{\"type\":\"A\",\"name\":\"davinciapps.pyldin601.xyz\",\"content\":\"$PUBLIC_IP\",\"ttl\":120,\"proxied\":false}"
+                       --data @- <<EOF
+                          {
+                            "type": "A",
+                            "name": "*.pyldin601.xyz",
+                            "content": "$PUBLIC_IP",
+                            "ttl": 120,
+                            "proxied": false
+                          }
+                        EOF
                   echo $PUBLIC_IP
           restartPolicy: OnFailure
