@@ -74,7 +74,7 @@ spec:
         - name: external-dns
           image: registry.k8s.io/external-dns/external-dns:v0.15.0
           args:
-            - --source=ingressroute
+            - --source=traefik-proxy
             - --provider=cloudflare
           env:
             - name: CF_API_TOKEN
