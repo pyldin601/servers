@@ -12,6 +12,16 @@ spec:
     repoURL: 'https://github.com/awslabs/mountpoint-s3-csi-driver.git'
     path: charts/aws-mountpoint-s3-csi-driver
     targetRevision: v1.9.0
+    helm:
+      parameters:
+        - name: awsAccessSecret.accessKey
+          valueFrom:
+            name: awssm-secret
+            key: access-key
+        - name: awsAccessSecret.keyId
+          valueFrom:
+            name: awssm-secret
+            key: secret-access-key
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
