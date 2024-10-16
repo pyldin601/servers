@@ -2,14 +2,14 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: external-dns-credentials
+  name: cloudflare-credentials
 spec:
   refreshInterval: 1h
   secretStoreRef:
     name: external-secretstore
     kind: SecretStore
   target:
-    name: external-dns-credentials
+    name: cloudflare-credentials
     creationPolicy: Owner
   data:
     - secretKey: CF_API_TOKEN
@@ -24,42 +24,32 @@ spec:
 kind: CronJob
 apiVersion: batch/v1
 metadata:
-  name: cloudflare-dns-records-sync
+  name: cloudflare-dns-updater
 spec:
+  schedule: "*/30 * * * *"
   successfulJobsHistoryLimit: 1
-  schedule: "* * * * *"
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-            - name: cloudflare-dns-records-sync
-              image: alpine:3.18
+            - name: cloudflare-dns-updater
+              image: node:22.5.1
               env:
                 - name: CF_API_TOKEN
                   valueFrom:
                     secretKeyRef:
-                      name: external-dns-credentials
+                      name: cloudflare-credentials
                       key: CF_API_TOKEN
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  apk update
-                  apk add --no-cache curl
-                  ZONE_ID=89a11213078594f0de740ed5f38a3148
-                  RECORD_ID=3aa2cc0db5d9d426abeb17fbd3685df4
-                  PUBLIC_IP=$(curl -s https://ipinfo.io/ip)
-                  curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
-                       -H "Authorization: Bearer $CF_API_TOKEN" \
-                       -H "Content-Type: application/json" \
-                       --data @- <<EOF
-                          {
-                            "type": "A",
-                            "name": "*.pyldin601.xyz",
-                            "content": "$PUBLIC_IP",
-                            "ttl": 120,
-                            "proxied": false
-                          }
-                        EOF
-                  echo $PUBLIC_IP
+                  npx --yes cloudflare-dns-updater -t "$CF_API_TOKEN" \
+                      -r pyldin601.xyz:*.pyldin601.xyz \
+                      -r pyldin601.xyz:pyldin601.xyz \
+                      -r pyldin601.dev:*.pyldin601.dev \
+                      -r pyldin601.dev:pyldin601.dev \
+                      -r radioter.io:*.radioter.io \
+                      -r radioter.io:radioter.io
           restartPolicy: OnFailure
