@@ -51,5 +51,7 @@ spec:
                       -r pyldin601.dev:*.pyldin601.dev \
                       -r pyldin601.dev:pyldin601.dev \
                       -r radioter.io:*.radioter.io \
-                      -r radioter.io:radioter.io
+                      -r radioter.io:radioter.io \
+                      -r davinciapps.com:davinciapps.com \
+                      -r davinciapps.com:*.davinciapps.com
           restartPolicy: OnFailure
