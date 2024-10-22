@@ -43,7 +43,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`davinciapps.pyldin601.dev`) || Host(`davinciapps.pyldin601.xyz`)
+      match: Host(`davinciapps.pyldin601.dev`) || Host(`davinciapps.pyldin601.xyz`) || Host(`davinciapps.com`)  || Host(`www.davinciapps.com`)
       services:
         - kind: Service
           name: external-web
