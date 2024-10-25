@@ -58,7 +58,7 @@ spec:
                   name: myownradio-server
                   key: RADIO_STREAMER_TOKEN
             - name: FILE_SYSTEM_ROOT_PATH
-              value: ""
+              value: "/app/storage"
             - name: PUBSUB_BACKEND_ENDPOINT
               value: http://radiomanager-pubsub-backend.myownradio.svc.cluster.local:8080
             - name: AUTH_JWT_SECRET_KEY
@@ -75,5 +75,8 @@ spec:
               value: https://radioter.io/new/player/
             - name: WEB_EGRESS_CONTROLLER_ENDPOINT
               value: http://radiomanager-web-egress-controller.myownradio.svc.cluster.local:8080
+          volumeMounts:
+            - mountPath: "/app/storage"
+              name: myownradio-server-storage
       imagePullSecrets:
         - name: dockerconfig
