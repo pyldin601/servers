@@ -15,6 +15,10 @@ spec:
       labels:
         deployment: radio-manager-backend
     spec:
+      volumes:
+        - name: myownradio-server-storage
+          persistentVolumeClaim:
+            claimName: myownradio-server-storage
       containers:
         - name: streamer
           image: pldin601/myownradio-radio-manager-backend:24.10.11519774784-967697d
