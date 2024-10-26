@@ -49,7 +49,6 @@ metadata:
   name: prom-node-exporter
   namespace: davinciapps
 spec:
-  type: ClusterIP
   ports:
     - name: node-exporter
       port: 9100
