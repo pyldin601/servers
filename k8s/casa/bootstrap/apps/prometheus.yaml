@@ -20,9 +20,9 @@ spec:
           value: 15s
         - name: extraScrapeConfigs
           value: |
-            - job_name: "oracle-nodes"
+            - job_name: "vm-nodes"
               static_configs:
-                - targets: [ "143.47.51.192:9100", "143.47.49.55:9100" ]
+                - targets: [ "192.168.1.140:9100" ]
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
