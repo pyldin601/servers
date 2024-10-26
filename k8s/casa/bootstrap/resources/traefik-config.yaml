@@ -17,10 +17,3 @@ spec:
       geoblock:
         moduleName: "github.com/traefik/traefik-plugin-geoblock"
         version: "v0.1.2"
-    middlewares:
-      geoblockMiddleware:
-        plugin:
-          geoblock:
-            denylist:
-              - "RU"
-            defaultPolicy: "allow"
