@@ -16,4 +16,4 @@ spec:
     plugins:
       geoblock:
         moduleName: "github.com/traefik/traefik-plugin-geoblock"
-        version: "v0.1.2"
+        version: "v0.14.0"
