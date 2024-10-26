@@ -15,5 +15,8 @@ spec:
           name: myownradio-server
           port: http
           scheme: http
+      middlewares:
+        - name: norussiaMiddleware
+          namespace: kube-system
   tls:
     certResolver: default
