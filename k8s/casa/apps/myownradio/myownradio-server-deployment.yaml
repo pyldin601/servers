@@ -23,7 +23,7 @@ spec:
             - "backend-php-fpm"
       containers:
         - name: php-fpm
-          image: pldin601/myownradio-backend-php:24.10.11534104830-c783ba2
+          image: pldin601/myownradio-backend-php:24.10.11535228303-7daef81
           resources:
             requests:
               memory: "512Mi"
@@ -154,7 +154,7 @@ spec:
             - mountPath: "/app/storage"
               name: myownradio-server-storage
         - name: nginx
-          image: pldin601/myownradio-backend-nginx:24.10.11534104814-c783ba2
+          image: pldin601/myownradio-backend-nginx:24.10.11535228229-7daef81
           resources:
             requests:
               memory: "256Mi"
