@@ -13,6 +13,9 @@ spec:
       - "--serverstransport.insecureSkipVerify=true"
     persistence:
       enabled: true
+    ingressRoute:
+      dashboard:
+        enabled: true
     plugins:
       geoblock:
         moduleName: "github.com/traefik/traefik-plugin-geoblock"
