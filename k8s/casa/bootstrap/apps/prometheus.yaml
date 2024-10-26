@@ -22,7 +22,7 @@ spec:
           value: |
             - job_name: "vm-nodes"
               static_configs:
-                - targets: [ "prom-node-exporter.davinciapps.svc.cluster.local:9100", "192.168.1.240:9100" ]
+                - targets: [ "192.168.1.240:9100" ]
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
