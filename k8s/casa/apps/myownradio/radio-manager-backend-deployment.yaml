@@ -21,7 +21,7 @@ spec:
             claimName: myownradio-server-storage
       containers:
         - name: streamer
-          image: pldin601/myownradio-radio-manager-backend:24.10.11519774784-967697d
+          image: pldin601/myownradio-radio-manager-backend:24.10.11526137336-0ad4f45
           resources:
             requests:
               memory: "512Mi"
