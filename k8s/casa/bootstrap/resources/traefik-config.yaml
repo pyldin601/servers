@@ -11,6 +11,7 @@ spec:
       - "--certificatesResolvers.default.acme.email=roman.lakhtadyr+certs@gmail.com"
       - "--certificatesResolvers.default.acme.storage=/data/acme.json"
       - "--serverstransport.insecureSkipVerify=true"
+      - "--entrypoints.websecure.http.middlewares=norussiaMiddleware@kubernetescrd"
     persistence:
       enabled: true
     plugins:
