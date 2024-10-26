@@ -28,7 +28,6 @@ resources:
   - resources/transmission-rpc.yaml
   - resources/external-secrets.yaml
   - resources/external-dns.yaml
-#  - resources/datadog.yaml
 
   # ArgoCD
   - argocd/argocd-server-ingressroute.yaml
