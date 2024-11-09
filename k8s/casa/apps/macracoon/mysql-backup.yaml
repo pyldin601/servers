@@ -18,8 +18,8 @@ spec:
         - name: alpine
           image: alpine:3.18
           command:
-            - sleep
-            - infinity
+            - ping
+            - internal-mysql.davinciapps.svc.cluster.local
 ---
 kind: CronJob
 apiVersion: batch/v1
