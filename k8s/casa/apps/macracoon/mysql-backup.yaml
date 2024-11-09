@@ -38,7 +38,7 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  apk add git git-lfs mysql-client mariadb-connector-c-dev &&
+                  apk add git mysql-client mariadb-connector-c-dev &&
                   git config --global user.email "hello@pyldin601.dev" &&
                   git config --global user.name "Backup Bot" &&
                   git clone https://pyldin601:"$GITHUB_TOKEN"@github.com/pyldin601/servers-backups.git &&
