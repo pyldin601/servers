@@ -9,3 +9,4 @@ commonLabels:
 
 resources:
   - vm.yaml
+  - externalsecret.yaml
