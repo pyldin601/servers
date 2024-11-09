@@ -7,7 +7,7 @@ metadata:
 spec:
   successfulJobsHistoryLimit: 2
   failedJobsHistoryLimit: 0
-  schedule: "34 18 * * *"
+  schedule: "37 18 * * *"
   jobTemplate:
     spec:
       template:
@@ -42,8 +42,8 @@ spec:
                   git config --global user.email "hello@pyldin601.dev" &&
                   git config --global user.name "Backup Bot" &&
                   git clone https://pyldin601:"$GITHUB_TOKEN"@github.com/pyldin601/servers-backups.git &&
-                  mkdir -p database/macracoon &&
-                  cd database/macracoon &&
+                  mkdir -p servers-backups/database/macracoon &&
+                  cd servers-backups/database/macracoon &&
                   mysqldump --no-create-info --no-tablespaces -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > macracoon_backup.sql &&
                   git add macracoon_backup.sql &&
                   git commit -m "Macracoon Database Backup" &&
