@@ -51,6 +51,7 @@ metadata:
   name: internal-mysql
   namespace: davinciapps
 spec:
+  clusterIP: None
   ports:
     - name: mysql
       port: 3306
