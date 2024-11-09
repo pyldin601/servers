@@ -17,6 +17,9 @@ spec:
       containers:
         - name: alpine
           image: alpine:3.18
+          command:
+            - sleep
+            - infinity
 ---
 kind: CronJob
 apiVersion: batch/v1
