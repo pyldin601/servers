@@ -17,7 +17,7 @@ spec:
               image: alpine:3.18
               env:
               - name: MYSQL_HOST
-                value: mysql.davinciapps.svc.cluster.local
+                value: internal-mysql.davinciapps.svc.cluster.local
               - name: MYSQL_DB
                 value: macracoon
               - name: MYSQL_USER

@@ -34,7 +34,7 @@ spec:
 apiVersion: v1
 kind: Endpoints
 metadata:
-  name: mysql
+  name: internal-mysql
   namespace: davinciapps
 subsets:
   - addresses:
@@ -46,7 +46,7 @@ subsets:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: internal-mysql
   namespace: davinciapps
 spec:
   ports:
