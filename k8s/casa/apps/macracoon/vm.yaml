@@ -50,6 +50,7 @@ metadata:
   name: internal-mysql
   namespace: davinciapps
 spec:
+  selector: {}
   ports:
     - name: mysql
       port: 3306
