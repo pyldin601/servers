@@ -7,7 +7,7 @@ metadata:
 spec:
   successfulJobsHistoryLimit: 2
   failedJobsHistoryLimit: 0
-  schedule: "51 19 * * *"
+  schedule: " 12 * * *"
   jobTemplate:
     spec:
       template:
@@ -17,7 +17,7 @@ spec:
               image: alpine:3.18
               env:
               - name: MYSQL_HOST
-                value: 192.168.1.240
+                value: internal-mysql.davinciapps.svc.cluster.local
               - name: MYSQL_DB
                 value: macracoon
               - name: MYSQL_USER
