@@ -37,12 +37,7 @@ metadata:
   namespace: davinciapps
 spec:
   type: ExternalName
-  externalIPs:
-    - 192.168.1.240
-  ports:
-    - name: mysql
-      port: 3306
-      protocol: TCP
+  externalName: 192.168.1.240
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
