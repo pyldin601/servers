@@ -38,15 +38,23 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  apk add git mysql-client mariadb-connector-c-dev &&
-                  git config --global user.email "hello@pyldin601.dev" &&
-                  git config --global user.name "Backup Bot" &&
-                  git clone https://pyldin601:"$GITHUB_TOKEN"@github.com/pyldin601/servers-backups.git &&
-                  mkdir -p servers-backups/database/macracoon &&
-                  cd servers-backups/database/macracoon &&
-                  mysqldump --no-create-info --no-tablespaces --skip-dump-date -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > macracoon_backup.sql &&
-                  git add macracoon_backup.sql &&
-                  git commit -m "Macracoon Database Backup" &&
-                  git push &&
+                  set -e  # Exit immediately if a command fails
+
+                  apk add git mysql-client mariadb-connector-c-dev
+                  git config --global user.email "hello@pyldin601.dev"
+                  git config --global user.name "Backup Bot"
+                  git clone https://pyldin601:"$GITHUB_TOKEN"@github.com/pyldin601/servers-backups.git
+                  
+                  mkdir -p servers-backups/database/macracoon
+                  cd servers-backups/database/macracoon
+                  mysqldump --no-create-info --no-tablespaces --skip-dump-date -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > macracoon_backup.sql
+                  
+                  git add macracoon_backup.sql
+                  
+                  # Check if there are any changes
+                  git diff --cached --exit-code && echo "No changes to commit." && exit 0
+                  
+                  git commit -m "Macracoon Database Backup"
+                  git push
                   exit 0
           restartPolicy: OnFailure
