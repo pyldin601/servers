@@ -1,4 +1,22 @@
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alpine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: alpine
+  template:
+    metadata:
+      labels:
+        deployment: alpine
+    spec:
+      containers:
+        - name: alpine
+          image: alpine:3.18
+---
 kind: CronJob
 apiVersion: batch/v1
 metadata:
