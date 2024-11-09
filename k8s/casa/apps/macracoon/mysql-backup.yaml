@@ -1,0 +1,52 @@
+---
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+  name: mysql-backup-cronjob
+  namespace: davinciapps
+spec:
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 0
+  schedule: "0 12 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: mysql-backup
+              image: alpine:3.18
+              env:
+              - name: MYSQL_HOST
+                value: mysql.davinciapps.svc.cluster.local
+              - name: MYSQL_DB
+                value: macracoon
+              - name: MYSQL_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: mysql-credentials
+                    key: user
+              - name: MYSQL_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: mysql-credentials
+                    key: password
+              - name: GITHUB_TOKEN
+                valueFrom:
+                  secretKeyRef:
+                    name: github-credentials
+                    key: token
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  apk add git mysql-client mariadb-connector-c-dev &&
+                  git config --global user.email "hello@pyldin601.dev" &&
+                  git config --global user.name "Backup Bot" &&
+                  git clone https://pyldin601:"$GITHUB_TOKEN"@github.com/pyldin601/servers-backups.git &&
+                  mkdir -p database/macracoon &&
+                  cd database/macracoon &&
+                  mysqldump --no-create-info --no-tablespaces -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > macracoon_backup.sql &&
+                  git add macracoon_backup.sql &&
+                  git commit -m "Macracoon Database Backup" &&
+                  git push &&
+                  exit 0
+          restartPolicy: OnFailure
