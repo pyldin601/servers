@@ -55,8 +55,6 @@ spec:
     - name: mysql
       port: 3306
       protocol: TCP
-      targetPort: 3306
-      nodePort: 0
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
