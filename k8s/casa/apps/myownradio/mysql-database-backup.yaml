@@ -41,14 +41,23 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  apk add git mysql-client mariadb-connector-c-dev &&
-                  git config --global user.email "hello@pyldin601.dev" &&
-                  git config --global user.name "Backup Bot" &&
-                  git clone https://pyldin601:"$GITHUB_TOKEN"@github.com/myownradio/mysql-database-backup.git &&
-                  cd mysql-database-backup &&
-                  mysqldump --no-create-info --no-tablespaces -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > myownradio_mysql_backup.sql &&
-                  git add myownradio_mysql_backup.sql &&
-                  git commit -m "Adding new database backup" &&
-                  git push &&
+                  set -e  # Exit immediately if a command fails
+                  
+                  apk add git mysql-client mariadb-connector-c-dev
+                  git config --global user.email "hello@pyldin601.dev"
+                  git config --global user.name "Backup Bot"
+                  git clone https://pyldin601:"$GITHUB_TOKEN"@github.com/pyldin601/servers-backups.git
+
+                  mkdir -p servers-backups/database/myownradio
+                  cd servers-backups/database/myownradio
+                  mysqldump --no-create-info --no-tablespaces --skip-dump-date -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > myownradio_backup.sql
+
+                  git add myownradio_backup.sql
+
+                  # Check if there are any changes
+                  git diff --cached --exit-code && echo "No changes to commit." && exit 0
+
+                  git commit -m "Myownradio Database Backup"
+                  git push
                   exit 0
           restartPolicy: OnFailure
