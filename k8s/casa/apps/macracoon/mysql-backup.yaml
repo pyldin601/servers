@@ -43,10 +43,10 @@ spec:
                   apk add git mysql-client mariadb-connector-c-dev
                   git config --global user.email "hello@pyldin601.dev"
                   git config --global user.name "Backup Bot"
-                  git clone https://pyldin601:"$GITHUB_TOKEN"@github.com/pyldin601/servers-backups.git
+                  git clone https://pyldin601:"$GITHUB_TOKEN"@github.com/macracoon/database-backups.git
                   
-                  mkdir -p servers-backups/database/macracoon
-                  cd servers-backups/database/macracoon
+                  mkdir -p database-backups/database/macracoon
+                  cd database-backups/database/macracoon
                   mysqldump --no-create-info --no-tablespaces --skip-dump-date -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DB > macracoon_backup.sql
                   
                   git add macracoon_backup.sql
