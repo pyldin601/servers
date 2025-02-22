@@ -9,7 +9,7 @@ commonLabels:
 images:
   - name: postgres
     newName: postgres
-    newTag: "9.5"
+    newTag: "17.4"
 
 resources:
   - musicloud-ns.yaml
