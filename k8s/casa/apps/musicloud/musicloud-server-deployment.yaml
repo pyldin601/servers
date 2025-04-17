@@ -41,6 +41,11 @@ spec:
               value: musicloud-postgres-service
             - name: DB_DATABASE
               value: musicloud
+            - name: GOOGLE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: google-api-credentials
+                  key: apiKey
           volumeMounts:
             - mountPath: "/volume/media"
               name: musicloud-server-data-volume
