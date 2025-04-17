@@ -25,7 +25,7 @@ spec:
             - "php-fpm"
       containers:
         - name: php-fpm
-          image: pldin601/musicloud-php-fpm:22.05.2404615532-c2d337f
+          image: pldin601/musicloud-php-fpm:25.04.14517897249-935b5f0
           env:
             - name: DB_USERNAME
               valueFrom:
@@ -47,6 +47,6 @@ spec:
             - mountPath: "/volume/temp"
               name: musicloud-server-temp-volume
         - name: nginx
-          image: pldin601/musicloud-nginx:22.05.2404615532-c2d337f
+          image: pldin601/musicloud-nginx:25.04.14517897249-935b5f0
           ports:
             - containerPort: 8080
