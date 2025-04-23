@@ -41,7 +41,7 @@ spec:
                   set -e  # Exit immediately if a command fails
 
                   apk add git mysql-client mariadb-connector-c-dev
-                  git config --global user.email "hello@pyldin601.dev"
+                  git config --global user.email "hello@pyldin601.xyz"
                   git config --global user.name "Backup Bot"
                   git clone https://pyldin601:"$GITHUB_TOKEN"@github.com/macracoon/database-backups.git
                   

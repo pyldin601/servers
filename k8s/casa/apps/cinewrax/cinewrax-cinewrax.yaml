@@ -55,7 +55,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`cw.pyldin601.dev`)
+      match: Host(`cw.pyldin601.xyz`)
       middlewares: []
       services:
         - kind: Service

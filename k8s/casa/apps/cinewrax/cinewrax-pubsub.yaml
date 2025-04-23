@@ -57,7 +57,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`cw.pyldin601.dev`) && Path(`/socket.io/`)
+      match: Host(`cw.pyldin601.xyz`) && Path(`/socket.io/`)
       middlewares: []
       services:
         - kind: Service

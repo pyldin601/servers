@@ -9,7 +9,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`cd.pyldin601.dev`)
+      match: Host(`cd.pyldin601.xyz`)
       priority: 10
       services:
         - name: argocd-server

@@ -8,7 +8,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`coins1.pyldin601.dev`)
+      match: Host(`coins1.pyldin601.xyz`)
       services:
         - kind: Service
           name: app
