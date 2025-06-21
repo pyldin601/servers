@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: polyglot-bot-server
-          image: pldin601/polyglot-bot@sha256:fd42ba86d59e2f6ae2bf97d0b0c427ed92434cccbcd18b03f64f49b90b119e60
+          image: pldin601/polyglot-bot@sha256:4052c4a5a66004c8185ca4a6d7d62679316fe32d30662bf0c9acae95f0180317
           env:
             - name: TS_API_KEY
               valueFrom:
