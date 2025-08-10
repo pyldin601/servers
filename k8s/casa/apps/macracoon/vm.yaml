@@ -57,22 +57,22 @@ spec:
     - name: mysql
       port: 3306
       protocol: TCP
-#---
-#apiVersion: traefik.containo.us/v1alpha1
-#kind: IngressRoute
-#metadata:
-#  name: external-web
-#  namespace: davinciapps
-#spec:
-#  entryPoints:
-#    - web
-#    - websecure
-#  routes:
-#    - kind: Rule
-#      match: Host(`davinciapps.com`) || Host(`www.davinciapps.com`) || Host(`dev.davinciapps.com`)
-#      services:
-#        - kind: Service
-#          name: external-web
-#          port: 8081
-#  tls:
-#    certResolver: default
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: external-web
+  namespace: davinciapps
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`davinciapps.com`) || Host(`www.davinciapps.com`)
+      services:
+        - kind: Service
+          name: external-web
+          port: 8081
+  tls:
+    certResolver: default
