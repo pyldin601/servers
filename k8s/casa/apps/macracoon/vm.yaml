@@ -69,7 +69,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`davinciapps.com`)  || Host(`www.davinciapps.com`)
+      match: Host(`davinciapps.com`) || Host(`www.davinciapps.com`) || Host(`dev.davinciapps.com`)
       services:
         - kind: Service
           name: external-web
