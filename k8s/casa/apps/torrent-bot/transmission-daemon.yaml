@@ -41,6 +41,11 @@ spec:
       containers:
         - name: transmission-daemon
           image: haugene/transmission-openvpn
+          resources:
+            requests:
+              memory: "500Mi"
+            limits:
+              memory: "1500Mi"
           securityContext:
             capabilities:
               add:
