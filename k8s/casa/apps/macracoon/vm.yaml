@@ -14,7 +14,7 @@ metadata:
 addressType: IPv4
 endpoints:
   - addresses:
-      - 192.168.1.240
+      - 192.168.0.107
     conditions: {}
 ports:
   - name: http
@@ -40,7 +40,7 @@ metadata:
 addressType: IPv4
 endpoints:
   - addresses:
-      - 192.168.1.240
+      - 192.168.0.107
     conditions: {}
 ports:
   - name: mysql
