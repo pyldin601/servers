@@ -1,0 +1,60 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radiomanager-mobile-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: radiomanager-mobile-fe
+  template:
+    metadata:
+      labels:
+        deployment: radiomanager-mobile-fe
+    spec:
+      containers:
+        - name: radiomanager-mobile-fe
+          image: pldin601/radiomanager-mobile-fe:25.09.17990318203-6dc6bff
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "750m"
+      imagePullSecrets:
+        - name: dockerconfig
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: radiomanager-mobile-fe
+spec:
+  selector:
+    deployment: radiomanager-mobile-fe
+  ports:
+    - name: http
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: radiomanager-mobile-fe
+  namespace: myownradio
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`m.radioter.io`)
+      middlewares: []
+      services:
+        - kind: Service
+          name: radiomanager-mobile-fe
+          port: 3000
+          scheme: http
+  tls:
+    certResolver: default

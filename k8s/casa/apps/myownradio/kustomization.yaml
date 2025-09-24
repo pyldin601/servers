@@ -60,6 +60,7 @@ resources:
 
   # radiomanager-frontend
   - radiomanager-frontend.yaml
+  - radiomanager-mobile-fe.yaml
 
   # channel-bot
   - myownradio-channel-bot-sealedsecret.yaml
