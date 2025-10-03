@@ -11,6 +11,8 @@ kind: EndpointSlice
 metadata:
   name: external-web
   namespace: davinciapps
+  labels:
+    kubernetes.io/service-name: external-web
 addressType: IPv4
 endpoints:
   - addresses:
@@ -37,6 +39,8 @@ kind: EndpointSlice
 metadata:
   name: internal-mysql
   namespace: davinciapps
+  labels:
+    kubernetes.io/service-name: external-web
 addressType: IPv4
 endpoints:
   - addresses:
