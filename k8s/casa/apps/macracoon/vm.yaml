@@ -41,7 +41,7 @@ metadata:
   name: internal-mysql
   namespace: davinciapps
   labels:
-    kubernetes.io/service-name: external-web
+    kubernetes.io/service-name: internal-mysql
 addressType: IPv4
 endpoints:
   - addresses:
