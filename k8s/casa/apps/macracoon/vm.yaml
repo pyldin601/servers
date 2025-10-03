@@ -17,7 +17,8 @@ addressType: IPv4
 endpoints:
   - addresses:
       - 192.168.0.240
-    conditions: {}
+    conditions:
+      ready: true
 ports:
   - name: http
     port: 8081
@@ -45,7 +46,8 @@ addressType: IPv4
 endpoints:
   - addresses:
       - 192.168.0.240
-    conditions: {}
+    conditions:
+      ready: true
 ports:
   - name: mysql
     port: 3306
