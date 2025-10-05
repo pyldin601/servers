@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: api-server
-          image: pldin601/radioterio-api-server@sha256:a26d0fcf3dd2c7d4b441f52ef5d29c626bbe86091fadd5a0e984032ee7f606a7
+          image: pldin601/radioterio-api-server:ef67f39265607964605dd5dd906f0112dfdbf74c
           resources:
             requests:
               memory: "512Mi"
