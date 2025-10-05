@@ -1,0 +1,30 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: api-server-stripprefix
+  namespace: radioterio
+spec:
+  stripPrefix:
+    prefixes: ["/api"]
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: api-server
+  namespace: radioterio
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`radioter.io`) && PathPrefix(`/api/`)
+      services:
+        - kind: Service
+          name: api-server
+          port: 8080
+          scheme: http
+      middlewares:
+        - name: api-server-stripprefix
+  tls:
+    certResolver: default

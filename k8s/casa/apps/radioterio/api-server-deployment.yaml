@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      deployment: api-server
+  template:
+    metadata:
+#      annotations:
+#        prometheus.io/scrape: "true"
+#        prometheus.io/port: "8080"
+      labels:
+        deployment: api-server
+    spec:
+      containers:
+        - name: api-server
+          image: pldin601/radioterio-api-server@sha256:7ff676f29d43c372ae00828a08a284f93246dbb145062b9ef8c78b4b2969a237
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "300m"
+            limits:
+              memory: "1024Mi"
+              cpu: "600m"
+          env:
+            - name: PORT
+              value: '8080'
+            - name: DATABASE_URL
+              value: mysql://mor:mor@myownradio-mysql.myownradio.svc.cluster.local:3306/mor
+            - name: DATABASE_CLIENT
+              value: mysql2
+            - name: AWS_S3_BUCKET
+              value: myownradio-storage
+            - name: AWS_REGION
+              value: eu-central-1
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: api-server-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: api-server-secret
+                  key: JWT_SECRET
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: api-server-secret
+                  key: AWS_SECRET_ACCESS_KEY
