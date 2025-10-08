@@ -6,7 +6,7 @@ metadata:
   namespace: radioterio
 spec:
   stripPrefix:
-    prefixes: ["/api"]
+    prefixes: ["/api-v2"]
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -18,7 +18,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`radioter.io`) && PathPrefix(`/api/`)
+      match: Host(`radioter.io`) && PathPrefix(`/api-v2/`)
       services:
         - kind: Service
           name: api-server
