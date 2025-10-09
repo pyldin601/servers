@@ -1,0 +1,30 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: playback-server-stripprefix
+  namespace: radioterio
+spec:
+  stripPrefix:
+    prefixes: ["/pb"]
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: playback-server
+  namespace: radioterio
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`radioter.io`) && PathPrefix(`/pb/`)
+      services:
+        - kind: Service
+          name: playback-server
+          port: 8080
+          scheme: http
+      middlewares:
+        - name: playback-server-stripprefix
+  tls:
+    certResolver: default

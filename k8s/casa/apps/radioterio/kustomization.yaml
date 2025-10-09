@@ -6,7 +6,13 @@ metadata:
 
 resources:
   - ns.yaml
+
   - api-server-deployment.yaml
   - api-server-externalsecret.yaml
   - api-server-ingressroute.yaml
   - api-server-service.yaml
+
+  - playback-server-deployment.yaml
+  - playback-server-externalsecret.yaml
+  - playback-server-ingressroute.yaml
+  - playback-server-service.yaml

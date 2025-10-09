@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playback-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      deployment: playback-server
+  template:
+    metadata:
+#      annotations:
+#        prometheus.io/scrape: "true"
+#        prometheus.io/port: "8080"
+      labels:
+        deployment: playback-server
+    spec:
+      containers:
+        - name: playback-server
+          image: pldin601/radioterio-playback-server:f66f666001f008f84ae18dacbd221b407ca2a40c
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "300m"
+            limits:
+              memory: "1024Mi"
+              cpu: "600m"
+          env:
+            - name: PORT
+              value: '8080'
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: playback-server-secret
+                  key: JWT_SECRET
