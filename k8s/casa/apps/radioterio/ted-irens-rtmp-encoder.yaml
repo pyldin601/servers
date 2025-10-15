@@ -1,0 +1,99 @@
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: rtmp-encoder-secret
+  namespace: radioterio
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: external-secretstore
+    kind: ClusterSecretStore
+  target:
+    name: rtmp-encoder-secret
+    creationPolicy: Owner
+  data:
+    - secretKey: RTMP_STREAM_KEY
+      remoteRef:
+        key: prod/Radioterio/RtmpEncoder
+        property: RTMP_STREAM_KEY
+    - secretKey: RTMP_URL
+      remoteRef:
+        key: prod/Radioterio/RtmpEncoder
+        property: RTMP_URL
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ted-irens-rtmp-encoder
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      deployment: ted-irens-rtmp-encoder
+  template:
+    metadata:
+      labels:
+        deployment: ted-irens-rtmp-encoder
+    spec:
+      containers:
+        - name: ted-irens-rtmp-encoder
+          image: pldin601/radioterio-rtmp-encoder:678263ca46881555dfcb7d2a20c4d784a08e9ce3
+          restartPolicy: Always
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: dev-dri
+              mountPath: /dev/dri
+          resources:
+            requests:
+              memory: "1024Mi"
+              cpu: "1000m"
+          env:
+            - name: USER_ID
+              value: '1'
+            - name: CHANNEL_ID
+              value: '118'
+
+            - name: VIDEO_WIDTH
+              value: '854'
+            - name: VIDEO_HEIGHT
+              value: '480'
+            - name: VIDEO_BITRATE
+              value: '1500'
+            - name: VIDEO_FRAMERATE
+              value: '30'
+
+            - name: AUDIO_BITRATE
+              value: '128'
+            - name: AUDIO_CHANNELS
+              value: '2'
+            - name: AUDIO_SAMPLE_RATE
+              value: '48000'
+
+            - name: PLAYBACK_SERVER_URL
+              value: http://playback-server.radioterio.svc.cluster.local:8080
+            - name: API_SERVER_URL
+              value: http://api-server.radioterio.svc.cluster.local:8080
+
+            - name: VIDEO_ACCELERATION
+              value: 'VAAPI'
+#            - name: GST_CEF_GPU_ENABLED
+#              value: 'set'
+#            - name: GST_CEF_CHROME_EXTRA_FLAGS
+#              value: 'use-gl=egl, enable-gpu-rasterization,ignore-gpu-blocklist'
+
+            - name: RTMP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: rtmp-encoder-secret
+                  key: RTMP_URL
+            - name: RTMP_STREAM_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rtmp-encoder-secret
+                  key: RTMP_STREAM_KEY
+      volumes:
+        - name: dev-dri
+          hostPath:
+            path: /dev/dri

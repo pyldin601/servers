@@ -16,3 +16,5 @@ resources:
   - playback-server-externalsecret.yaml
   - playback-server-ingressroute.yaml
   - playback-server-service.yaml
+
+  - ted-irens-rtmp-encoder.yaml
