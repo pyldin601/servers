@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
         - name: ted-irens-rtmp-encoder
-          image: pldin601/radioterio-rtmp-encoder:678263ca46881555dfcb7d2a20c4d784a08e9ce3
+          image: pldin601/radioterio-rtmp-encoder:c3f180bc3098ba86a1a5d65053fc6c2a2f792a5c
           restartPolicy: Always
           securityContext:
             privileged: true
