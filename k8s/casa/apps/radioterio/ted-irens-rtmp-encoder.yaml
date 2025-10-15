@@ -27,7 +27,7 @@ kind: Deployment
 metadata:
   name: ted-irens-rtmp-encoder
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       deployment: ted-irens-rtmp-encoder
