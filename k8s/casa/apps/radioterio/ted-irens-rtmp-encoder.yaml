@@ -27,7 +27,7 @@ kind: Deployment
 metadata:
   name: ted-irens-rtmp-encoder
 spec:
-  replicas: 1
+  replicas: 0
   strategy:
     type: Recreate
   selector:
