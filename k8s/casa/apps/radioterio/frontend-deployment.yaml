@@ -27,4 +27,4 @@ spec:
             - name: NEXT_PUBLIC_API_SERVER_URL
               value: http://api-server.radioterio.svc.cluster.local:8080
             - name: NEXT_PUBLIC_PLAYBACK_SERVER_URL
-              value: http://api-server.radioterio.svc.cluster.local:8080
+              value: http://api-server.radioterio.svc.cluster.local:8080/pb
