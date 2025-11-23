@@ -12,8 +12,6 @@ resources:
   - apps/macracoon.yaml
   - apps/mountpoint-s3-csi-driver.yaml
   - apps/radioterio.yaml
-#  - apps/superorder-me.yaml
-#  - apps/superorder-old.yaml
 
   # Management
   - apps/grafana.yaml
@@ -26,7 +24,6 @@ resources:
   - resources/transmission-rpc.yaml
   - resources/external-secrets.yaml
   - resources/external-dns.yaml
-#  - resources/datadog.yaml
 
   # ArgoCD
   - argocd/argocd-server-ingressroute.yaml
