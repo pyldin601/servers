@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: pldin601/radioterio-frontend:fac4aa42270d71f9c6e2aeee5a2591038f9870f2
+          image: pldin601/radioterio-frontend:a18511d0ed897c305f61274ccc3574005b020910
           resources:
             requests:
               memory: "512Mi"
@@ -24,7 +24,7 @@ spec:
               memory: "1024Mi"
               cpu: "600m"
           env:
-            - name: NEXT_PUBLIC_API_SERVER_URL
+            - name: API_SERVER_URL
               value: https://radioter.io/api-v2
-            - name: NEXT_PUBLIC_PLAYBACK_SERVER_URL
+            - name: PLAYBACK_SERVER_URL
               value: https://radioter.io/pb
