@@ -7,6 +7,10 @@ metadata:
 resources:
   - ns.yaml
 
+  - redis-deployment.yaml
+  - redis-pvc.yaml
+  - redis-service.yaml
+
   - api-server-deployment.yaml
   - api-server-externalsecret.yaml
   - api-server-ingressroute.yaml
