@@ -25,6 +25,6 @@ spec:
               cpu: "600m"
           env:
             - name: NEXT_PUBLIC_API_SERVER_URL
-              value: http://api-server.radioterio.svc.cluster.local:4001
+              value: http://api-server.radioterio.svc.cluster.local:8080
             - name: NEXT_PUBLIC_PLAYBACK_SERVER_URL
-              value: http://api-server.radioterio.svc.cluster.local:4002
+              value: http://api-server.radioterio.svc.cluster.local:8080
