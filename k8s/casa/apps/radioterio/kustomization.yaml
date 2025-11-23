@@ -17,4 +17,8 @@ resources:
   - playback-server-ingressroute.yaml
   - playback-server-service.yaml
 
+  - frontend-deployment.yaml
+  - frontend-service.yaml
+  - frontend-ingressroute.yaml
+
   - ted-irens-rtmp-encoder.yaml

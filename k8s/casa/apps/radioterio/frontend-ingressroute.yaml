@@ -1,0 +1,19 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: frontend
+  namespace: radioterio
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`radioter.io`)
+      services:
+        - kind: Service
+          name: frontend
+          port: 3000
+          scheme: http
+  tls:
+    certResolver: default

@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: frontend
+  template:
+    metadata:
+      labels:
+        deployment: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: pldin601/radioterio-frontend:bf9e40b3243233809f1cbd72135bbd1d87b98847
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "300m"
+            limits:
+              memory: "1024Mi"
+              cpu: "600m"
+          env:
+            - name: NEXT_PUBLIC_API_SERVER_URL
+              value: http://api-server.radioterio.svc.cluster.local:4001
+            - name: NEXT_PUBLIC_PLAYBACK_SERVER_URL
+              value: http://api-server.radioterio.svc.cluster.local:4002
