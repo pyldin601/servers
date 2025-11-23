@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: pldin601/radioterio-frontend:bf9e40b3243233809f1cbd72135bbd1d87b98847
+          image: pldin601/radioterio-frontend:fac4aa42270d71f9c6e2aeee5a2591038f9870f2
           resources:
             requests:
               memory: "512Mi"
