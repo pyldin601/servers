@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: 'git@github.com:pyldin601/explainit.git'
-    path: kustomize
+    path: kustomize/overlays/prod
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
