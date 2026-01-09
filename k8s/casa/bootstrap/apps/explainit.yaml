@@ -9,7 +9,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/pyldin601/explainit.git'
+    repoURL: 'git@github.com:pyldin601/explainit.git'
     path: kustomize
     targetRevision: HEAD
   destination:
