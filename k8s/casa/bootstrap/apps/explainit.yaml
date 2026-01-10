@@ -9,8 +9,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'git@github.com:pyldin601/explainit.git'
-    path: kustomize/overlays/prod
+    repoURL: 'https://github.com/pyldin601/servers.git'
+    path: k8s/casa/apps/explainit
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'

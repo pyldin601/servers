@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: explainit
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    name: in-cluster
+    namespace: explainit
+  source:
+    repoURL: https://github.com/pyldin601/explainit.git
+    targetRevision: main
+    path: kustomize/overlays/prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+

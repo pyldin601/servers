@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: explainit
+  labels:
+    app.kubernetes.io/name: explainit
+

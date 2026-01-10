@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: explainit-ollama
+  labels:
+    app.kubernetes.io/name: explainit
+    app.kubernetes.io/component: inference
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: explainit
+    app.kubernetes.io/component: inference
+  ports:
+    - name: http
+      port: 11434
+      targetPort: http
+      protocol: TCP
+
