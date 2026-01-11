@@ -12,7 +12,7 @@ resources:
   - apps/macracoon.yaml
   - apps/mountpoint-s3-csi-driver.yaml
   - apps/radioterio.yaml
-  - apps/explainit.yaml
+#  - apps/explainit.yaml
 
   # Management
   - apps/grafana.yaml
