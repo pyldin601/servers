@@ -9,9 +9,9 @@ spec:
     name: in-cluster
     namespace: explainit
   source:
-    repoURL: https://github.com/pyldin601/explainit.git
+    repoURL: https://github.com/pyldin601/servers.git
     targetRevision: main
-    path: kustomize/overlays/prod
+    path: k8s/casa/app/explainit/overlays/prod
   syncPolicy:
     automated:
       prune: true
