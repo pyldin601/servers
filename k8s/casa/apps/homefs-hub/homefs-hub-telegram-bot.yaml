@@ -22,6 +22,8 @@ spec:
               value: http://ollama.default.svc.cluster.local:11434
             - name: OLLAMA_MODEL
               value: gemma3n:latest
+            - name: ALLOWED_CHAT_IDS
+              value: "384980395"
             - name: TELEGRAM_BOT_TOKEN
               valueFrom:
                 secretKeyRef:
