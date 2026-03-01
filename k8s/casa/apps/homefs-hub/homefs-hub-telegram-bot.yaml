@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homefs-hub-telegram-bot
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      deployment: homefs-hub-telegram-bot
+  template:
+    metadata:
+      labels:
+        deployment: homefs-hub-telegram-bot
+    spec:
+      containers:
+        - name: homefs-hub-telegram-bot
+          image: ghcr.io/pyldin601/homefs-telegram-bot:a4372b535ccd4c91ac16ef82f122ab1bb4865fd3
+          env:
+            - name: OLLAMA_BASE_URL
+              value: http://ollama.default.svc.cluster.local:11434
+            - name: OLLAMA_MODEL
+              value: gemma3n:latest
+            - name: TELEGRAM_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: homefs-hub-telegram-bot-secret
+                  key: TELEGRAM_BOT_TOKEN
