@@ -29,3 +29,5 @@ spec:
                 secretKeyRef:
                   name: homefs-hub-telegram-bot-secret
                   key: TELEGRAM_BOT_TOKEN
+            - name: SKILL_SERVER_URL
+              value: http://homefs-skill-server.default.svc.cluster.local:8000
