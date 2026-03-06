@@ -16,12 +16,12 @@ spec:
     spec:
       containers:
         - name: homefs-hub-telegram-bot
-          image: ghcr.io/pyldin601/homefs-telegram-bot:62c27a2288463495598d9a1a57ce3280e1ec08a8
+          image: ghcr.io/pyldin601/homefs-telegram-bot:e936fb67b60c8f8d8f63937cb1f00a104d86276e
           env:
             - name: OLLAMA_BASE_URL
               value: http://ollama.default.svc.cluster.local:11434
             - name: OLLAMA_MODEL
-              value: gemma3n:latest
+              value: qwen2.5
             - name: ALLOWED_CHAT_IDS
               value: "384980395"
             - name: TELEGRAM_BOT_TOKEN
