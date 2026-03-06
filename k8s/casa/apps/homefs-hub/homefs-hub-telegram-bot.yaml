@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: homefs-hub-telegram-bot
-          image: ghcr.io/pyldin601/homefs-telegram-bot:e936fb67b60c8f8d8f63937cb1f00a104d86276e
+          image: ghcr.io/pyldin601/homefs-telegram-bot:bb83725efdad6b689643cacf118948e9c178894b
           env:
             - name: OLLAMA_BASE_URL
               value: http://ollama.default.svc.cluster.local:11434
@@ -29,5 +29,15 @@ spec:
                 secretKeyRef:
                   name: homefs-hub-telegram-bot-secret
                   key: TELEGRAM_BOT_TOKEN
+            - name: TOLOKA_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: homefs-hub-telegram-bot-secret
+                  key: TOLOKA_USERNAME
+            - name: TOLOKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: homefs-hub-telegram-bot-secret
+                  key: TOLOKA_PASSWORD
             - name: SKILL_SERVER_URL
               value: http://homefs-skill-server.default.svc.cluster.local:8000
