@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: homefs-hub-telegram-bot
-          image: ghcr.io/pyldin601/homefs-telegram-bot:d86f11e514164ada56bfa8138f08a38a1ed4009c
+          image: ghcr.io/pyldin601/homefs-telegram-bot:356e65cf3901c65c9fbc703499f4fc1590e4c694
           env:
             - name: OLLAMA_BASE_URL
               value: http://ollama.default.svc.cluster.local:11434
