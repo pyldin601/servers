@@ -39,5 +39,5 @@ spec:
                 secretKeyRef:
                   name: homefs-hub-telegram-bot-secret
                   key: TOLOKA_PASSWORD
-            - name: SKILL_SERVER_URL
+            - name: TOOL_SERVER_URL
               value: http://homefs-hub-tool-server.homefs-hub.svc.cluster.local:8000
