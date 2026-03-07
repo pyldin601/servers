@@ -11,4 +11,5 @@ labels:
 resources:
   - namespace.yaml
   - homefs-hub-telegram-bot.yaml
+  - homefs-hub-tool-server.yaml
   - externalsecret.yaml

@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homefs-hub-tool-server
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      deployment: homefs-hub-tool-server
+  template:
+    metadata:
+      labels:
+        deployment: homefs-hub-tool-server
+    spec:
+      containers:
+        - name: homefs-hub-tool-server
+          image: ghcr.io/pyldin601/homefs-tool-server:6d17f44eeede8e5c78c1a75f566feffdfae3e605
+          ports:
+            - name: http
+              containerPort: 8000
+          env:
+            - name: PORT
+              value: "8000"
+            - name: TOLOKA_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: homefs-hub-telegram-bot-secret
+                  key: TOLOKA_USERNAME
+            - name: TOLOKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: homefs-hub-telegram-bot-secret
+                  key: TOLOKA_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homefs-hub-tool-server
+spec:
+  selector:
+    deployment: homefs-hub-tool-server
+  ports:
+    - name: http
+      port: 8000
+      targetPort: http
