@@ -33,6 +33,8 @@ spec:
                 secretKeyRef:
                   name: homefs-hub-telegram-bot-secret
                   key: TOLOKA_PASSWORD
+            - name: TRANS_URL
+              value: http://transmission-daemon.torrent-bot.svc.cluster.local:9091/transmission/rpc
 ---
 apiVersion: v1
 kind: Service
