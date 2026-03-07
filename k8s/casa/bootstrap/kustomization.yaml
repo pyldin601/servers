@@ -10,6 +10,7 @@ resources:
   - apps/torrent-bot.yaml
   - apps/polyglot-bot.yaml
   - apps/homefs-hub.yaml
+  - apps/shared.yaml
   - apps/macracoon.yaml
   - apps/mountpoint-s3-csi-driver.yaml
   - apps/radioterio.yaml
