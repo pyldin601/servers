@@ -14,8 +14,8 @@ spec:
   data:
     - secretKey: token
       remoteRef:
-        key: prod/Radioterio/Github
-        property: token
+        key: prod/homefs/global
+        property: RADIOTERIO_GITHUB_TOKEN
 ---
 kind: CronJob
 apiVersion: batch/v1

@@ -15,12 +15,12 @@ spec:
   data:
     - secretKey: RTMP_STREAM_KEY
       remoteRef:
-        key: prod/Radioterio/RtmpEncoder
-        property: RTMP_STREAM_KEY
+        key: prod/homefs/global
+        property: RADIOTERIO_RTMPENCODER_RTMP_STREAM_KEY
     - secretKey: RTMP_URL
       remoteRef:
-        key: prod/Radioterio/RtmpEncoder
-        property: RTMP_URL
+        key: prod/homefs/global
+        property: RADIOTERIO_RTMPENCODER_RTMP_URL
 ---
 apiVersion: apps/v1
 kind: Deployment
