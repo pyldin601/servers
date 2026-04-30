@@ -1,0 +1,180 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: open-oscar-server-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: open-oscar-server
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      deployment: open-oscar-server
+  template:
+    metadata:
+      labels:
+        deployment: open-oscar-server
+    spec:
+      initContainers:
+        - name: install-open-oscar-server
+          image: golang:1.25.5-alpine
+          command:
+            - /bin/sh
+            - -ec
+          args:
+            - |
+              if [ ! -x /data/bin/open_oscar_server ]; then
+                mkdir -p /data/bin
+                GOBIN=/data/bin go install github.com/mk6i/open-oscar-server/cmd/server@v0.23.0
+                mv /data/bin/server /data/bin/open_oscar_server
+              fi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      containers:
+        - name: open-oscar-server
+          image: alpine:3.20
+          command:
+            - /data/bin/open_oscar_server
+          ports:
+            - name: oscar
+              containerPort: 5190
+              protocol: TCP
+            - name: api
+              containerPort: 8080
+              protocol: TCP
+            - name: toc
+              containerPort: 9898
+              protocol: TCP
+            - name: kerberos
+              containerPort: 1088
+              protocol: TCP
+            - name: icq-legacy
+              containerPort: 4000
+              protocol: UDP
+          env:
+            - name: OSCAR_LISTENERS
+              value: CASA://0.0.0.0:5190
+            - name: OSCAR_ADVERTISED_LISTENERS_PLAIN
+              value: CASA://aim.pyldin601.xyz:5190
+            - name: TOC_LISTENERS
+              value: 0.0.0.0:9898
+            - name: API_LISTENER
+              value: 0.0.0.0:8080
+            - name: DB_PATH
+              value: /data/oscar.sqlite
+            - name: DISABLE_AUTH
+              value: "true"
+            - name: DISABLE_MULTI_LOGIN_NOTIF
+              value: "true"
+            - name: LOG_LEVEL
+              value: info
+            - name: ICQ_LEGACY_ENABLED
+              value: "true"
+            - name: ICQ_LEGACY_UDP_LISTENER
+              value: 0.0.0.0:4000
+            - name: ICQ_LEGACY_VERSIONS
+              value: 2,3,4,5
+            - name: ICQ_LEGACY_SESSION_TIMEOUT
+              value: 120s
+            - name: ICQ_LEGACY_KEEPALIVE_INTERVAL
+              value: 120s
+            - name: ICQ_LEGACY_AUTO_REGISTRATION
+              value: "false"
+            - name: ICQ_LEGACY_DEPARTMENTS_ENABLED
+              value: "false"
+            - name: ICQ_LEGACY_BROADCAST_ENABLED
+              value: "true"
+            - name: ICQ_LEGACY_WWP_ENABLED
+              value: "true"
+            - name: ICQ_LEGACY_DIRECT_CONNECTIONS
+              value: "5"
+          livenessProbe:
+            tcpSocket:
+              port: oscar
+            initialDelaySeconds: 15
+            periodSeconds: 30
+          readinessProbe:
+            tcpSocket:
+              port: oscar
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: open-oscar-server-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: open-oscar-server
+spec:
+  type: ClusterIP
+  selector:
+    deployment: open-oscar-server
+  ports:
+    - name: oscar
+      port: 5190
+      targetPort: oscar
+      protocol: TCP
+    - name: api
+      port: 8080
+      targetPort: api
+      protocol: TCP
+    - name: toc
+      port: 9898
+      targetPort: toc
+      protocol: TCP
+    - name: kerberos
+      port: 1088
+      targetPort: kerberos
+      protocol: TCP
+    - name: icq-legacy
+      port: 4000
+      targetPort: icq-legacy
+      protocol: UDP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: open-oscar-server-public
+spec:
+  type: LoadBalancer
+  selector:
+    deployment: open-oscar-server
+  ports:
+    - name: oscar
+      port: 5190
+      targetPort: oscar
+      protocol: TCP
+    - name: toc
+      port: 9898
+      targetPort: toc
+      protocol: TCP
+    - name: kerberos
+      port: 1088
+      targetPort: kerberos
+      protocol: TCP
+    - name: icq-legacy
+      port: 4000
+      targetPort: icq-legacy
+      protocol: UDP
