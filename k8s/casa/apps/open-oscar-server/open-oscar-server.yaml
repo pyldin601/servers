@@ -15,7 +15,7 @@ kind: Deployment
 metadata:
   name: open-oscar-server
 spec:
-  replicas: 1
+  replicas: 0
   revisionHistoryLimit: 2
   selector:
     matchLabels:
