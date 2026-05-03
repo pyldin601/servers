@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ppp
-          image: pldin601/3p:e7ab6907c789d601c04c945abb02af99cd2057a9
+          image: pldin601/3p:c0d3337c5c203eb024f9d514027f255d1404e66a
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
