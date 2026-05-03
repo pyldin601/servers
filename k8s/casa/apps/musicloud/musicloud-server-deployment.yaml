@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: musicloud-server-deployment
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       deployment: musicloud-server-deployment
