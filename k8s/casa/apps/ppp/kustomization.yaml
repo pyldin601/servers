@@ -4,10 +4,10 @@ metadata:
   name: arbitrary
 
 commonLabels:
-  app: 3p
+  app: ppp
 
 images: []
 
 resources:
   - namespace.yaml
-  - 3p.yaml
+  - ppp.yaml

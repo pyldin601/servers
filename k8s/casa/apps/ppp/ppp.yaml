@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: three-p
-  namespace: 3p
+  name: ppp
+  namespace: ppp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: 3p
+      app: ppp
   template:
     metadata:
       labels:
-        app: 3p
+        app: ppp
     spec:
       containers:
-        - name: 3p
+        - name: ppp
           image: pldin601/3p:latest
           imagePullPolicy: Always
           ports:
@@ -43,12 +43,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: three-p
-  namespace: 3p
+  name: ppp
+  namespace: ppp
 spec:
   type: ClusterIP
   selector:
-    app: 3p
+    app: ppp
   ports:
     - name: http
       port: 3000
@@ -57,17 +57,17 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: 3p
-  namespace: 3p
+  name: ppp
+  namespace: ppp
 spec:
   entryPoints:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`3p.pyldin601.xyz`)
+      match: Host(`ppp.pyldin601.xyz`)
       services:
         - kind: Service
-          name: three-p
+          name: ppp
           port: http
           scheme: http
   tls:

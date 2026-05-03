@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 3p
+  name: ppp
   namespace: argocd
   finalizers:
       - resources-finalizer.argocd.argoproj.io
@@ -10,11 +10,11 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/pyldin601/servers.git'
-    path: k8s/casa/apps/3p
+    path: k8s/casa/apps/ppp
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: 3p
+    namespace: ppp
   syncPolicy:
     automated:
       prune: true
