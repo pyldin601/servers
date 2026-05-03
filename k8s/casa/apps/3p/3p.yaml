@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: 3p
+  name: three-p
   namespace: 3p
 spec:
   replicas: 1
@@ -43,7 +43,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: 3p
+  name: three-p
   namespace: 3p
 spec:
   type: ClusterIP
@@ -67,7 +67,7 @@ spec:
       match: Host(`3p.pyldin601.xyz`)
       services:
         - kind: Service
-          name: 3p
+          name: three-p
           port: http
           scheme: http
   tls:
