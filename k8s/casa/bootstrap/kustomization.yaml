@@ -11,6 +11,7 @@ resources:
   - apps/polyglot-bot.yaml
   - apps/homefs-hub.yaml
   - apps/open-oscar-server.yaml
+  - apps/3p.yaml
   - apps/shared.yaml
   - apps/macracoon.yaml
   - apps/mountpoint-s3-csi-driver.yaml
