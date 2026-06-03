@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: homefs-hub-tool-server
-          image: ghcr.io/pyldin601/homefs-tool-server:c637b6335a897fb02ecb9d64857e8262ddf084da
+          image: ghcr.io/pyldin601/homefs-tool-server:7384458de3a263da66c59e0fea0dc8932e684d7d
           ports:
             - name: http
               containerPort: 8000
