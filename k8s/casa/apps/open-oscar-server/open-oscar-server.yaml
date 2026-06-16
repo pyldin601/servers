@@ -152,29 +152,3 @@ spec:
       port: 4000
       targetPort: icq-legacy
       protocol: UDP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: open-oscar-server-public
-spec:
-  type: LoadBalancer
-  selector:
-    deployment: open-oscar-server
-  ports:
-    - name: oscar
-      port: 5190
-      targetPort: oscar
-      protocol: TCP
-    - name: toc
-      port: 9898
-      targetPort: toc
-      protocol: TCP
-    - name: kerberos
-      port: 1088
-      targetPort: kerberos
-      protocol: TCP
-    - name: icq-legacy
-      port: 4000
-      targetPort: icq-legacy
-      protocol: UDP
