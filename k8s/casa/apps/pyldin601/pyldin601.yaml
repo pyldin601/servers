@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pyldin601
+  namespace: pyldin601
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: pyldin601
+  template:
+    metadata:
+      labels:
+        app: pyldin601
+    spec:
+      containers:
+        - name: pyldin601
+          image: ghcr.io/pyldin601/pyldin601:0a66222
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pyldin601
+  namespace: pyldin601
+spec:
+  type: ClusterIP
+  selector:
+    app: pyldin601
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: pyldin601
+  namespace: pyldin601
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`pyldin601.xyz`)
+      services:
+        - kind: Service
+          name: pyldin601
+          port: http
+          scheme: http
+  tls:
+    certResolver: default
