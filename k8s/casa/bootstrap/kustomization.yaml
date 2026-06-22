@@ -10,7 +10,7 @@ resources:
   - apps/torrent-bot.yaml
   - apps/polyglot-bot.yaml
   - apps/homefs-hub.yaml
-  - apps/open-oscar-server.yaml
+#  - apps/open-oscar-server.yaml
   - apps/ppp.yaml
   - apps/pyldin601.yaml
   - apps/shared.yaml
