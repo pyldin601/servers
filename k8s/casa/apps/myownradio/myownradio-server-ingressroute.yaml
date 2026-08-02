@@ -9,7 +9,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`radioter.io`) && PathPrefix(`/`)
+      match: Host(`radioter.io`) && (PathPrefix(`/api/`) || PathPrefix(`/content/`) || PathPrefix(`/flow`))
       services:
         - kind: Service
           name: myownradio-server
