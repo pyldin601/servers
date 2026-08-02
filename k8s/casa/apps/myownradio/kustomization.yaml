@@ -43,6 +43,11 @@ resources:
   - myownradio-server-configmap.yaml
   - myownradio-server-sealedsecret.yaml
 
+  # clone UI (Next.js). Deploy first (no public exposure); the radioter.io/
+  # cutover is a separate step (add the clone IngressRoute + narrow the server
+  # route in myownradio-server-ingressroute.yaml).
+  - myownradio-clone-ui.yaml
+
   # streamer
   - myownradio-streamer-deployment.yaml
   - myownradio-streamer-service.yaml

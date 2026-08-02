@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myownradio-clone-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: myownradio-clone-ui
+  template:
+    metadata:
+      labels:
+        deployment: myownradio-clone-ui
+    spec:
+      containers:
+        - name: myownradio-clone-ui
+          # Immutable tag from the clone repo's CI (bump to redeploy).
+          image: ghcr.io/radioterio/myownradio-clone-ui:sha-43681bc
+          ports:
+            - containerPort: 3000
+          env:
+            # The clone proxies /api, /content, /flow, /radio-manager server-side
+            # to this base. It resolves via the radioter.io ingress, which routes
+            # those prefixes to their real backends (NOT back to `/` => no loop).
+            - name: LEGACY_BASE_URL
+              value: https://radioter.io
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "150m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /css/legacy/common.css # static asset, no backend dependency
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /css/legacy/common.css
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      # If the GHCR package is private, add a pull secret here:
+      # imagePullSecrets:
+      #   - name: ghcr-dockerconfig
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: myownradio-clone-ui
+spec:
+  selector:
+    deployment: myownradio-clone-ui
+  ports:
+    - name: http
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
