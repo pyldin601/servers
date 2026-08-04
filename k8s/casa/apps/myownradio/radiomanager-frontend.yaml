@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: radiomanager-frontend
-          image: pldin601/myownradio-radiomanager-frontend:26.08.30930861750-e5b218a
+          image: pldin601/myownradio-radiomanager-frontend:26.08.30928334014-28ae65d
           resources:
             requests:
               memory: "512Mi"
@@ -43,6 +43,15 @@ spec:
       targetPort: 3000
 ---
 apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: stripprefix-new
+  namespace: myownradio
+spec:
+  stripPrefix:
+    prefixes: ["/new"]
+---
+apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: radiomanager-frontend
@@ -52,8 +61,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      # The app is built with basePath /v2, so no prefix stripping.
-      match: Host(`radioter.io`) && PathPrefix(`/v2`)
+      match: Host(`new.radioter.io`) && PathPrefix(`/`)
       middlewares: []
       services:
         - kind: Service

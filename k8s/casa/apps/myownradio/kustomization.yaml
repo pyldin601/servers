@@ -63,7 +63,7 @@ resources:
   - radio-manager-backend-service.yaml
   - radio-manager-backend-ingressroute.yaml
 
-  # radiomanager-frontend (served on radioter.io/v2)
+  # radiomanager-frontend (served on new.radioter.io)
   - radiomanager-frontend.yaml
 #  - radiomanager-mobile-fe.yaml
 
