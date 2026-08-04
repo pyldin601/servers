@@ -16,7 +16,7 @@ spec:
       containers:
         - name: myownradio-clone-ui
           # Immutable tag from the clone repo's CI (bump to redeploy).
-          image: ghcr.io/radioterio/myownradio-clone-ui:sha-43681bc
+          image: ghcr.io/radioterio/myownradio-clone-ui:sha-6819d6f
           ports:
             - containerPort: 3000
           env:
