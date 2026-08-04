@@ -64,7 +64,7 @@ resources:
   - radio-manager-backend-ingressroute.yaml
 
   # radiomanager-frontend
-#  - radiomanager-frontend.yaml
+  - radiomanager-frontend.yaml
 #  - radiomanager-mobile-fe.yaml
 
   # channel-bot
