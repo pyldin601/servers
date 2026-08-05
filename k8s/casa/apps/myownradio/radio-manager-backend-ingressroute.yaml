@@ -49,15 +49,5 @@ spec:
           scheme: http
       middlewares:
         - name: radio-manager-backend-stripprefix
-    # Anonymous auth endpoints (login/signup/reset) must bypass forward-auth
-    - kind: Rule
-      match: Host(`radioter.io`) && PathPrefix(`/radio-manager/api/v0/auth/`)
-      services:
-        - kind: Service
-          name: radio-manager-backend
-          port: 8080
-          scheme: http
-      middlewares:
-        - name: radio-manager-backend-stripprefix
   tls:
     certResolver: default
