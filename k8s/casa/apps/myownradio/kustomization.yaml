@@ -11,11 +11,11 @@ images:
   # radioterio/radioterio commit you want deployed (the base manifests say
   # :latest; these pins are what actually ships).
   - name: ghcr.io/radioterio/radioterio-frontend
-    newTag: sha-ba32881
+    newTag: sha-c3f7505
   - name: ghcr.io/radioterio/api-server
-    newTag: sha-ba32881
+    newTag: sha-c3f7505
   - name: ghcr.io/radioterio/playback-server
-    newTag: sha-ba32881
+    newTag: sha-c3f7505
 
   - name: pldin601/myownradio-radiomanager-web-egress-controller
     newTag: 23.11.6995128147-3fe4a0b
