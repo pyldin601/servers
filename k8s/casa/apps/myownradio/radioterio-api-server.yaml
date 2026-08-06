@@ -134,3 +134,26 @@ spec:
       protocol: TCP
       port: 4001
       targetPort: 4001
+---
+# Public API for agents and external clients: https://api.radioter.io
+# (*.radioter.io already resolves via the Cloudflare wildcard updater).
+# The web app does NOT use this — it reaches the api-server over the
+# cluster network (ADR-002). No rate limiting yet: watch the login route.
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: radioterio-api-server
+  namespace: myownradio
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`api.radioter.io`)
+      services:
+        - kind: Service
+          name: radioterio-api-server
+          port: 4001
+          scheme: http
+  tls:
+    certResolver: default
