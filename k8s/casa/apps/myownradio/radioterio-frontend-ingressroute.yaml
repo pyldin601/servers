@@ -1,0 +1,23 @@
+---
+# THE CUTOVER SWITCH: takes radioter.io root for the rebuild. Enable only
+# together with removing the clone's root route (myownradio-clone-ui), and
+# only after ghcr.io/radioterio/radioterio-frontend exists and its pod is
+# Ready — otherwise the live site 503s.
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: radioterio-frontend
+  namespace: myownradio
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`radioter.io`) && PathPrefix(`/`)
+      services:
+        - kind: Service
+          name: radioterio-frontend
+          port: 3000
+          scheme: http
+  tls:
+    certResolver: default

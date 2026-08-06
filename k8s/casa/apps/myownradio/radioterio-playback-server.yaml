@@ -1,0 +1,96 @@
+---
+# RADIOTERIO_INTERNAL_API_SECRET must match the api-server's (one shared
+# property in prod/homefs/global).
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: radioterio-playback-server-secret
+  namespace: myownradio
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: external-secretstore
+    kind: ClusterSecretStore
+  target:
+    name: radioterio-playback-server-secret
+    creationPolicy: Owner
+  data:
+    - secretKey: INTERNAL_API_SECRET
+      remoteRef:
+        key: prod/homefs/global
+        property: RADIOTERIO_INTERNAL_API_SECRET
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radioterio-playback-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      deployment: radioterio-playback-server
+  template:
+    metadata:
+      labels:
+        deployment: radioterio-playback-server
+    spec:
+      imagePullSecrets:
+        - name: ghcr-dockerconfig
+      containers:
+        - name: playback-server
+          # Built by radioterio/radioterio's "Build images" workflow.
+          # `latest` to bootstrap; pin to a sha-XXXXXXX tag once images flow.
+          image: ghcr.io/radioterio/playback-server:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4002
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "300m"
+            limits:
+              memory: "1024Mi"
+              cpu: "600m"
+          env:
+            - name: PLAYBACK_PORT
+              value: "4002"
+            - name: API_BASE_URL
+              value: http://radioterio-api-server:4001
+            - name: INTERNAL_API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: radioterio-playback-server-secret
+                  key: INTERNAL_API_SECRET
+            - name: LOG_FORMAT
+              value: json
+            # DSNs are not secrets (org myownradio, project playback-server).
+            - name: SENTRY_DSN
+              value: https://cecb78200cb5f802ce6bdf3b522efed3@o349913.ingest.us.sentry.io/4511723983142912
+            - name: SENTRY_ENVIRONMENT
+              value: production
+          # No HTTP health route yet — probe the listening socket.
+          readinessProbe:
+            tcpSocket:
+              port: 4002
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 4002
+            initialDelaySeconds: 15
+            periodSeconds: 20
+---
+# Internal only — listeners reach streams through the api-server's reverse
+# proxy, so there is deliberately no IngressRoute here.
+kind: Service
+apiVersion: v1
+metadata:
+  name: radioterio-playback-server
+spec:
+  selector:
+    deployment: radioterio-playback-server
+  ports:
+    - name: http
+      protocol: TCP
+      port: 4002
+      targetPort: 4002

@@ -1,0 +1,136 @@
+---
+# Secrets come from AWS Secrets Manager via external-secrets.
+# RADIOTERIO_APISERVER_* properties already exist (Z-era deployment);
+# RADIOTERIO_INTERNAL_API_SECRET is new — add it to prod/homefs/global
+# (any strong random string, shared with the playback server).
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: radioterio-api-server-secret
+  namespace: myownradio
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: external-secretstore
+    kind: ClusterSecretStore
+  target:
+    name: radioterio-api-server-secret
+    creationPolicy: Owner
+  data:
+    - secretKey: JWT_SECRET
+      remoteRef:
+        key: prod/homefs/global
+        property: RADIOTERIO_APISERVER_JWT_SECRET
+    - secretKey: AWS_ACCESS_KEY_ID
+      remoteRef:
+        key: prod/homefs/global
+        property: RADIOTERIO_APISERVER_AWS_ACCESS_KEY_ID
+    - secretKey: AWS_SECRET_ACCESS_KEY
+      remoteRef:
+        key: prod/homefs/global
+        property: RADIOTERIO_APISERVER_AWS_SECRET_ACCESS_KEY
+    - secretKey: INTERNAL_API_SECRET
+      remoteRef:
+        key: prod/homefs/global
+        property: RADIOTERIO_INTERNAL_API_SECRET
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radioterio-api-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      deployment: radioterio-api-server
+  template:
+    metadata:
+      labels:
+        deployment: radioterio-api-server
+    spec:
+      imagePullSecrets:
+        - name: ghcr-dockerconfig
+      containers:
+        - name: api-server
+          # Built by radioterio/radioterio's "Build images" workflow.
+          # `latest` to bootstrap; pin to a sha-XXXXXXX tag once images flow.
+          image: ghcr.io/radioterio/api-server:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4001
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "300m"
+            limits:
+              memory: "1024Mi"
+              cpu: "600m"
+          env:
+            - name: PORT
+              value: "4001"
+            # Same production MySQL the legacy stack used (same namespace now).
+            - name: DATABASE_URL
+              value: mysql://mor:mor@myownradio-mysql:3306/mor
+            - name: DATABASE_CLIENT
+              value: mysql2
+            # The real production audio library.
+            - name: AWS_S3_BUCKET
+              value: myownradio-storage
+            - name: AWS_REGION
+              value: eu-central-1
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: radioterio-api-server-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: radioterio-api-server-secret
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: radioterio-api-server-secret
+                  key: JWT_SECRET
+            # Streams reverse-proxy to the playback server; listeners only ever
+            # talk to this service (the playback server stays private).
+            - name: PLAYBACK_SERVER_URL
+              value: http://radioterio-playback-server:4002
+            - name: INTERNAL_API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: radioterio-api-server-secret
+                  key: INTERNAL_API_SECRET
+            - name: LOG_FORMAT
+              value: json
+            # DSNs are not secrets (org myownradio, project api-server).
+            - name: SENTRY_DSN
+              value: https://2933deac9f736b2c6c694eac302e5c87@o349913.ingest.us.sentry.io/4511723374510080
+            - name: SENTRY_ENVIRONMENT
+              value: production
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 4001
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 4001
+            initialDelaySeconds: 15
+            periodSeconds: 20
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: radioterio-api-server
+spec:
+  selector:
+    deployment: radioterio-api-server
+  ports:
+    - name: http
+      protocol: TCP
+      port: 4001
+      targetPort: 4001
