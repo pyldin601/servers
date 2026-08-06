@@ -35,9 +35,9 @@ resources:
   - radioterio-api-server.yaml
   - radioterio-playback-server.yaml
   - radioterio-frontend.yaml
-  # Cutover switch: uncomment together with removing myownradio-clone-ui's
-  # root route, once the frontend pod is Ready.
-#  - radioterio-frontend-ingressroute.yaml
+  # Owns the radioter.io root since the 2026-08-06 cutover (replaced the
+  # clone; its leftover IngressRoute must not exist in-cluster).
+  - radioterio-frontend-ingressroute.yaml
 
   # redis
 #  - redis-deployment.yaml
