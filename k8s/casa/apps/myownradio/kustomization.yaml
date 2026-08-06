@@ -7,6 +7,16 @@ commonLabels:
   app: myownradio
 
 images:
+  # radioterio — bump all three together to the sha- tag of the
+  # radioterio/radioterio commit you want deployed (the base manifests say
+  # :latest; these pins are what actually ships).
+  - name: ghcr.io/radioterio/radioterio-frontend
+    newTag: sha-a18e5bd
+  - name: ghcr.io/radioterio/api-server
+    newTag: sha-a18e5bd
+  - name: ghcr.io/radioterio/playback-server
+    newTag: sha-a18e5bd
+
   - name: pldin601/myownradio-radiomanager-web-egress-controller
     newTag: 23.11.6995128147-3fe4a0b
   - name: pldin601/myownradio-radiomanager-web-egress-process
