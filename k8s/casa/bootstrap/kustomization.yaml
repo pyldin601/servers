@@ -6,7 +6,7 @@ metadata:
 
 resources:
   # Applications
-  - apps/myownradio.yaml
+#  - apps/myownradio.yaml
   - apps/torrent-bot.yaml
   - apps/polyglot-bot.yaml
   - apps/homefs-hub.yaml
@@ -16,13 +16,13 @@ resources:
   - apps/shared.yaml
 #  - apps/macracoon.yaml
   - apps/mountpoint-s3-csi-driver.yaml
-  - apps/radioterio.yaml
+#  - apps/radioterio.yaml
 #  - apps/explainit.yaml
 
   # Management
-  - apps/grafana.yaml
-  - apps/prometheus.yaml
-  - apps/loki.yaml
+#  - apps/grafana.yaml
+#  - apps/prometheus.yaml
+#  - apps/loki.yaml
 
   # Resources
   - resources/sealed-secrets.yaml
