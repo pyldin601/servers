@@ -18,6 +18,7 @@ resources:
   - apps/mountpoint-s3-csi-driver.yaml
 #  - apps/radioterio.yaml
 #  - apps/explainit.yaml
+  - apps/zoom3d.yaml
 
   # Management
 #  - apps/grafana.yaml

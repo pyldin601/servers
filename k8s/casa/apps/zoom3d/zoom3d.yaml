@@ -1,0 +1,149 @@
+# zoom3d: retro ray-casting multiplayer meeting room (https://github.com/pyldin601/zoom3d).
+# The server keeps rooms in memory: exactly one replica, and Recreate so a rollout never runs two.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zoom3d-server
+  namespace: zoom3d
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: zoom3d-server
+  template:
+    metadata:
+      labels:
+        app: zoom3d-server
+    spec:
+      containers:
+        - name: zoom3d-server
+          image: ghcr.io/pyldin601/zoom3d-server:sha-fd04071
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PORT
+              value: "8787"
+          ports:
+            - containerPort: 8787
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zoom3d-server
+  namespace: zoom3d
+spec:
+  type: ClusterIP
+  selector:
+    app: zoom3d-server
+  ports:
+    - name: http
+      port: 8787
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zoom3d-web
+  namespace: zoom3d
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: zoom3d-web
+  template:
+    metadata:
+      labels:
+        app: zoom3d-web
+    spec:
+      containers:
+        - name: zoom3d-web
+          image: ghcr.io/pyldin601/zoom3d-web:sha-fd04071
+          imagePullPolicy: IfNotPresent
+          env:
+            # Fallback only: Traefik routes /ws straight to the server.
+            - name: SERVER_URL
+              value: http://zoom3d-server.zoom3d.svc.cluster.local:8787
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zoom3d-web
+  namespace: zoom3d
+spec:
+  type: ClusterIP
+  selector:
+    app: zoom3d-web
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: zoom3d
+  namespace: zoom3d
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    # WebSocket signalling and presence go straight to the server.
+    - kind: Rule
+      match: Host(`zoom3d.pyldin601.xyz`) && Path(`/ws`)
+      services:
+        - kind: Service
+          name: zoom3d-server
+          port: http
+          scheme: http
+    - kind: Rule
+      match: Host(`zoom3d.pyldin601.xyz`)
+      services:
+        - kind: Service
+          name: zoom3d-web
+          port: http
+          scheme: http
+  tls:
+    certResolver: default
