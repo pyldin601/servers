@@ -1,5 +1,19 @@
 # zoom3d: retro ray-casting multiplayer meeting room (https://github.com/pyldin601/zoom3d).
 # The server keeps rooms in memory: exactly one replica, and Recreate so a rollout never runs two.
+# On SIGTERM it saves the rooms to STATE_FILE on the zoom3d-state volume and restores them on start.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zoom3d-state
+  namespace: zoom3d
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 16Mi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,6 +32,13 @@ spec:
       labels:
         app: zoom3d-server
     spec:
+      securityContext:
+        # The image runs as node (uid/gid 1000); it must be able to write the state volume.
+        fsGroup: 1000
+      volumes:
+        - name: state
+          persistentVolumeClaim:
+            claimName: zoom3d-state
       containers:
         - name: zoom3d-server
           image: ghcr.io/pyldin601/zoom3d-server:sha-bacd3b3
@@ -25,6 +46,11 @@ spec:
           env:
             - name: PORT
               value: "8787"
+            - name: STATE_FILE
+              value: /data/lobby.json
+          volumeMounts:
+            - name: state
+              mountPath: /data
           ports:
             - containerPort: 8787
               name: http
