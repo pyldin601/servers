@@ -60,9 +60,10 @@ data:
     denied-peer-ip=fe80::-febf:ffff:ffff:ffff:ffff:ffff:ffff:ffff
   # The home IP is dynamic. Start with the current public IP as coturn's external address, and
   # exit when it changes so the kubelet restarts the container with the new one.
-  # external-ip is the bare public IP on purpose: the "public/private" form allow-lists the private
-  # (node) IP as a peer, ahead of denied-peer-ip, which would let any TURN user reach the node's UDP
-  # services (flannel VXLAN included). Relay-to-relay between two clients then hairpins via the router.
+  # external-ip is the bare public IP on purpose: the "public/private" form also allow-lists the node
+  # IP as a peer, ahead of denied-peer-ip, which would let any TURN user reach the node's UDP services
+  # (flannel VXLAN included). coturn maps its public IP to the node IP either way, so relay-to-relay
+  # between two clients of this server is denied: TURN helps when at least one side has a UDP path.
   run.sh: |
     #!/bin/bash
     set -euo pipefail
