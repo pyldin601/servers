@@ -5,4 +5,5 @@ metadata:
 
 resources:
   - namespace.yaml
+  - turn-sealedsecret.yaml
   - zoom3d.yaml
