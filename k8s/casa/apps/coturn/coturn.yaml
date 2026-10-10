@@ -160,6 +160,9 @@ spec:
             periodSeconds: 30
           securityContext:
             runAsNonRoot: true
+            # The image's nobody:nogroup; numeric so the kubelet can verify runAsNonRoot.
+            runAsUser: 65534
+            runAsGroup: 65534
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
