@@ -41,13 +41,16 @@ spec:
             claimName: zoom3d-state
       containers:
         - name: zoom3d-server
-          image: ghcr.io/pyldin601/zoom3d-server:sha-0e873ca
+          image: ghcr.io/pyldin601/zoom3d-server:sha-b2aab98
           imagePullPolicy: IfNotPresent
           env:
             - name: PORT
               value: "8787"
             - name: STATE_FILE
               value: /data/lobby.json
+            # Sentry project zoom3d-server (org myownradio); the DSN only allows sending events.
+            - name: SENTRY_DSN
+              value: https://826ee8d7fcfa3afe7422d081971fb0a3@o349913.ingest.us.sentry.io/4512230984450048
           volumeMounts:
             - name: state
               mountPath: /data
@@ -105,7 +108,7 @@ spec:
     spec:
       containers:
         - name: zoom3d-web
-          image: ghcr.io/pyldin601/zoom3d-web:sha-0e873ca
+          image: ghcr.io/pyldin601/zoom3d-web:sha-b2aab98
           imagePullPolicy: IfNotPresent
           env:
             # Fallback only: Traefik routes /ws straight to the server.
