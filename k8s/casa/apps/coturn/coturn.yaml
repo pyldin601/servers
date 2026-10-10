@@ -1,0 +1,208 @@
+# coturn: TURN relay for zoom3d's WebRTC mesh (https://github.com/pyldin601/zoom3d).
+# Self-contained: deleting this app and zoom3d's TURN_* env vars removes TURN entirely.
+#
+# Host network, so relay ports are the node's own ports. The router forwards to 192.168.1.78:
+#   UDP 3478, TCP 3478, UDP 49160-49999 (relay range).
+# TURN over TLS on 443 goes through Traefik (IngressRouteTCP below), which terminates TLS and
+# forwards plain TCP to 3478.
+#
+# Auth is coturn's `use-auth-secret` (TURN REST API): the zoom3d server signs short-lived
+# credentials with the same `turn-secret` (sealed in both namespaces).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coturn
+  namespace: coturn
+data:
+  turnserver.conf: |
+    realm=turn.pyldin601.xyz
+    listening-port=3478
+    # Chrome allocates one relay port per TURN URL per peer connection: an 8-person mesh with
+    # udp, tcp and turns URLs can hold 8*7*3 = 168 at once. The range leaves room for several rooms.
+    min-port=49160
+    max-port=49999
+    use-auth-secret
+    fingerprint
+    # Traefik terminates TLS on 443, so coturn serves plain UDP/TCP only (DTLS and the CLI are off by default).
+    no-tls
+    # Browsers only use UDP relays.
+    no-tcp-relay
+    no-multicast-peers
+    # One user is one peer for one session: 7 connections * 3 URLs, with headroom for two interfaces.
+    user-quota=64
+    total-quota=800
+    # A mesh connection carries ~0.5 Mbps (350k video, mic, 128k boombox) each way. Bytes per second.
+    max-bps=250000
+    # 100 Mbps for all relayed traffic, so TURN can't saturate the home uplink.
+    bps-capacity=12500000
+    stale-nonce=600
+    log-file=stdout
+    simple-log
+    pidfile=/run/coturn/turnserver.pid
+    # Never relay into the home network, the cluster, or other non-public ranges.
+    denied-peer-ip=0.0.0.0-0.255.255.255
+    denied-peer-ip=10.0.0.0-10.255.255.255
+    denied-peer-ip=100.64.0.0-100.127.255.255
+    denied-peer-ip=127.0.0.0-127.255.255.255
+    denied-peer-ip=169.254.0.0-169.254.255.255
+    denied-peer-ip=172.16.0.0-172.31.255.255
+    denied-peer-ip=192.0.0.0-192.0.0.255
+    denied-peer-ip=192.0.2.0-192.0.2.255
+    denied-peer-ip=192.88.99.0-192.88.99.255
+    denied-peer-ip=192.168.0.0-192.168.255.255
+    denied-peer-ip=198.18.0.0-198.19.255.255
+    denied-peer-ip=198.51.100.0-198.51.100.255
+    denied-peer-ip=203.0.113.0-203.0.113.255
+    denied-peer-ip=240.0.0.0-255.255.255.255
+    denied-peer-ip=::1
+    denied-peer-ip=::ffff:0.0.0.0-::ffff:255.255.255.255
+    denied-peer-ip=fc00::-fdff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+    denied-peer-ip=fe80::-febf:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+  # The home IP is dynamic. Start with the current public IP as coturn's external address, and
+  # exit when it changes so the kubelet restarts the container with the new one.
+  # external-ip is the bare public IP on purpose: the "public/private" form allow-lists the private
+  # (node) IP as a peer, ahead of denied-peer-ip, which would let any TURN user reach the node's UDP
+  # services (flannel VXLAN included). Relay-to-relay between two clients then hairpins via the router.
+  run.sh: |
+    #!/bin/bash
+    set -euo pipefail
+    umask 077
+    public_ip=$(detect-external-ip)
+    conf=/run/coturn/turnserver.conf
+    {
+      cat /etc/coturn/turnserver.conf
+      echo "listening-ip=$HOST_IP"
+      echo "relay-ip=$HOST_IP"
+      echo "external-ip=$public_ip"
+      echo "static-auth-secret=$TURN_SECRET"
+    } > "$conf"
+    echo "coturn: external ip $public_ip, node ip $HOST_IP"
+    turnserver -c "$conf" &
+    pid=$!
+    trap 'kill -TERM "$pid"; wait "$pid" || true; exit 0' TERM INT
+    while kill -0 "$pid" 2>/dev/null; do
+      sleep 60 &
+      wait $!
+      ip=$(detect-external-ip 2>/dev/null) || continue
+      if [ "$ip" != "$public_ip" ]; then
+        echo "coturn: external ip changed from $public_ip to $ip, restarting"
+        kill -TERM "$pid"
+        wait "$pid" || true
+        exit 1
+      fi
+    done
+    echo "coturn: turnserver exited"
+    exit 1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coturn
+  namespace: coturn
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  # Host ports: never two pods at once.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: coturn
+  template:
+    metadata:
+      labels:
+        app: coturn
+    spec:
+      hostNetwork: true
+      volumes:
+        - name: config
+          configMap:
+            name: coturn
+        - name: run
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Mi
+      containers:
+        - name: coturn
+          image: coturn/coturn:4.18.0
+          imagePullPolicy: IfNotPresent
+          command: ["bash", "/etc/coturn/run.sh"]
+          env:
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: TURN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: turn-secret
+                  key: TURN_SECRET
+          volumeMounts:
+            - name: config
+              mountPath: /etc/coturn
+            - name: run
+              mountPath: /run/coturn
+          ports:
+            - containerPort: 3478
+              name: turn-udp
+              protocol: UDP
+            - containerPort: 3478
+              name: turn-tcp
+              protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: 3478
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 3478
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+              # The image's turnserver binary carries this file capability; exec fails without it.
+              add: ["NET_BIND_SERVICE"]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              memory: 256Mi
+---
+# Lets Traefik reach the host-network pod (its endpoint is the node IP).
+apiVersion: v1
+kind: Service
+metadata:
+  name: coturn
+  namespace: coturn
+spec:
+  type: ClusterIP
+  selector:
+    app: coturn
+  ports:
+    - name: turn-tcp
+      port: 3478
+      targetPort: 3478
+      protocol: TCP
+---
+# turns:turn.pyldin601.xyz:443 for networks that only allow HTTPS. Matches by SNI, so the
+# HTTP routers on websecure are unaffected.
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: coturn-tls
+  namespace: coturn
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: HostSNI(`turn.pyldin601.xyz`)
+      services:
+        - name: coturn
+          port: 3478
+  tls:
+    certResolver: default
