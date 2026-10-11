@@ -89,6 +89,8 @@ spec:
     spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
+      # Service env vars like LIVEKIT_PORT=tcp://... would be read as LiveKit settings.
+      enableServiceLinks: false
       volumes:
         - name: config
           configMap:
