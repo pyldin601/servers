@@ -3,7 +3,9 @@
 #
 # Host network, so media ports are the node's own ports. It reuses the router forwards to 192.168.1.78
 # that were made for coturn: UDP 3478 (TURN/STUN) and UDP 49160-49999 (media 49160-49163, TURN relays
-# 49170-49999). TCP 7881 (ICE/TCP) is not forwarded; TURN over TLS on 443 covers UDP-blocked networks.
+# 49170-49999), plus TCP 7881 (ICE/TCP, for networks that block UDP).
+# TURN-only clients can't reach the SFU: the relay address is the public IP and the router doesn't hairpin UDP.
+# So TURN/TLS on 443 (443-only networks) won't work until UDP hairpin (NAT loopback) is enabled on the router.
 #   wss://lk.pyldin601.xyz   signalling + API, through Traefik (IngressRoute below)
 #   turns:turn.pyldin601.xyz:443   Traefik terminates TLS and forwards plain TCP to 5349 (external_tls)
 apiVersion: v1
