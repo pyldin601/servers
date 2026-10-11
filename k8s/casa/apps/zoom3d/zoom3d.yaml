@@ -31,6 +31,10 @@ spec:
     metadata:
       labels:
         app: zoom3d-server
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8787"
+        prometheus.io/path: /metrics
     spec:
       securityContext:
         # The image runs as node (uid/gid 1000); it must be able to write the state volume.

@@ -17,6 +17,9 @@ metadata:
 data:
   livekit.yaml: |
     port: 7880
+    # Scraped by casa's Prometheus (pod annotations below); node port, not forwarded on the router.
+    prometheus:
+      port: 6789
     logging:
       level: info
     rtc:
@@ -89,6 +92,9 @@ spec:
     metadata:
       labels:
         app: livekit
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "6789"
     spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet

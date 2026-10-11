@@ -1,4 +1,7 @@
 ---
+# Prometheus for casa, dashboards only (no Alertmanager). Scrapes pods and services annotated with
+# prometheus.io/scrape (zoom3d server, LiveKit), the node (node-exporter) and cluster state (kube-state-metrics).
+# Grafana (apps/grafana) reads it at http://prometheus-server.monitoring.svc.cluster.local.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -9,25 +12,36 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/prometheus-community/helm-charts.git'
-    path: charts/prometheus
-    targetRevision: prometheus-25.22.0
+    repoURL: 'https://prometheus-community.github.io/helm-charts'
+    chart: prometheus
+    targetRevision: 29.36.1
     helm:
-      parameters:
-        - name: server.strategy.type
-          value: Recreate
-        - name: server.global.scrape_interval
-          value: 15s
-        - name: extraScrapeConfigs
-          value: |
-            - job_name: "vm-nodes"
-              static_configs:
-                - targets: [ "192.168.0.240:9100" ]
+      valuesObject:
+        alertmanager:
+          enabled: false
+        prometheus-pushgateway:
+          enabled: false
+        server:
+          strategy:
+            type: Recreate
+          global:
+            scrape_interval: 15s
+          retention: 15d
+          persistentVolume:
+            size: 8Gi
+            storageClass: local-path
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 1Gi
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: default
-
+    namespace: monitoring
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -22,7 +22,7 @@ resources:
 
   # Management
 #  - apps/grafana.yaml
-#  - apps/prometheus.yaml
+  - apps/prometheus.yaml
 #  - apps/loki.yaml
 
   # Resources
