@@ -67,16 +67,22 @@ spec:
             - containerPort: 3000
               name: http-grafana
               protocol: TCP
+          # First start and upgrades run database migrations for minutes on this node: allow up to 5 min before
+          # liveness takes over, or it kills Grafana mid-migration.
+          startupProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            periodSeconds: 10
+            failureThreshold: 30
           readinessProbe:
             httpGet:
               path: /api/health
               port: 3000
-            initialDelaySeconds: 10
             periodSeconds: 30
           livenessProbe:
             tcpSocket:
               port: 3000
-            initialDelaySeconds: 60
             periodSeconds: 10
           resources:
             requests:
