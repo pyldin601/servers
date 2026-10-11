@@ -41,13 +41,27 @@ spec:
             claimName: zoom3d-state
       containers:
         - name: zoom3d-server
-          image: ghcr.io/pyldin601/zoom3d-server:sha-3d86cfe
+          image: ghcr.io/pyldin601/zoom3d-server:sha-59eb860
           imagePullPolicy: IfNotPresent
           env:
             - name: PORT
               value: "8787"
             - name: STATE_FILE
               value: /data/lobby.json
+            # Audio and video go through the LiveKit SFU (livekit.yaml); the server signs a token per peer.
+            # It refuses to start without all three.
+            - name: LIVEKIT_URL
+              value: wss://lk.pyldin601.xyz
+            - name: LIVEKIT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: livekit-keys
+                  key: LIVEKIT_API_KEY
+            - name: LIVEKIT_API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: livekit-keys
+                  key: LIVEKIT_API_SECRET
             # Sentry project zoom3d-server (org myownradio); the DSN only allows sending events.
             - name: SENTRY_DSN
               value: https://826ee8d7fcfa3afe7422d081971fb0a3@o349913.ingest.us.sentry.io/4512230984450048
@@ -108,7 +122,7 @@ spec:
     spec:
       containers:
         - name: zoom3d-web
-          image: ghcr.io/pyldin601/zoom3d-web:sha-3d86cfe
+          image: ghcr.io/pyldin601/zoom3d-web:sha-59eb860
           imagePullPolicy: IfNotPresent
           env:
             # Fallback only: Traefik routes /ws straight to the server.

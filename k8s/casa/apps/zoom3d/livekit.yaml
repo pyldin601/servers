@@ -1,5 +1,5 @@
-# LiveKit SFU (with its built-in TURN) for zoom3d's media. Not used by the app yet: zoom3d still runs a
-# peer-to-peer mesh until its LiveKit client lands. Deleting this file and livekit-sealedsecret.yaml removes it.
+# LiveKit SFU (with its built-in TURN) carrying all of zoom3d's audio and video (the mesh is gone since
+# zoom3d PR #53). The zoom3d server signs tokens with the livekit-keys secret.
 #
 # Host network, so media ports are the node's own ports. It reuses the router forwards to 192.168.1.78
 # that were made for coturn: UDP 3478 (TURN/STUN) and UDP 49160-49999 (media 49160-49163, TURN relays

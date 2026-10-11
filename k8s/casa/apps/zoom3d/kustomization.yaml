@@ -8,4 +8,3 @@ resources:
   - zoom3d.yaml
   - livekit.yaml
   - livekit-sealedsecret.yaml
-  - preview.yaml
