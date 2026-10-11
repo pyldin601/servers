@@ -19,7 +19,6 @@ resources:
 #  - apps/radioterio.yaml
 #  - apps/explainit.yaml
   - apps/zoom3d.yaml
-  - apps/coturn.yaml
 
   # Management
 #  - apps/grafana.yaml

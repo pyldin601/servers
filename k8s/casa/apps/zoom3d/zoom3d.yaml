@@ -51,14 +51,6 @@ spec:
             # Sentry project zoom3d-server (org myownradio); the DSN only allows sending events.
             - name: SENTRY_DSN
               value: https://826ee8d7fcfa3afe7422d081971fb0a3@o349913.ingest.us.sentry.io/4512230984450048
-            # TURN relay (apps/coturn). The server signs short-lived credentials with the shared secret.
-            - name: TURN_URLS
-              value: turn:turn.pyldin601.xyz:3478?transport=udp,turn:turn.pyldin601.xyz:3478?transport=tcp,turns:turn.pyldin601.xyz:443?transport=tcp
-            - name: TURN_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: turn-secret
-                  key: TURN_SECRET
           volumeMounts:
             - name: state
               mountPath: /data
