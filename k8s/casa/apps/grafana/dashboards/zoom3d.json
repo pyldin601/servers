@@ -373,7 +373,7 @@
       "collapsed": false,
       "gridPos": {
         "x": 0,
-        "y": 12,
+        "y": 19,
         "w": 24,
         "h": 1
       },
@@ -389,7 +389,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 13,
+        "y": 20,
         "w": 4,
         "h": 4
       },
@@ -428,7 +428,7 @@
       },
       "gridPos": {
         "x": 4,
-        "y": 13,
+        "y": 20,
         "w": 4,
         "h": 4
       },
@@ -467,7 +467,7 @@
       },
       "gridPos": {
         "x": 8,
-        "y": 13,
+        "y": 20,
         "w": 4,
         "h": 4
       },
@@ -506,7 +506,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 13,
+        "y": 20,
         "w": 4,
         "h": 4
       },
@@ -545,7 +545,7 @@
       },
       "gridPos": {
         "x": 16,
-        "y": 13,
+        "y": 20,
         "w": 8,
         "h": 4
       },
@@ -585,7 +585,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 17,
+        "y": 24,
         "w": 8,
         "h": 7
       },
@@ -619,7 +619,7 @@
       },
       "gridPos": {
         "x": 8,
-        "y": 17,
+        "y": 24,
         "w": 8,
         "h": 7
       },
@@ -652,7 +652,7 @@
       },
       "gridPos": {
         "x": 16,
-        "y": 17,
+        "y": 24,
         "w": 8,
         "h": 7
       },
@@ -691,7 +691,7 @@
       "collapsed": false,
       "gridPos": {
         "x": 0,
-        "y": 24,
+        "y": 31,
         "w": 24,
         "h": 1
       },
@@ -707,7 +707,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 25,
+        "y": 32,
         "w": 8,
         "h": 7
       },
@@ -740,7 +740,7 @@
       },
       "gridPos": {
         "x": 8,
-        "y": 25,
+        "y": 32,
         "w": 8,
         "h": 7
       },
@@ -774,7 +774,7 @@
       },
       "gridPos": {
         "x": 16,
-        "y": 25,
+        "y": 32,
         "w": 8,
         "h": 7
       },
@@ -817,7 +817,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 32,
+        "y": 39,
         "w": 8,
         "h": 7
       },
@@ -850,7 +850,7 @@
       },
       "gridPos": {
         "x": 8,
-        "y": 32,
+        "y": 39,
         "w": 8,
         "h": 7
       },
@@ -883,7 +883,7 @@
       },
       "gridPos": {
         "x": 16,
-        "y": 32,
+        "y": 39,
         "w": 8,
         "h": 7
       },
@@ -900,6 +900,126 @@
       ],
       "fieldConfig": {
         "defaults": {},
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 27,
+      "type": "timeseries",
+      "title": "Messages sent / s by type",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Everything the server delivers to clients; a broadcast counts once per recipient. Bots' moves show up as peer_state.",
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 8,
+        "h": 7
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (type) (rate(zoom3d_messages_sent_total[1m]))",
+          "legendFormat": "{{type}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 28,
+      "type": "timeseries",
+      "title": "Bandwidth sent by type",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "WebSocket payload sent to clients (game state, not media).",
+      "gridPos": {
+        "x": 8,
+        "y": 12,
+        "w": 8,
+        "h": 7
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (type) (rate(zoom3d_bytes_sent_total[1m])) * 8",
+          "legendFormat": "{{type}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "options": {}
+    },
+    {
+      "id": 29,
+      "type": "timeseries",
+      "title": "Fan-out: sent vs received",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "What 6d reduces: today every move is relayed to everyone, so sent grows with people \u00d7 movers.",
+      "gridPos": {
+        "x": 16,
+        "y": 12,
+        "w": 8,
+        "h": 7
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum(rate(zoom3d_messages_sent_total[1m]))",
+          "legendFormat": "sent / s"
+        },
+        {
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum(rate(zoom3d_messages_total[1m]))",
+          "legendFormat": "received / s"
+        },
+        {
+          "refId": "C",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum(rate(zoom3d_messages_sent_total[1m])) / clamp_min(sum(zoom3d_peers{state=\"connected\"}), 1)",
+          "legendFormat": "sent / s per connected person"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps"
+        },
         "overrides": []
       },
       "options": {}
