@@ -1,0 +1,8 @@
+apiVersion: 1
+providers:
+  - name: casa
+    folder: casa
+    type: file
+    allowUiUpdates: false
+    options:
+      path: /etc/grafana/dashboards

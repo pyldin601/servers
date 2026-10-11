@@ -1,9 +1,14 @@
+# Grafana for casa at https://grafana.pyldin601.xyz: dashboards over Prometheus (bootstrap/apps/prometheus.yaml).
+# Login: user `admin`, password in the grafana-admin SealedSecret:
+#   kubectl -n monitoring get secret grafana-admin -o jsonpath='{.data.GF_SECURITY_ADMIN_PASSWORD}' | base64 -d
+# Anonymous access and sign-up are off. The data source and dashboards/ are provisioned (read-only in the UI).
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: grafana-pvc
 spec:
+  storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   resources:
@@ -17,6 +22,11 @@ metadata:
     app: grafana
   name: grafana
 spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  # One pod owns the SQLite database on the volume.
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: grafana
@@ -31,41 +41,71 @@ spec:
           - 0
       containers:
         - name: grafana
-          image: grafana/grafana:9.5.2
+          image: grafana/grafana:13.2.3
           imagePullPolicy: IfNotPresent
+          env:
+            - name: GF_SERVER_ROOT_URL
+              value: https://grafana.pyldin601.xyz
+            - name: GF_SECURITY_ADMIN_USER
+              value: admin
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-admin
+                  key: GF_SECURITY_ADMIN_PASSWORD
+            - name: GF_SECURITY_COOKIE_SECURE
+              value: "true"
+            - name: GF_AUTH_ANONYMOUS_ENABLED
+              value: "false"
+            - name: GF_USERS_ALLOW_SIGN_UP
+              value: "false"
+            - name: GF_ANALYTICS_REPORTING_ENABLED
+              value: "false"
+            - name: GF_ANALYTICS_CHECK_FOR_UPDATES
+              value: "false"
           ports:
             - containerPort: 3000
               name: http-grafana
               protocol: TCP
           readinessProbe:
-            failureThreshold: 3
             httpGet:
-              path: /robots.txt
+              path: /api/health
               port: 3000
-              scheme: HTTP
             initialDelaySeconds: 10
             periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 2
           livenessProbe:
-            failureThreshold: 3
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            successThreshold: 1
             tcpSocket:
               port: 3000
-            timeoutSeconds: 1
+            initialDelaySeconds: 60
+            periodSeconds: 10
           resources:
             requests:
-              cpu: 250m
-              memory: 750Mi
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
           volumeMounts:
             - mountPath: /var/lib/grafana
               name: grafana-pv
+            - mountPath: /etc/grafana/provisioning/datasources
+              name: datasources
+            - mountPath: /etc/grafana/provisioning/dashboards
+              name: dashboard-providers
+            - mountPath: /etc/grafana/dashboards
+              name: dashboards
       volumes:
         - name: grafana-pv
           persistentVolumeClaim:
             claimName: grafana-pvc
+        - name: datasources
+          configMap:
+            name: grafana-datasources
+        - name: dashboard-providers
+          configMap:
+            name: grafana-dashboard-providers
+        - name: dashboards
+          configMap:
+            name: grafana-dashboards
 ---
 apiVersion: v1
 kind: Service
@@ -85,13 +125,12 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: grafana
-  namespace: default
 spec:
   entryPoints:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`grafana-new.pyldin601.xyz`)
+      match: Host(`grafana.pyldin601.xyz`)
       services:
         - kind: Service
           name: grafana

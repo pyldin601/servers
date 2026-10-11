@@ -3,10 +3,24 @@ kind: Kustomization
 metadata:
   name: arbitrary
 
+namespace: monitoring
+
 commonLabels:
   app: grafana
 
-images: []
-
 resources:
   - grafana.yaml
+  - grafana-admin-sealedsecret.yaml
+
+# Provisioned on start: the Prometheus data source and the dashboards in dashboards/ (a changed file
+# changes the ConfigMap name, which rolls Grafana).
+configMapGenerator:
+  - name: grafana-datasources
+    files:
+      - prometheus.yaml=provisioning-datasources.yaml
+  - name: grafana-dashboard-providers
+    files:
+      - casa.yaml=provisioning-dashboards.yaml
+  - name: grafana-dashboards
+    files:
+      - dashboards/zoom3d.json

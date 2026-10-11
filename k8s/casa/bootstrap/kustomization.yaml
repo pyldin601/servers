@@ -21,7 +21,7 @@ resources:
   - apps/zoom3d.yaml
 
   # Management
-#  - apps/grafana.yaml
+  - apps/grafana.yaml
   - apps/prometheus.yaml
 #  - apps/loki.yaml
 
