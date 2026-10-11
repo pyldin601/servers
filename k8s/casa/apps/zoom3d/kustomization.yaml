@@ -6,3 +6,5 @@ metadata:
 resources:
   - namespace.yaml
   - zoom3d.yaml
+  - livekit.yaml
+  - livekit-sealedsecret.yaml
