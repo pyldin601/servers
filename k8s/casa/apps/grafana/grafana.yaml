@@ -63,6 +63,8 @@ spec:
               value: "false"
             - name: GF_ANALYTICS_CHECK_FOR_UPDATES
               value: "false"
+            - name: GOMEMLIMIT
+              value: 900MiB
           ports:
             - containerPort: 3000
               name: http-grafana
@@ -84,12 +86,14 @@ spec:
             tcpSocket:
               port: 3000
             periodSeconds: 10
+          # Steady ~210 MiB, but starts (migrations, plugins, provisioning) spike past 500 MiB: 512Mi got it
+          # OOM-killed. GOMEMLIMIT makes the Go runtime collect harder before it reaches the limit.
           resources:
             requests:
               cpu: 50m
-              memory: 128Mi
+              memory: 256Mi
             limits:
-              memory: 512Mi
+              memory: 1Gi
           volumeMounts:
             - mountPath: /var/lib/grafana
               name: grafana-pv
