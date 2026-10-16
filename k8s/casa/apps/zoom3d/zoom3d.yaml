@@ -45,7 +45,7 @@ spec:
             claimName: zoom3d-state
       containers:
         - name: zoom3d-server
-          image: ghcr.io/pyldin601/zoom3d-server:sha-8c8f726
+          image: ghcr.io/pyldin601/zoom3d-server:sha-8f4f091
           imagePullPolicy: IfNotPresent
           env:
             - name: PORT
@@ -126,7 +126,7 @@ spec:
     spec:
       containers:
         - name: zoom3d-web
-          image: ghcr.io/pyldin601/zoom3d-web:sha-8c8f726
+          image: ghcr.io/pyldin601/zoom3d-web:sha-8f4f091
           imagePullPolicy: IfNotPresent
           env:
             # Fallback only: Traefik routes /ws straight to the server.
