@@ -81,7 +81,7 @@ metadata:
   namespace: zoom3d
 spec:
   replicas: 1
-  revisionHistoryLimit: 2
+  revisionHistoryLimit: 1
   # Host ports: never two pods at once.
   strategy:
     type: Recreate

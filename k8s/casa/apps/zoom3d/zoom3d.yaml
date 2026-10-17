@@ -21,7 +21,7 @@ metadata:
   namespace: zoom3d
 spec:
   replicas: 1
-  revisionHistoryLimit: 2
+  revisionHistoryLimit: 1
   strategy:
     type: Recreate
   selector:
@@ -115,7 +115,7 @@ metadata:
   namespace: zoom3d
 spec:
   replicas: 1
-  revisionHistoryLimit: 2
+  revisionHistoryLimit: 1
   selector:
     matchLabels:
       app: zoom3d-web
