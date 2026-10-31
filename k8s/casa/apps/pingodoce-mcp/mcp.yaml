@@ -22,7 +22,7 @@ spec:
         - name: ghcr-dockerconfig
       containers:
         - name: mcp
-          image: ghcr.io/pyldin601/pingodoce-mcp:sha-PLACEHOLDER
+          image: ghcr.io/pyldin601/pingodoce-mcp:sha-5c6274a
           imagePullPolicy: IfNotPresent
           env:
             - name: PORT

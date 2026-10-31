@@ -19,7 +19,7 @@ spec:
         - name: ghcr-dockerconfig
       containers:
         - name: migrate
-          image: ghcr.io/pyldin601/pingodoce-auth:sha-PLACEHOLDER
+          image: ghcr.io/pyldin601/pingodoce-auth:sha-5c6274a
           command: ["node", "packages/db/src/migrate.ts"]
           env:
             - name: DATABASE_URL

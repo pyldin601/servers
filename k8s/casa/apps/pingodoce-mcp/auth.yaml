@@ -22,7 +22,7 @@ spec:
         - name: ghcr-dockerconfig
       containers:
         - name: auth
-          image: ghcr.io/pyldin601/pingodoce-auth:sha-PLACEHOLDER
+          image: ghcr.io/pyldin601/pingodoce-auth:sha-5c6274a
           imagePullPolicy: IfNotPresent
           env:
             - name: PORT

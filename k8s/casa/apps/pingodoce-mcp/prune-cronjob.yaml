@@ -21,7 +21,7 @@ spec:
             - name: ghcr-dockerconfig
           containers:
             - name: prune
-              image: ghcr.io/pyldin601/pingodoce-auth:sha-PLACEHOLDER
+              image: ghcr.io/pyldin601/pingodoce-auth:sha-5c6274a
               command: ["node", "apps/auth/src/admin.ts", "prune", "--days", "90"]
               env:
                 - name: REDIS_URL
