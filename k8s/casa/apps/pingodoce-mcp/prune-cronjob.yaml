@@ -1,0 +1,39 @@
+# Retention: deletes users not seen for 90 days and expired OAuth records, once a day (never per replica).
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pingodoce-prune
+  namespace: pingodoce-mcp
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  schedule: "17 4 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: Never
+          imagePullSecrets:
+            - name: ghcr-dockerconfig
+          containers:
+            - name: prune
+              image: ghcr.io/pyldin601/pingodoce-auth:sha-PLACEHOLDER
+              command: ["node", "apps/auth/src/admin.ts", "prune", "--days", "90"]
+              env:
+                - name: REDIS_URL
+                  value: redis://shared-redis.default.svc.cluster.local:6379
+                - name: DATABASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: pingodoce-secrets
+                      key: DATABASE_URL
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 64Mi
+                limits:
+                  memory: 256Mi

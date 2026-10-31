@@ -1,0 +1,16 @@
+# pingodoce-mcp: hosted MCP server for the Pingo Doce online shop (https://github.com/pyldin601/pingodoce-mcp).
+# Runbook: docs/operations.md in that repo. Sync waves: 0 namespace, secrets, Postgres; 1 migrations; 2 the apps.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: arbitrary
+
+resources:
+  - namespace.yaml
+  - externalsecrets.yaml
+  - postgres.yaml
+  - migrate-job.yaml
+  - auth.yaml
+  - mcp.yaml
+  - prune-cronjob.yaml
+  - ingressroute.yaml

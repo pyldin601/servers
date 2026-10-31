@@ -1,0 +1,110 @@
+# auth: OAuth authorization server and the Pingo Doce sign-in pages. Stateless (Postgres + shared-redis), so two
+# replicas, which also proves any replica can finish a sign-in another one started.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+  namespace: pingodoce-mcp
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  replicas: 2
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      imagePullSecrets:
+        - name: ghcr-dockerconfig
+      containers:
+        - name: auth
+          image: ghcr.io/pyldin601/pingodoce-auth:sha-PLACEHOLDER
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PORT
+              value: "3000"
+            - name: PUBLIC_URL
+              value: https://auth.pingodoce.pyldin601.xyz
+            - name: MCP_RESOURCE_URL
+              value: https://mcp.pingodoce.pyldin601.xyz/mcp
+            # The docs site does not exist yet; this link is dead until it does.
+            - name: DOCS_URL
+              value: https://pingodoce.pyldin601.xyz
+            - name: REDIS_URL
+              value: redis://shared-redis.default.svc.cluster.local:6379
+            - name: SIGNUP_MODE
+              value: invite
+            - name: TRUST_PROXY_HOPS
+              value: "1"
+            # Traefik's Service hides client addresses (externalTrafficPolicy: Cluster), so every visitor shares
+            # one IP: these only stop runaway loops. The per-identifier and global OTP limits protect Pingo Doce.
+            - name: SEND_LIMIT_PER_IP
+              value: "100"
+            - name: REGISTRATION_LIMIT_PER_IP
+              value: "200"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: pingodoce-secrets
+                  key: DATABASE_URL
+            - name: OIDC_JWKS
+              valueFrom:
+                secretKeyRef:
+                  name: pingodoce-secrets
+                  key: OIDC_JWKS
+            - name: OIDC_COOKIE_KEYS
+              valueFrom:
+                secretKeyRef:
+                  name: pingodoce-secrets
+                  key: OIDC_COOKIE_KEYS
+            - name: COOKIE_JAR_KEYS
+              valueFrom:
+                secretKeyRef:
+                  name: pingodoce-secrets
+                  key: COOKIE_JAR_KEYS
+            - name: IDENTIFIER_HMAC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: pingodoce-secrets
+                  key: IDENTIFIER_HMAC_KEY
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 20m
+              memory: 96Mi
+            limits:
+              memory: 384Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth
+  namespace: pingodoce-mcp
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  type: ClusterIP
+  selector:
+    app: auth
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http

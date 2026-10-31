@@ -1,0 +1,35 @@
+# Database migrations, run on every sync after wave 0 (namespace, secrets, Postgres) is healthy and before the apps
+# roll (wave 2). A failed migration fails the sync, so the old pods keep running.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pingodoce-migrate
+  namespace: pingodoce-mcp
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  # A few retries for a database that has only just become ready.
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: ghcr-dockerconfig
+      containers:
+        - name: migrate
+          image: ghcr.io/pyldin601/pingodoce-auth:sha-PLACEHOLDER
+          command: ["node", "packages/db/src/migrate.ts"]
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: pingodoce-secrets
+                  key: DATABASE_URL
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 256Mi

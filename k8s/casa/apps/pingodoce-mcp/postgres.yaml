@@ -1,0 +1,93 @@
+# Postgres for pingodoce-mcp: OAuth clients and grants, users, encrypted Pingo Doce cookie jars. One replica on the
+# node's local-path volume; backups are manual (see the runbook).
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pingodoce-postgres
+  namespace: pingodoce-mcp
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingodoce-postgres
+  namespace: pingodoce-mcp
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  # Never two servers on one data directory.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: pingodoce-postgres
+  template:
+    metadata:
+      labels:
+        app: pingodoce-postgres
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pingodoce-postgres
+      containers:
+        - name: postgres
+          image: postgres:18-alpine
+          env:
+            - name: POSTGRES_USER
+              value: pingodoce
+            - name: POSTGRES_DB
+              value: pingodoce
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pingodoce-secrets
+                  key: POSTGRES_PASSWORD
+          # Postgres 18 images keep their data under /var/lib/postgresql/18/docker; mount the parent.
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql
+          ports:
+            - containerPort: 5432
+              name: postgres
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "pingodoce", "-d", "pingodoce"]
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command: ["pg_isready", "-U", "pingodoce", "-d", "pingodoce"]
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 20m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pingodoce-postgres
+  namespace: pingodoce-mcp
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  type: ClusterIP
+  selector:
+    app: pingodoce-postgres
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: postgres

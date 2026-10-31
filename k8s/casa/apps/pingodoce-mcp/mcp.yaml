@@ -1,0 +1,84 @@
+# mcp: the MCP server (Streamable HTTP, stateless). Verifies auth's access tokens and calls Pingo Doce for the user,
+# one call at a time per user (a lock in shared-redis), so any replica can serve any request.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp
+  namespace: pingodoce-mcp
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  replicas: 2
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: mcp
+  template:
+    metadata:
+      labels:
+        app: mcp
+    spec:
+      imagePullSecrets:
+        - name: ghcr-dockerconfig
+      containers:
+        - name: mcp
+          image: ghcr.io/pyldin601/pingodoce-mcp:sha-PLACEHOLDER
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PORT
+              value: "3001"
+            - name: PUBLIC_URL
+              value: https://mcp.pingodoce.pyldin601.xyz
+            - name: AUTH_ISSUER
+              value: https://auth.pingodoce.pyldin601.xyz
+            - name: REDIS_URL
+              value: redis://shared-redis.default.svc.cluster.local:6379
+            - name: TRUST_PROXY_HOPS
+              value: "1"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: pingodoce-secrets
+                  key: DATABASE_URL
+            - name: COOKIE_JAR_KEYS
+              valueFrom:
+                secretKeyRef:
+                  name: pingodoce-secrets
+                  key: COOKIE_JAR_KEYS
+          ports:
+            - containerPort: 3001
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 20m
+              memory: 96Mi
+            limits:
+              memory: 384Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp
+  namespace: pingodoce-mcp
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  type: ClusterIP
+  selector:
+    app: mcp
+  ports:
+    - name: http
+      port: 3001
+      targetPort: http

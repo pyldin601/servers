@@ -1,0 +1,29 @@
+# The hosts resolve through the *.pyldin601.xyz wildcard (cloudflare-dns-updater). If pingodoce.pyldin601.xyz ever
+# gets a record of its own, add *.pingodoce.pyldin601.xyz too, or these two stop resolving.
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: pingodoce-mcp
+  namespace: pingodoce-mcp
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`auth.pingodoce.pyldin601.xyz`)
+      services:
+        - kind: Service
+          name: auth
+          port: http
+          scheme: http
+    - kind: Rule
+      match: Host(`mcp.pingodoce.pyldin601.xyz`)
+      services:
+        - kind: Service
+          name: mcp
+          port: http
+          scheme: http
+  tls:
+    certResolver: default
