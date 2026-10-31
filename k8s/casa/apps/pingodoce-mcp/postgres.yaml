@@ -7,6 +7,8 @@ metadata:
   namespace: pingodoce-mcp
   annotations:
     argocd.argoproj.io/sync-wave: "0"
+    # Every user's data: never prune or delete it with the Application; remove it by hand if that is really meant.
+    argocd.argoproj.io/sync-options: Prune=false,Delete=false
 spec:
   storageClassName: local-path
   accessModes:

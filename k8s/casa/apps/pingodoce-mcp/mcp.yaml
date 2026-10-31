@@ -31,6 +31,9 @@ spec:
               value: https://mcp.pingodoce.pyldin601.xyz
             - name: AUTH_ISSUER
               value: https://auth.pingodoce.pyldin601.xyz
+            # Read auth's signing keys inside the cluster rather than through the public host and the home router.
+            - name: AUTH_JWKS_URL
+              value: http://auth.pingodoce-mcp.svc.cluster.local:3000/jwks
             - name: REDIS_URL
               value: redis://shared-redis.default.svc.cluster.local:6379
             - name: TRUST_PROXY_HOPS
