@@ -22,7 +22,7 @@ spec:
         - name: ghcr-dockerconfig
       containers:
         - name: web
-          image: ghcr.io/radioterio/radioterio-web:sha-0343a45
+          image: ghcr.io/radioterio/radioterio-web:sha-daa4b9a
           imagePullPolicy: IfNotPresent
           env:
             # Kubernetes sets HOSTNAME to the pod's name, which the Next.js server would listen on instead.

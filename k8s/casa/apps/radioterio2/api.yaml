@@ -38,7 +38,7 @@ spec:
         - name: ghcr-dockerconfig
       containers:
         - name: api
-          image: ghcr.io/radioterio/radioterio-api:sha-0343a45
+          image: ghcr.io/radioterio/radioterio-api:sha-daa4b9a
           imagePullPolicy: IfNotPresent
           env:
             - name: POD_IP
