@@ -1,0 +1,17 @@
+# radioterio2: hosted radio stations streamed to RTMP, at https://new.radioter.io (https://github.com/radioterio/radioterio2).
+# Sync waves: 0 namespace, secrets, Postgres, NATS, MinIO; 1 the API and the website.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: arbitrary
+
+resources:
+  - namespace.yaml
+  - externalsecret.yaml
+  - sealedsecret.yaml
+  - postgres.yaml
+  - nats.yaml
+  - minio.yaml
+  - api.yaml
+  - web.yaml
+  - ingressroute.yaml

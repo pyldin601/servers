@@ -1,0 +1,29 @@
+# new.radioter.io resolves through the *.radioter.io wildcard (cloudflare-dns-updater).
+# /api goes straight to the API, so uploads do not pass through the website's server.
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: radioterio2
+  namespace: radioterio2
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`new.radioter.io`) && PathPrefix(`/api/`)
+      services:
+        - kind: Service
+          name: api
+          port: http
+          scheme: http
+    - kind: Rule
+      match: Host(`new.radioter.io`)
+      services:
+        - kind: Service
+          name: web
+          port: http
+          scheme: http
+  tls:
+    certResolver: default

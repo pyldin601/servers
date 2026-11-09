@@ -1,0 +1,127 @@
+# api: the radioterio2 API. It also starts one station-engine process for each live station, inside this container,
+# so exactly one replica, and Recreate so a rollout never runs two. On SIGTERM it stops its engines; on start it
+# starts again the stations that were live.
+#
+# Host network, so a browser on the home network can play a station's monitor (WebRTC): the engine then offers the
+# node's LAN address. From outside the home network the monitor does not connect (no public address or TURN relay).
+# The API listens on the node's address, port 8300; engines answer the API on 127.0.0.1:18400-18499.
+#
+# Each live station takes about 1.3 to 1.6 cores of this node at 720p, so MAX_LIVE_STATIONS is 1 while the node
+# is shared with the other apps. The CPU limit keeps a station from starving them.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: radioterio2
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      enableServiceLinks: false
+      # The API gives its engines up to 12 s to stop.
+      terminationGracePeriodSeconds: 30
+      imagePullSecrets:
+        - name: ghcr-dockerconfig
+      containers:
+        - name: api
+          image: ghcr.io/radioterio/radioterio-api:sha-0343a45
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: API_ADDRESS
+              value: "$(POD_IP):8300"
+            - name: SITE_ORIGIN
+              value: https://new.radioter.io
+            - name: COOKIE_SECURE
+              value: "true"
+            - name: NATS_URL
+              value: nats://nats.radioterio2.svc.cluster.local:4222
+            - name: MONITOR_PORTS
+              value: 18400-18499
+            - name: MAX_LIVE_STATIONS
+              value: "1"
+            - name: S3_BUCKET
+              value: radioterio
+            - name: S3_ENDPOINT
+              value: http://minio.radioterio2.svc.cluster.local:9000
+            - name: S3_REGION
+              value: us-east-1
+            - name: S3_CREATE_BUCKET
+              value: "true"
+            - name: RUST_LOG
+              value: info
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: radioterio2-secrets
+                  key: DATABASE_URL
+            - name: STREAM_KEY_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: radioterio2-secrets
+                  key: STREAM_KEY_SECRET
+            - name: S3_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: radioterio2-secrets
+                  key: S3_ACCESS_KEY_ID
+            - name: S3_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: radioterio2-secrets
+                  key: S3_SECRET_ACCESS_KEY
+          ports:
+            - containerPort: 8300
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 1500m
+              memory: 256Mi
+            limits:
+              cpu: 2500m
+              memory: 1536Mi
+---
+# Lets Traefik reach the host-network pod (its endpoint is the node's address).
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  namespace: radioterio2
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  type: ClusterIP
+  selector:
+    app: api
+  ports:
+    - name: http
+      port: 8300
+      targetPort: 8300

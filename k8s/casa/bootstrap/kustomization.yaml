@@ -20,6 +20,7 @@ resources:
 #  - apps/explainit.yaml
   - apps/zoom3d.yaml
   - apps/pingodoce-mcp.yaml
+  - apps/radioterio2.yaml
 
   # Management
   - apps/grafana.yaml

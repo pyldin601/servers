@@ -1,0 +1,67 @@
+# web: the radioterio2 website (Next.js standalone server). The ingress sends /api straight to the API.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: radioterio2
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      enableServiceLinks: false
+      imagePullSecrets:
+        - name: ghcr-dockerconfig
+      containers:
+        - name: web
+          image: ghcr.io/radioterio/radioterio-web:sha-0343a45
+          imagePullPolicy: IfNotPresent
+          env:
+            # Kubernetes sets HOSTNAME to the pod's name, which the Next.js server would listen on instead.
+            - name: HOSTNAME
+              value: 0.0.0.0
+          ports:
+            - containerPort: 3300
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /login
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /login
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 20m
+              memory: 96Mi
+            limits:
+              memory: 384Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: radioterio2
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  type: ClusterIP
+  selector:
+    app: web
+  ports:
+    - name: http
+      port: 3300
+      targetPort: http
