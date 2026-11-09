@@ -3,11 +3,12 @@
 # starts again the stations that were live.
 #
 # Host network, so a browser on the home network can play a station's monitor (WebRTC): the engine then offers the
-# node's LAN address. From outside the home network the monitor does not connect (no public address or TURN relay).
+# node's LAN address (checked 2026-11-09). From outside the home network it is not tested and may not connect: the
+# engine also offers the public address found with STUN, but there is no TURN relay and no router port forward.
 # The API listens on the node's address, port 8300; engines answer the API on 127.0.0.1:18400-18499.
 #
-# Each live station takes about 1.3 to 1.6 cores of this node at 720p, so MAX_LIVE_STATIONS is 1 while the node
-# is shared with the other apps. The CPU limit keeps a station from starving them.
+# One live 720p station with the slow zoom and the spectrum took 1.8 cores of this node (2026-11-09), so
+# MAX_LIVE_STATIONS is 1 while the node is shared with the other apps. The CPU limit keeps a station from starving them.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
