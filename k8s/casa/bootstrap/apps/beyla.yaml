@@ -35,6 +35,9 @@ spec:
         privileged: false
         contextPropagation:
           enabled: false
+        # KILL lets Beyla signal Node.js processes that run as another user; the Node.js agent needs that.
+        extraCapabilities:
+          - KILL
         resources:
           requests:
             cpu: 50m
