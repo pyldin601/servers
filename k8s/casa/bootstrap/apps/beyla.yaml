@@ -11,9 +11,10 @@
 #
 # Limits on this node:
 #   - Kernel 5.15: no trace context between services (needs 5.17), so each service's requests are their own traces.
-#   - nodejs.enabled is false: Beyla would otherwise signal each Node.js process (SIGUSR1) to open its inspector on
-#     127.0.0.1:9229 and inject an agent that ties outgoing calls to the request that made them. Without it, a
-#     Node.js service's outgoing calls may show up as separate traces. Set it to true to trade that for the injection.
+#   - nodejs.enabled is true: Beyla signals each traced Node.js process (SIGUSR1) to open its inspector on
+#     127.0.0.1:9229 inside the pod and injects an agent that ties outgoing calls to the request that made them.
+#     Set it to false to leave the processes alone; a Node.js service's outgoing calls then show up as separate
+#     traces instead of nested under the request.
 #   - An app that sends its own OpenTelemetry traces is left alone (exclude_otel_instrumented_services, on by default).
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -54,7 +55,7 @@ spec:
                 db.operation.name:
                   not_match: PING
             nodejs:
-              enabled: false
+              enabled: true
             otel_traces_export:
               endpoint: http://tempo.monitoring.svc.cluster.local:4318
             prometheus_export:
