@@ -3,8 +3,11 @@
 # into trace spans and sends them to Tempo (bootstrap/apps/tempo.yaml). No app changes: it watches from the kernel.
 # Traces only: the Prometheus exporter is off.
 #
-# Traced: every namespace except the ones Beyla skips by default (kube-system, monitoring) and the ones excluded
-# below. A new app namespace is traced without touching this file.
+# Traced: only the namespaces listed under discovery.instrument. Spans carry the URLs of the calls a pod receives
+# and makes (path and query string), stored in Tempo for 7 days, so a namespace goes on the list only if its pods
+# don't call APIs that put a credential in the URL. Left out for that reason: homefs-hub, torrent-bot and
+# polyglot-bot (the Telegram Bot API has the bot token in the path; OMDb takes ?apikey=). Filtering those calls by
+# host doesn't work: Beyla often has only the IP.
 #
 # Limits on this node:
 #   - Kernel 5.15: no trace context between services (needs 5.17), so each service's requests are their own traces.
@@ -41,21 +44,15 @@ spec:
           data:
             discovery:
               instrument:
-                - k8s_namespace: '*'
-              exclude_instrument:
-                - k8s_namespace: argocd
-                # Cluster plumbing: external-secrets, the S3 CSI driver, shared-redis.
-                - k8s_namespace: default
-                # Tracker announces and VPN traffic, not requests anyone debugs.
-                - k8s_namespace: torrent-bot
-                  k8s_pod_name: 'transmission-daemon-*'
-            # Spans carry the full URL of outgoing calls, and the Telegram Bot API puts the bot token in the URL
-            # path (https://api.telegram.org/bot<token>/getUpdates). Drop those spans so no token reaches Tempo.
-            # Anything else that puts a secret in a URL path needs the same treatment.
+                - k8s_namespace: zoom3d
+                - k8s_namespace: pingodoce-mcp
+                - k8s_namespace: radioterio2
+            # Readiness checks ping Redis every few seconds; their own request is dropped below, so the ping would
+            # be left as a trace of its own.
             filter:
               application:
-                server.address:
-                  not_match: api.telegram.org
+                db.operation.name:
+                  not_match: PING
             nodejs:
               enabled: false
             otel_traces_export:
