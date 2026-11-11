@@ -49,6 +49,13 @@ spec:
                 # Tracker announces and VPN traffic, not requests anyone debugs.
                 - k8s_namespace: torrent-bot
                   k8s_pod_name: 'transmission-daemon-*'
+            # Spans carry the full URL of outgoing calls, and the Telegram Bot API puts the bot token in the URL
+            # path (https://api.telegram.org/bot<token>/getUpdates). Drop those spans so no token reaches Tempo.
+            # Anything else that puts a secret in a URL path needs the same treatment.
+            filter:
+              application:
+                server.address:
+                  not_match: api.telegram.org
             nodejs:
               enabled: false
             otel_traces_export:
