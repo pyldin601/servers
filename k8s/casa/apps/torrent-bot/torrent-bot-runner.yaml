@@ -17,7 +17,7 @@ spec:
                 claimName: db-volume-claim
           containers:
             - name: torrent-bot
-              image: pldin601/torrent-bot-runner@sha256:a7878cc77b59241e85a106b93ba3ef208c5ab21c71c52b45a27e0fab72a97f0d
+              image: pldin601/torrent-bot-runner@sha256:05d7f17bd4bfa19b76f5e1592e9290a352b9e1b827c849636f6d77bc9f2f2bd3
               volumeMounts:
                 - mountPath: /storage
                   name: db-volume

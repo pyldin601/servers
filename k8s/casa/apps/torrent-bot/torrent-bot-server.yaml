@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: torrent-bot-server
-          image: pldin601/torrent-bot-server@sha256:3bccebea38ce8dcc76c987f1bde08875d2ba3fffb080b0d965b7e4f8ac397958
+          image: pldin601/torrent-bot-server@sha256:375ff21b51b6c0f17d00ccc0df78c31a407ecc72132be55835efa6151f90d34c
           env:
             # Spans go to Tempo (bootstrap/apps/tempo.yaml). The app never records the bot token or passwords.
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
