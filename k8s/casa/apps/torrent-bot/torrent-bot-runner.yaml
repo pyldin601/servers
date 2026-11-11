@@ -17,11 +17,14 @@ spec:
                 claimName: db-volume-claim
           containers:
             - name: torrent-bot
-              image: pldin601/torrent-bot-runner@sha256:5e9a8900a14c9eff8a7896aa0cefc0d287736fc44bcd218701c1702921baef34
+              image: pldin601/torrent-bot-runner@sha256:a7878cc77b59241e85a106b93ba3ef208c5ab21c71c52b45a27e0fab72a97f0d
               volumeMounts:
                 - mountPath: /storage
                   name: db-volume
               env:
+                # Spans go to Tempo (bootstrap/apps/tempo.yaml). The app never records the bot token or passwords.
+                - name: OTEL_EXPORTER_OTLP_ENDPOINT
+                  value: http://tempo.monitoring.svc.cluster.local:4318
                 - name: STORAGE_FILE
                   value: /storage/torrent-bot.db
                 - name: TRANS_URL

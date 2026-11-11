@@ -28,8 +28,11 @@ spec:
     spec:
       containers:
         - name: torrent-bot-server
-          image: pldin601/torrent-bot-server@sha256:17a5a5819a91681756e2bcaff352fec4a29527f301ccf7e36bb2be792f43678c
+          image: pldin601/torrent-bot-server@sha256:3bccebea38ce8dcc76c987f1bde08875d2ba3fffb080b0d965b7e4f8ac397958
           env:
+            # Spans go to Tempo (bootstrap/apps/tempo.yaml). The app never records the bot token or passwords.
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://tempo.monitoring.svc.cluster.local:4318
             - name: TRANS_URL
               value: http://transmission-daemon:9091/transmission/rpc
             - name: TOLOKA_USERNAME
