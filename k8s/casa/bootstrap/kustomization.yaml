@@ -25,6 +25,8 @@ resources:
   # Management
   - apps/grafana.yaml
   - apps/prometheus.yaml
+  - apps/tempo.yaml
+  - apps/beyla.yaml
 #  - apps/loki.yaml
 
   # Resources

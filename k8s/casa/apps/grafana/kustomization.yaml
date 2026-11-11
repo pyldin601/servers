@@ -12,7 +12,7 @@ resources:
   - grafana.yaml
   - grafana-admin-sealedsecret.yaml
 
-# Provisioned on start: the Prometheus data source and the dashboards in dashboards/ (a changed file
+# Provisioned on start: the Prometheus and Tempo data sources and the dashboards in dashboards/ (a changed file
 # changes the ConfigMap name, which rolls Grafana).
 configMapGenerator:
   - name: grafana-datasources

@@ -1,0 +1,42 @@
+---
+# Tempo for casa: stores traces. One process (monolithic mode), blocks on a local-path volume, 7 days kept.
+# Grafana (apps/grafana) reads it at http://tempo.monitoring.svc.cluster.local:3200.
+# Traces come in over OTLP, in-cluster only: http://tempo.monitoring.svc.cluster.local:4318 (HTTP) or :4317 (gRPC).
+# Beyla (bootstrap/apps/beyla.yaml) sends there; an app with an OpenTelemetry SDK can send there too.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tempo
+  namespace: argocd
+  finalizers:
+      - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://grafana-community.github.io/helm-charts'
+    chart: tempo
+    targetRevision: 3.2.1
+    helm:
+      valuesObject:
+        tempo:
+          reportingEnabled: false
+          retention: 168h
+          resources:
+            requests:
+              cpu: 50m
+              memory: 256Mi
+            limits:
+              memory: 1Gi
+        persistence:
+          enabled: true
+          storageClassName: local-path
+          size: 5Gi
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

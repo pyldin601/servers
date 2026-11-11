@@ -7,3 +7,12 @@ datasources:
     url: http://prometheus-server.monitoring.svc.cluster.local
     isDefault: true
     editable: false
+  - name: Tempo
+    uid: tempo
+    type: tempo
+    access: proxy
+    url: http://tempo.monitoring.svc.cluster.local:3200
+    editable: false
+    jsonData:
+      nodeGraph:
+        enabled: true

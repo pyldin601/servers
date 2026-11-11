@@ -1,0 +1,75 @@
+---
+# Beyla for casa: an eBPF agent on the node that turns the requests pods receive and send (HTTP, gRPC, SQL, Redis)
+# into trace spans and sends them to Tempo (bootstrap/apps/tempo.yaml). No app changes: it watches from the kernel.
+# Traces only: the Prometheus exporter is off.
+#
+# Traced: every namespace except the ones Beyla skips by default (kube-system, monitoring) and the ones excluded
+# below. A new app namespace is traced without touching this file.
+#
+# Limits on this node:
+#   - Kernel 5.15: no trace context between services (needs 5.17), so each service's requests are their own traces.
+#   - nodejs.enabled is false: Beyla would otherwise signal each Node.js process (SIGUSR1) to open its inspector on
+#     127.0.0.1:9229 and inject an agent that ties outgoing calls to the request that made them. Without it, a
+#     Node.js service's outgoing calls may show up as separate traces. Set it to true to trade that for the injection.
+#   - An app that sends its own OpenTelemetry traces is left alone (exclude_otel_instrumented_services, on by default).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: beyla
+  namespace: argocd
+  finalizers:
+      - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://grafana.github.io/helm-charts'
+    chart: beyla
+    targetRevision: 1.16.17
+    helm:
+      valuesObject:
+        # A list of Linux capabilities instead of a privileged container, and no host network.
+        privileged: false
+        contextPropagation:
+          enabled: false
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 1Gi
+        config:
+          data:
+            discovery:
+              instrument:
+                - k8s_namespace: '*'
+              exclude_instrument:
+                - k8s_namespace: argocd
+                # Cluster plumbing: external-secrets, the S3 CSI driver, shared-redis.
+                - k8s_namespace: default
+                # Tracker announces and VPN traffic, not requests anyone debugs.
+                - k8s_namespace: torrent-bot
+                  k8s_pod_name: 'transmission-daemon-*'
+            nodejs:
+              enabled: false
+            otel_traces_export:
+              endpoint: http://tempo.monitoring.svc.cluster.local:4318
+            prometheus_export:
+              port: 0
+            routes:
+              # Probes and Prometheus scrapes: every few seconds per pod, never worth a trace.
+              ignored_patterns:
+                - /healthz
+                - /readyz
+                - /health
+                - /api/health
+                - /minio/health/*
+                - /metrics
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

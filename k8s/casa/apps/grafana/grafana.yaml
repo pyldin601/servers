@@ -1,4 +1,5 @@
-# Grafana for casa at https://grafana.pyldin601.xyz: dashboards over Prometheus (bootstrap/apps/prometheus.yaml).
+# Grafana for casa at https://grafana.pyldin601.xyz: dashboards over Prometheus (bootstrap/apps/prometheus.yaml),
+# traces from Tempo (bootstrap/apps/tempo.yaml).
 # Login: user `admin`, password in the grafana-admin SealedSecret:
 #   kubectl -n monitoring get secret grafana-admin -o jsonpath='{.data.GF_SECURITY_ADMIN_PASSWORD}' | base64 -d
 # Anonymous access and sign-up are off. The data source and dashboards/ are provisioned (read-only in the UI).
