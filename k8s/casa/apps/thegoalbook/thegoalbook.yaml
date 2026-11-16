@@ -1,0 +1,131 @@
+# Read-along page for a privately owned audiobook. The content (index.html, audio.m4a, cover.jpg) is not in
+# this repo or in any image: it is copied into the PVC with `kubectl cp`, and the site sits behind basic auth.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: thegoalbook-content
+  namespace: thegoalbook
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: thegoalbook-nginx
+  namespace: thegoalbook
+data:
+  default.conf: |
+    server {
+      listen 8080;
+      root /usr/share/nginx/html;
+      location = /healthz { access_log off; return 200 "ok\n"; }
+      location = /index.html { add_header Cache-Control "no-cache"; }
+      location = / { add_header Cache-Control "no-cache"; try_files /index.html =404; }
+      location / { add_header Cache-Control "private, max-age=86400"; }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thegoalbook
+  namespace: thegoalbook
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: thegoalbook
+  template:
+    metadata:
+      labels:
+        app: thegoalbook
+    spec:
+      volumes:
+        - name: content
+          persistentVolumeClaim:
+            claimName: thegoalbook-content
+        - name: nginx
+          configMap:
+            name: thegoalbook-nginx
+      containers:
+        - name: nginx
+          image: nginxinc/nginx-unprivileged:1.27-alpine
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: content
+              mountPath: /usr/share/nginx/html
+            - name: nginx
+              mountPath: /etc/nginx/conf.d
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              memory: 64Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thegoalbook
+  namespace: thegoalbook
+spec:
+  type: ClusterIP
+  selector:
+    app: thegoalbook
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: basic-auth
+  namespace: thegoalbook
+spec:
+  basicAuth:
+    secret: basic-auth
+    realm: thegoalbook
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: thegoalbook
+  namespace: thegoalbook
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`thegoalbook.pyldin601.xyz`)
+      middlewares:
+        - name: basic-auth
+      services:
+        - kind: Service
+          name: thegoalbook
+          port: http
+          scheme: http
+  tls:
+    certResolver: default
